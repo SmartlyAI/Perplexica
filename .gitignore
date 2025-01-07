@@ -14,7 +14,7 @@ yarn-error.log
 *.iml
 
 # Environment variables
-.env
+# .env
 .env.local
 .env.development.local
 .env.test.local
