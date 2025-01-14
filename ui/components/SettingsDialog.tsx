@@ -15,7 +15,7 @@ import React, {
 } from 'react';
 import ThemeSwitcher from './theme/Switcher';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 
 const Input = ({ className, ...restProps }: InputProps) => {
   return (
@@ -129,7 +129,7 @@ const SettingsDialog = ({
         const chatModel =
           localStorage.getItem('chatModel') ||
           (data.chatModelProviders &&
-          data.chatModelProviders[chatModelProvider]?.length > 0
+            data.chatModelProviders[chatModelProvider]?.length > 0
             ? data.chatModelProviders[chatModelProvider][0].name
             : undefined) ||
           '';
@@ -231,7 +231,7 @@ const SettingsDialog = ({
                       </p>
                       <ThemeSwitcher />
                     </div>
-                    {config.chatModelProviders && (
+                    {/* {config.chatModelProviders && (
                       <div className="flex flex-col space-y-1">
                         <p className="text-black/70 dark:text-white/70 text-sm">
                           Chat model Provider
@@ -259,8 +259,8 @@ const SettingsDialog = ({
                           )}
                         />
                       </div>
-                    )}
-                    {selectedChatModelProvider &&
+                    )} */}
+                    {/* {selectedChatModelProvider &&
                       selectedChatModelProvider != 'custom_openai' && (
                         <div className="flex flex-col space-y-1">
                           <p className="text-black/70 dark:text-white/70 text-sm">
@@ -301,8 +301,8 @@ const SettingsDialog = ({
                             })()}
                           />
                         </div>
-                      )}
-                    {selectedChatModelProvider &&
+                      )} */}
+                    {/* {selectedChatModelProvider &&
                       selectedChatModelProvider === 'custom_openai' && (
                         <>
                           <div className="flex flex-col space-y-1">
@@ -345,9 +345,9 @@ const SettingsDialog = ({
                             />
                           </div>
                         </>
-                      )}
+                      )} */}
                     {/* Embedding models */}
-                    {config.embeddingModelProviders && (
+                    {/* {config.embeddingModelProviders && (
                       <div className="flex flex-col space-y-1">
                         <p className="text-black/70 dark:text-white/70 text-sm">
                           Embedding model Provider
@@ -385,30 +385,30 @@ const SettingsDialog = ({
                           options={(() => {
                             const embeddingModelProvider =
                               config.embeddingModelProviders[
-                                selectedEmbeddingModelProvider
+                              selectedEmbeddingModelProvider
                               ];
 
                             return embeddingModelProvider
                               ? embeddingModelProvider.length > 0
                                 ? embeddingModelProvider.map((model) => ({
-                                    label: model.displayName,
-                                    value: model.name,
-                                  }))
+                                  label: model.displayName,
+                                  value: model.name,
+                                }))
                                 : [
-                                    {
-                                      label: 'No embedding models available',
-                                      value: '',
-                                      disabled: true,
-                                    },
-                                  ]
-                              : [
                                   {
-                                    label:
-                                      'Invalid provider, please check backend logs',
+                                    label: 'No embedding models available',
                                     value: '',
                                     disabled: true,
                                   },
-                                ];
+                                ]
+                              : [
+                                {
+                                  label:
+                                    'Invalid provider, please check backend logs',
+                                  value: '',
+                                  disabled: true,
+                                },
+                              ];
                           })()}
                         />
                       </div>
@@ -428,8 +428,8 @@ const SettingsDialog = ({
                           })
                         }
                       />
-                    </div>
-                    <div className="flex flex-col space-y-1">
+                    </div> */}
+                    {/* <div className="flex flex-col space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
                         Ollama API URL
                       </p>
@@ -444,8 +444,8 @@ const SettingsDialog = ({
                           })
                         }
                       />
-                    </div>
-                    <div className="flex flex-col space-y-1">
+                    </div> */}
+                    {/* <div className="flex flex-col space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
                         GROQ API Key
                       </p>
@@ -460,8 +460,8 @@ const SettingsDialog = ({
                           })
                         }
                       />
-                    </div>
-                    <div className="flex flex-col space-y-1">
+                    </div> */}
+                    {/* <div className="flex flex-col space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
                         Anthropic API Key
                       </p>
@@ -476,8 +476,8 @@ const SettingsDialog = ({
                           })
                         }
                       />
-                    </div>
-                    <div className="flex flex-col space-y-1">
+                    </div> */}
+                    {/* <div className="flex flex-col space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
                         Gemini API Key
                       </p>
@@ -492,7 +492,7 @@ const SettingsDialog = ({
                           })
                         }
                       />
-                    </div>
+                    </div> */}
                   </div>
                 )}
                 {isLoading && (
