@@ -512,7 +512,7 @@ const SettingsDialog = ({
                     {isUpdating ? (
                       <RefreshCw size={20} className="animate-spin" />
                     ) : (
-                      <CloudUpload size={20} />
+                      <span>Save</span>
                     )}
                   </button>
                 </div>

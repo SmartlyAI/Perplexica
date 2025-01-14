@@ -7,6 +7,8 @@ import { useSelectedLayoutSegments } from 'next/navigation';
 import React, { useState, type ReactNode } from 'react';
 import Layout from './Layout';
 import SettingsDialog from './SettingsDialog';
+import History from './History';
+import Image from 'next/image';
 
 const VerticalIconContainer = ({ children }: { children: ReactNode }) => {
   return (
@@ -42,12 +44,13 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div>
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-20 lg:flex-col">
-        <div className="flex grow flex-col items-center justify-between gap-y-5 overflow-y-auto bg-[#efeaf3] dark:bg-dark-secondary px-2 py-8">
-          <a href="/">
-            <img src="logo.png" alt="Smartly" />
+      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-80 lg:flex-col">
+        <div className="flex grow flex-col justify-between gap-y-5 overflow-y-auto bg-[#efeaf3] dark:bg-dark-secondary px-4 py-8">
+          <a href="/" className="flex items-center">
+            <Image src="/logo.png" alt="Smartly" width={34} height={41} className='mr-4' />
+            SmartlyChat
           </a>
-          <VerticalIconContainer>
+          {/* <VerticalIconContainer>
             {navLinks.map((link, i) => (
               <Link
                 key={i}
@@ -65,7 +68,9 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                 )}
               </Link>
             ))}
-          </VerticalIconContainer>
+          </VerticalIconContainer> */}
+
+          <History />
 
           <Settings
             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
