@@ -409,6 +409,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
     messageId = messageId ?? crypto.randomBytes(7).toString('hex');
 
+    localStorage.setItem('token', token);
+
     ws?.send(
       JSON.stringify({
         type: 'message',

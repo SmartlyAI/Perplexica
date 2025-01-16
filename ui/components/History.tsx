@@ -29,7 +29,6 @@ const History = () => {
             });
 
             const data = await res.json();
-            console.log(data)
 
             setChats(data.chats);
             setLoading(false);
