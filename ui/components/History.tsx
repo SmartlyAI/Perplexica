@@ -21,7 +21,7 @@ const History = () => {
         const fetchChats = async () => {
             setLoading(true);
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats/${localStorage.getItem('token')}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,6 +29,7 @@ const History = () => {
             });
 
             const data = await res.json();
+            console.log(data)
 
             setChats(data.chats);
             setLoading(false);
@@ -58,14 +59,14 @@ const History = () => {
         </div>
     ) : (
         <div>
-            {chats.length === 0 && (
+            {chats?.length === 0 && (
                 <div className="flex flex-row items-center justify-center min-h-screen">
                     <p className="text-black/70 dark:text-white/70 text-sm">
                         No chats found.
                     </p>
                 </div>
             )}
-            {chats.length > 0 && (
+            {chats?.length > 0 && (
                 <div className="flex flex-col pb-20 lg:pb-2">
                     {chats.map((chat, i) => (
                         <div

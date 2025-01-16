@@ -149,9 +149,9 @@ const useSocket = (
           ) {
             chatModel = Object.keys(
               chatModelProviders[
-                Object.keys(chatModelProviders[chatModelProvider]).length > 0
-                  ? chatModelProvider
-                  : Object.keys(chatModelProviders)[0]
+              Object.keys(chatModelProviders[chatModelProvider]).length > 0
+                ? chatModelProvider
+                : Object.keys(chatModelProviders)[0]
               ],
             )[0];
             localStorage.setItem('chatModel', chatModel);
@@ -316,6 +316,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
   const initialMessage = searchParams.get('q');
 
   const [chatId, setChatId] = useState<string | undefined>(id);
+  const [token, setToken] = useState<string>(localStorage.getItem('token') ?? '');
   const [newChatCreated, setNewChatCreated] = useState(false);
 
   const [hasError, setHasError] = useState(false);
@@ -366,6 +367,10 @@ const ChatWindow = ({ id }: { id?: string }) => {
       setIsMessagesLoaded(true);
       setChatId(crypto.randomBytes(20).toString('hex'));
     }
+
+    if (token == '') {
+      setToken(crypto.randomBytes(50).toString('hex'));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -411,6 +416,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
           messageId: messageId,
           chatId: chatId!,
           content: message,
+          token: token,
         },
         files: fileIds,
         focusMode: focusMode,
