@@ -316,7 +316,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
   const initialMessage = searchParams.get('q');
 
   const [chatId, setChatId] = useState<string | undefined>(id);
-  const [token, setToken] = useState<string>(localStorage.getItem('token') ?? '');
+  const [token, setToken] = useState<string>(typeof window !== 'undefined' ? localStorage.getItem('token') ?? '' : '');
   const [newChatCreated, setNewChatCreated] = useState(false);
 
   const [hasError, setHasError] = useState(false);

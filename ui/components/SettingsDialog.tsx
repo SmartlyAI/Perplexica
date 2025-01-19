@@ -11,9 +11,12 @@ import React, {
   Fragment,
   useEffect,
   useState,
+  useTransition,
   type SelectHTMLAttributes,
 } from 'react';
 import ThemeSwitcher from './theme/Switcher';
+import { getUserLocale, setUserLocale } from '@/lib/services';
+import { Locale } from '@/i18n/config';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 
@@ -190,6 +193,19 @@ const SettingsDialog = ({
     }
   };
 
+  const langs = [
+    {
+      value: 'en',
+      label: 'en'
+    },
+    {
+      value: 'fr',
+      label: 'fr'
+    }
+  ];
+
+  const [isPending, startTransition] = useTransition();
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -231,35 +247,26 @@ const SettingsDialog = ({
                       </p>
                       <ThemeSwitcher />
                     </div>
-                    {/* {config.chatModelProviders && (
-                      <div className="flex flex-col space-y-1">
-                        <p className="text-black/70 dark:text-white/70 text-sm">
-                          Chat model Provider
-                        </p>
-                        <Select
-                          value={selectedChatModelProvider ?? undefined}
-                          onChange={(e) => {
-                            setSelectedChatModelProvider(e.target.value);
-                            if (e.target.value === 'custom_openai') {
-                              setSelectedChatModel('');
-                            } else {
-                              setSelectedChatModel(
-                                config.chatModelProviders[e.target.value][0]
-                                  .name,
-                              );
-                            }
-                          }}
-                          options={Object.keys(config.chatModelProviders).map(
-                            (provider) => ({
-                              value: provider,
-                              label:
-                                provider.charAt(0).toUpperCase() +
-                                provider.slice(1),
-                            }),
-                          )}
-                        />
-                      </div>
-                    )} */}
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-black/70 dark:text-white/70 text-sm">
+                        Language
+                      </p>
+                      <Select
+                        // value={getUserLocale()}
+                        onChange={(e) => {
+                          const locale = e.target.value;
+                          startTransition(() => {
+                            setUserLocale(locale);
+                          });
+                        }}
+                        options={langs.map(
+                          (lang) => ({
+                            value: lang.value,
+                            label: lang.label,
+                          }),
+                        )}
+                      />
+                    </div>
                     {/* {selectedChatModelProvider &&
                       selectedChatModelProvider != 'custom_openai' && (
                         <div className="flex flex-col space-y-1">

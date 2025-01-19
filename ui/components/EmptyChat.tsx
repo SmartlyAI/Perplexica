@@ -3,6 +3,7 @@ import EmptyChatMessageInput from './EmptyChatMessageInput';
 import SettingsDialog from './SettingsDialog';
 import { useState } from 'react';
 import { File } from './ChatWindow';
+import { useTranslations } from 'next-intl';
 
 const EmptyChat = ({
   sendMessage,
@@ -26,6 +27,7 @@ const EmptyChat = ({
   setFiles: (files: File[]) => void;
 }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const t = useTranslations('EmptyChat');
 
   return (
     <div className="relative">
@@ -38,7 +40,7 @@ const EmptyChat = ({
       </div>
       <div className="flex flex-col items-center justify-center min-h-screen max-w-screen-sm mx-auto p-2 space-y-8">
         <h2 className="text-black/70 dark:text-white/70 text-3xl font-medium -mt-8">
-          Welcome to Smartly Chat
+          {t("title")}
         </h2>
         <EmptyChatMessageInput
           sendMessage={sendMessage}

@@ -11,46 +11,46 @@ import History from './History';
 import Image from 'next/image';
 
 const VerticalIconContainer = ({ children }: { children: ReactNode }) => {
-  return (
-    <div className="flex flex-col items-center gap-y-3 w-full">{children}</div>
-  );
+    return (
+        <div className="flex flex-col items-center gap-y-3 w-full">{children}</div>
+    );
 };
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
-  const segments = useSelectedLayoutSegments();
+    const segments = useSelectedLayoutSegments();
 
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  const navLinks = [
-    {
-      icon: Home,
-      href: '/',
-      active: segments.length === 0 || segments.includes('c'),
-      label: 'Home',
-    },
-    {
-      icon: Search,
-      href: '/discover',
-      active: segments.includes('discover'),
-      label: 'Discover',
-    },
-    {
-      icon: BookOpenText,
-      href: '/library',
-      active: segments.includes('library'),
-      label: 'Library',
-    },
-  ];
+    const navLinks = [
+        {
+            icon: Home,
+            href: '/',
+            active: segments.length === 0 || segments.includes('c'),
+            label: 'Home',
+        },
+        {
+            icon: Search,
+            href: '/discover',
+            active: segments.includes('discover'),
+            label: 'Discover',
+        },
+        {
+            icon: BookOpenText,
+            href: '/library',
+            active: segments.includes('library'),
+            label: 'Library',
+        },
+    ];
 
-  return (
-    <div>
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-80 lg:flex-col">
-        <div className="flex grow flex-col justify-between gap-y-5 overflow-y-auto bg-[#efeaf3] dark:bg-dark-secondary px-4 py-8">
-          <a href="/" className="flex items-center">
-            <Image src="/logo.png" alt="Smartly" width={34} height={41} className='mr-4' />
-            SmartlyChat
-          </a>
-          {/* <VerticalIconContainer>
+    return (
+        <div>
+            <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-80 lg:flex-col">
+                <div className="relative flex grow flex-col overflow-y-auto bg-[#efeaf3] dark:bg-dark-secondary px-4 py-8">
+                    <a href="/" className="flex items-center">
+                        <Image src="/logo.png" alt="Smartly" width={34} height={41} className='mr-4' />
+                        SmartlyChat
+                    </a>
+                    {/* <VerticalIconContainer>
             {navLinks.map((link, i) => (
               <Link
                 key={i}
@@ -70,44 +70,45 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
             ))}
           </VerticalIconContainer> */}
 
-          <History />
+                    <History />
+                    <div className='fixed bottom-5 left-4 right-0'>
+                        <Settings
+                            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+                            className="cursor-pointer"
+                        />
+                    </div>
 
-          <Settings
-            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-            className="cursor-pointer"
-          />
+                    <SettingsDialog
+                        isOpen={isSettingsOpen}
+                        setIsOpen={setIsSettingsOpen}
+                    />
+                </div>
+            </div>
 
-          <SettingsDialog
-            isOpen={isSettingsOpen}
-            setIsOpen={setIsSettingsOpen}
-          />
+            <div className="fixed bottom-0 w-full z-50 flex flex-row items-center gap-x-6 bg-light-primary dark:bg-dark-primary px-4 py-4 shadow-sm lg:hidden">
+                {navLinks.map((link, i) => (
+                    <Link
+                        href={link.href}
+                        key={i}
+                        className={cn(
+                            'relative flex flex-col items-center space-y-1 text-center w-full',
+                            link.active
+                                ? 'text-black dark:text-white'
+                                : 'text-black dark:text-white/70',
+                        )}
+                    >
+                        {link.active && (
+                            <div className="absolute top-0 -mt-4 h-1 w-full rounded-b-lg bg-black dark:bg-white" />
+                        )}
+                        <link.icon />
+                        <p className="text-xs">{link.label}</p>
+                    </Link>
+                ))}
+            </div>
+
+            <Layout>{children}</Layout>
         </div>
-      </div>
-
-      <div className="fixed bottom-0 w-full z-50 flex flex-row items-center gap-x-6 bg-light-primary dark:bg-dark-primary px-4 py-4 shadow-sm lg:hidden">
-        {navLinks.map((link, i) => (
-          <Link
-            href={link.href}
-            key={i}
-            className={cn(
-              'relative flex flex-col items-center space-y-1 text-center w-full',
-              link.active
-                ? 'text-black dark:text-white'
-                : 'text-black dark:text-white/70',
-            )}
-          >
-            {link.active && (
-              <div className="absolute top-0 -mt-4 h-1 w-full rounded-b-lg bg-black dark:bg-white" />
-            )}
-            <link.icon />
-            <p className="text-xs">{link.label}</p>
-          </Link>
-        ))}
-      </div>
-
-      <Layout>{children}</Layout>
-    </div>
-  );
+    );
 };
 
 export default Sidebar;
