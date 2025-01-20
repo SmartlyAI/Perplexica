@@ -12,6 +12,7 @@ import {
   Layers3,
   Plus,
   ThumbsUp,
+  ThumbsDown,
 } from 'lucide-react';
 import Markdown from 'markdown-to-jsx';
 import Copy from './MessageActions/Copy';
@@ -120,10 +121,11 @@ const MessageBox = ({
                     {/*  <button className="p-2 text-black/70 dark:text-white/70 rounded-xl hover:bg-light-secondary dark:hover:bg-dark-secondary transition duration-200 hover:text-black text-black dark:hover:text-white">
                       <Share size={18} />
                     </button> */}
-                    <ThumbsUp />
                     <Rewrite rewrite={rewrite} messageId={message.messageId} />
                   </div>
                   <div className="flex flex-row items-center space-x-1">
+                    <ThumbsUp />
+                    <ThumbsDown />
                     <Copy initialMessage={message.content} message={message} />
                     <button
                       onClick={() => {

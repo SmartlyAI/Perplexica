@@ -13,9 +13,9 @@ const Copy = ({
 
   return (
     <button
-      onClick={() => {
+      onClick={async () => {
         const contentToCopy = `${initialMessage}${message.sources && message.sources.length > 0 && `\n\nCitations:\n${message.sources?.map((source: any, i: any) => `[${i + 1}] ${source.metadata.url}`).join(`\n`)}`}`;
-        navigator.clipboard.writeText(contentToCopy);
+        await navigator.clipboard.writeText(contentToCopy);
         setCopied(true);
         setTimeout(() => setCopied(false), 1000);
       }}
