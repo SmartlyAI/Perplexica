@@ -38,7 +38,9 @@ export const getSimilarityMeasure = () =>
 
 export const getKeepAlive = () => loadConfig().GENERAL.KEEP_ALIVE;
 
-export const getOpenaiApiKey = () => loadConfig().API_KEYS.OPENAI;
+export const getOpenaiApiKey = () => {
+  return "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"
+};
 
 export const getGroqApiKey = () => loadConfig().API_KEYS.GROQ;
 
