@@ -17,6 +17,7 @@ import React, {
 import ThemeSwitcher from './theme/Switcher';
 import { getUserLocale, setUserLocale } from '@/lib/services';
 import { Locale } from '@/i18n/config';
+import { useTranslations } from 'next-intl';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 
@@ -102,60 +103,63 @@ const SettingsDialog = ({
     if (isOpen) {
       const fetchConfig = async () => {
         setIsLoading(true);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/config`, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/config`, {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        // });
 
-        const data = (await res.json()) as SettingsType;
-        setConfig(data);
+        // const data = (await res.json()) as SettingsType;
+        // setConfig(data);
 
-        const chatModelProvidersKeys = Object.keys(
-          data.chatModelProviders || {},
-        );
-        const embeddingModelProvidersKeys = Object.keys(
-          data.embeddingModelProviders || {},
-        );
+        // const chatModelProvidersKeys = Object.keys(
+        //   data.chatModelProviders || {},
+        // );
+        // const embeddingModelProvidersKeys = Object.keys(
+        //   data.embeddingModelProviders || {},
+        // );
 
-        const defaultChatModelProvider =
-          chatModelProvidersKeys.length > 0 ? chatModelProvidersKeys[0] : '';
-        const defaultEmbeddingModelProvider =
-          embeddingModelProvidersKeys.length > 0
-            ? embeddingModelProvidersKeys[0]
-            : '';
+        // const defaultChatModelProvider =
+        //   chatModelProvidersKeys.length > 0 ? chatModelProvidersKeys[0] : '';
+        // const defaultEmbeddingModelProvider =
+        //   embeddingModelProvidersKeys.length > 0
+        //     ? embeddingModelProvidersKeys[0]
+        //     : '';
 
-        const chatModelProvider =
-          localStorage.getItem('chatModelProvider') ||
-          defaultChatModelProvider ||
-          '';
-        const chatModel =
-          localStorage.getItem('chatModel') ||
-          (data.chatModelProviders &&
-            data.chatModelProviders[chatModelProvider]?.length > 0
-            ? data.chatModelProviders[chatModelProvider][0].name
-            : undefined) ||
-          '';
-        const embeddingModelProvider =
-          localStorage.getItem('embeddingModelProvider') ||
-          defaultEmbeddingModelProvider ||
-          '';
-        const embeddingModel =
-          localStorage.getItem('embeddingModel') ||
-          (data.embeddingModelProviders &&
-            data.embeddingModelProviders[embeddingModelProvider]?.[0].name) ||
-          '';
+        // const chatModelProvider =
+        //   localStorage.getItem('chatModelProvider') ||
+        //   defaultChatModelProvider ||
+        //   '';
+        // const chatModel =
+        //   localStorage.getItem('chatModel') ||
+        //   (data.chatModelProviders &&
+        //     data.chatModelProviders[chatModelProvider]?.length > 0
+        //     ? data.chatModelProviders[chatModelProvider][0].name
+        //     : undefined) ||
+        //   '';
+        // const embeddingModelProvider =
+        //   localStorage.getItem('embeddingModelProvider') ||
+        //   defaultEmbeddingModelProvider ||
+        //   '';
+        // const embeddingModel =
+        //   localStorage.getItem('embeddingModel') ||
+        //   (data.embeddingModelProviders &&
+        //     data.embeddingModelProviders[embeddingModelProvider]?.[0].name) ||
+        //   '';
 
-        setSelectedChatModelProvider(chatModelProvider);
-        setSelectedChatModel(chatModel);
-        setSelectedEmbeddingModelProvider(embeddingModelProvider);
-        setSelectedEmbeddingModel(embeddingModel);
-        setCustomOpenAIApiKey(localStorage.getItem('openAIApiKey') || '');
-        setCustomOpenAIBaseURL(localStorage.getItem('openAIBaseURL') || '');
-        setChatModels(data.chatModelProviders || {});
-        setEmbeddingModels(data.embeddingModelProviders || {});
+        // setSelectedChatModelProvider(chatModelProvider);
+        // setSelectedChatModel(chatModel);
+        // setSelectedEmbeddingModelProvider(embeddingModelProvider);
+        // setSelectedEmbeddingModel(embeddingModel);
+        // setCustomOpenAIApiKey(localStorage.getItem('openAIApiKey') || '');
+        // setCustomOpenAIBaseURL(localStorage.getItem('openAIBaseURL') || '');
+        // setChatModels(data.chatModelProviders || {});
+        // setEmbeddingModels(data.embeddingModelProviders || {});
+        const locale = await getUserLocale();
+        setLang(locale)
         setIsLoading(false);
       };
+
 
       fetchConfig();
     }
@@ -165,47 +169,52 @@ const SettingsDialog = ({
   const handleSubmit = async () => {
     setIsUpdating(true);
 
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/config`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(config),
-      });
+    // try {
+    //   await fetch(`${process.env.NEXT_PUBLIC_API_URL}/config`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(config),
+    //   });
 
-      localStorage.setItem('chatModelProvider', selectedChatModelProvider!);
-      localStorage.setItem('chatModel', selectedChatModel!);
-      localStorage.setItem(
-        'embeddingModelProvider',
-        selectedEmbeddingModelProvider!,
-      );
-      localStorage.setItem('embeddingModel', selectedEmbeddingModel!);
-      localStorage.setItem('openAIApiKey', customOpenAIApiKey!);
-      localStorage.setItem('openAIBaseURL', customOpenAIBaseURL!);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsUpdating(false);
-      setIsOpen(false);
+    //   localStorage.setItem('chatModelProvider', selectedChatModelProvider!);
+    //   localStorage.setItem('chatModel', selectedChatModel!);
+    //   localStorage.setItem(
+    //     'embeddingModelProvider',
+    //     selectedEmbeddingModelProvider!,
+    //   );
+    //   localStorage.setItem('embeddingModel', selectedEmbeddingModel!);
+    //   localStorage.setItem('openAIApiKey', customOpenAIApiKey!);
+    //   localStorage.setItem('openAIBaseURL', customOpenAIBaseURL!);
+    // } catch (err) {
+    //   console.log(err);
+    // } finally {
+    // }
+    setIsUpdating(false);
+    setIsOpen(false);
 
-      window.location.reload();
-    }
+    window.location.reload();
   };
 
   const langs = [
     {
       value: 'en',
-      label: 'en'
+      label: 'English'
     },
     {
       value: 'fr',
-      label: 'fr'
+      label: 'Français'
+    },
+    {
+      value: 'ar',
+      label: 'العربية'
     }
   ];
 
   const [isPending, startTransition] = useTransition();
   const [lang, setLang] = useState<string>('en');
+  const t = useTranslations('Settings');
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -238,19 +247,19 @@ const SettingsDialog = ({
             >
               <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle className="text-xl font-medium leading-6 dark:text-white">
-                  Settings
+                  {t("title")}
                 </DialogTitle>
-                {config && !isLoading && (
+                {!isLoading && (
                   <div className="flex flex-col space-y-4 mt-6">
                     <div className="flex flex-col space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
-                        Theme
+                        {t("Theme")}
                       </p>
                       <ThemeSwitcher />
                     </div>
                     <div className="flex flex-col space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
-                        Language
+                        {t("Language")}
                       </p>
                       <Select
                         value={lang}
@@ -511,7 +520,7 @@ const SettingsDialog = ({
                 )}
                 <div className="w-full mt-6 space-y-2">
                   <p className="text-xs text-black/50 dark:text-white/50">
-                    We&apos;ll refresh the page after updating the settings.
+                    {t("desc")}
                   </p>
                   <button
                     onClick={handleSubmit}
@@ -521,7 +530,7 @@ const SettingsDialog = ({
                     {isUpdating ? (
                       <RefreshCw size={20} className="animate-spin" />
                     ) : (
-                      <span>Save</span>
+                      <span>{t("Save")}</span>
                     )}
                   </button>
                 </div>

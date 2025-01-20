@@ -1,5 +1,16 @@
 {
     "EmptyChat": {
-        "title": "Bienvenue sur Smartly Chat"
+        "title": "Bienvenue sur Smartly Chat",
+        "placeholder": "Demandez n'importe quoi..."
+    },
+    "History": {
+        "message": "Aucune discussion trouvée."
+    },
+    "Settings": {
+        "title": "Paramètres",
+        "Theme": "Thème",
+        "Language": "Langue",
+        "desc": "Nous actualiserons la page après avoir mis à jour les paramètres.",
+        "Save": "Sauvegarder"
     }
 }

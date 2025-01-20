@@ -3,6 +3,7 @@
 import DeleteChat from '@/components/DeleteChat';
 import { cn, formatTimeDifference } from '@/lib/utils';
 import { BookOpenText, ClockIcon, Delete, ScanEye } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -16,6 +17,7 @@ export interface Chat {
 const History = () => {
     const [chats, setChats] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(true);
+    const t = useTranslations('History');
 
     useEffect(() => {
         const fetchChats = async () => {
@@ -61,7 +63,7 @@ const History = () => {
             {chats?.length === 0 && (
                 <div className="flex flex-row items-center justify-center min-h-screen">
                     <p className="text-black/70 dark:text-white/70 text-sm">
-                        No chats found.
+                        {t("message")}
                     </p>
                 </div>
             )}

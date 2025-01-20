@@ -1,5 +1,16 @@
 {
     "EmptyChat": {
-        "title": "Welcome to Smartly Chat"
+        "title": "Welcome to Smartly Chat",
+        "placeholder": "Ask anything..."
+    },
+    "History": {
+        "message": "No chats found."
+    },
+    "Settings": {
+        "title": "Settings",
+        "Theme": "Theme",
+        "Language": "Language",
+        "desc": "We'll refresh the page after updating the settings.",
+        "Save": "Save"
     }
 }
