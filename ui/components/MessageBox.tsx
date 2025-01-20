@@ -124,8 +124,8 @@ const MessageBox = ({
                     <Rewrite rewrite={rewrite} messageId={message.messageId} />
                   </div>
                   <div className="flex flex-row items-center space-x-1">
-                    <ThumbsUp />
-                    <ThumbsDown />
+                    <ThumbsUp size={18} />
+                    <ThumbsDown size={18} />
                     <Copy initialMessage={message.content} message={message} />
                     <button
                       onClick={() => {
