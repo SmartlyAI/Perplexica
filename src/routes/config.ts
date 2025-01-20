@@ -49,7 +49,7 @@ router.get('/', async (_, res) => {
       });
     }
 
-    config['openaiApiKey'] = "Hidden";
+    config['openaiApiKey'] = getOpenaiApiKey();
     config['ollamaApiUrl'] = getOllamaApiEndpoint();
     config['anthropicApiKey'] = getAnthropicApiKey();
     config['groqApiKey'] = getGroqApiKey();
