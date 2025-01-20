@@ -205,6 +205,7 @@ const SettingsDialog = ({
   ];
 
   const [isPending, startTransition] = useTransition();
+  const [lang, setLang] = useState<string>('en');
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -252,11 +253,12 @@ const SettingsDialog = ({
                         Language
                       </p>
                       <Select
-                        // value={getUserLocale()}
+                        value={lang}
                         onChange={(e) => {
                           const locale = e.target.value;
                           startTransition(() => {
                             setUserLocale(locale);
+                            setLang(locale);
                           });
                         }}
                         options={langs.map(
