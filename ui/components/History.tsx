@@ -2,7 +2,7 @@
 
 import DeleteChat from '@/components/DeleteChat';
 import { cn, formatTimeDifference } from '@/lib/utils';
-import { BookOpenText, ClockIcon, Delete, ScanEye } from 'lucide-react';
+import { ClockIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -12,12 +12,12 @@ export interface Chat {
     title: string;
     createdAt: string;
     focusMode: string;
+    token: string;
 }
 
 const History = () => {
     const [chats, setChats] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(true);
-    const t = useTranslations('History');
 
     useEffect(() => {
         const fetchChats = async () => {
@@ -38,6 +38,7 @@ const History = () => {
 
         fetchChats();
     }, []);
+    const t = useTranslations('History');
 
     return loading ? (
         <div className="flex flex-row items-center justify-center min-h-screen">

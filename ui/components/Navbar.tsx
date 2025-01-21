@@ -3,6 +3,7 @@ import { Message } from './ChatWindow';
 import { useEffect, useState } from 'react';
 import { formatTimeDifference } from '@/lib/utils';
 import DeleteChat from './DeleteChat';
+import useSidebarStore from '@/stores/global-stores';
 
 const Navbar = ({
   chatId,
@@ -13,6 +14,7 @@ const Navbar = ({
 }) => {
   const [title, setTitle] = useState<string>('');
   const [timeAgo, setTimeAgo] = useState<string>('');
+  const { toggleSidebar } = useSidebarStore();
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -53,7 +55,7 @@ const Navbar = ({
         <Edit size={17} />
       </a>
       <div>
-        <PanelRightOpen size={17} />
+        <PanelRightOpen size={17} onClick={toggleSidebar} />
       </div>
       <div className="hidden lg:flex flex-row items-center justify-center space-x-2">
         <Clock size={17} />
