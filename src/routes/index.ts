@@ -9,6 +9,7 @@ import messagesRouter from './messages';
 import searchRouter from './search';
 import discoverRouter from './discover';
 import uploadsRouter from './uploads';
+import webhookRouter from './webhooks';
 
 const router = express.Router();
 
@@ -22,5 +23,6 @@ router.use('/chatsmessages', messagesRouter);
 router.use('/search', searchRouter);
 router.use('/discover', discoverRouter);
 router.use('/uploads', uploadsRouter);
+router.use('/webhook', webhookRouter);
 
 export default router;
