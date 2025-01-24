@@ -1,14 +1,15 @@
 import express from 'express';
-
+import { smartlyEmitter } from '../websocket/messageHandler';
 const router = express.Router();
 
-router.post('/:user_id', async (req, res) => {
-    const body = req.body;
-
-    console.log(body);
-    console.log(req.params.user_id)
-
-    res.status(200).json({ message: 'hello from express' });
+router.post('/:chatId', async (req, res) => {
+    try {
+        const body = req.body;
+        smartlyEmitter.emit('data', body);
+    } catch (error) {
+        smartlyEmitter.emit('error', error);
+    }
+    res.status(500).json({ message: 'error from chat ' + req.params.chatId });
 });
 
 export default router;

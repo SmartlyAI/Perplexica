@@ -1,4 +1,5 @@
 import { EventEmitter, WebSocket } from 'ws';
+import SmartlyEventEmitter from 'events';
 import { BaseMessage, AIMessage, HumanMessage } from '@langchain/core/messages';
 import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import type { Embeddings } from '@langchain/core/embeddings';
@@ -7,11 +8,16 @@ import db from '../db';
 import { chats, messages as messagesSchema } from '../db/schema';
 import { eq, asc, gt } from 'drizzle-orm';
 import crypto from 'crypto';
+import axios from 'axios';
 import { getFileDetails } from '../utils/files';
 import MetaSearchAgent, {
   MetaSearchAgentType,
 } from '../search/metaSearchAgent';
 import prompts from '../prompts';
+
+const smartlyEventEmitter = new SmartlyEventEmitter();
+
+export const smartlyEmitter = smartlyEventEmitter;
 
 type Message = {
   messageId: string;
@@ -145,6 +151,72 @@ const handleEmitterEvents = (
   });
 };
 
+const SmartlyHandleEmitterEvents = (
+  emitter: SmartlyEventEmitter,
+  ws: WebSocket,
+  messageId: string,
+  chatId: string,
+) => {
+  let recievedMessage = '';
+  let sources = [];
+
+  emitter.on('data', (data) => {
+    try {
+      console.log('Smartly data', data);
+      const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
+      if (parsedData.status !== 'sources') {
+      ws.send(
+        JSON.stringify({
+          type: 'message',
+          data: parsedData.data,
+          messageId: messageId,
+        }),
+      );
+      recievedMessage += parsedData.data;
+    } else if (parsedData.status === 'sources') {
+      ws.send(
+        JSON.stringify({
+          type: 'sources',
+          data: parsedData.data,
+          messageId: messageId,
+        }),
+      );
+        sources = parsedData.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  emitter.on('end', () => {
+    console.log('Smartly end');
+    ws.send(JSON.stringify({ type: 'messageEnd', messageId: messageId }));
+
+    db.insert(messagesSchema)
+      .values({
+        content: recievedMessage,
+        chatId: chatId,
+        messageId: messageId,
+        role: 'assistant',
+        metadata: JSON.stringify({
+          createdAt: new Date(),
+          ...(sources && sources.length > 0 && { sources }),
+        }),
+      })
+      .execute();
+  });
+  emitter.on('error', (data) => {
+    console.log('Smartly error', data);
+    const parsedData = JSON.parse(data);
+    ws.send(
+      JSON.stringify({
+        type: 'error',
+        data: parsedData.data,
+        key: 'CHAIN_ERROR',
+      }),
+    );
+  });
+};
+
 export const handleMessage = async (
   message: string,
   ws: WebSocket,
@@ -255,6 +327,60 @@ export const handleMessage = async (
           }),
         );
       }
+    }
+  } catch (err) {
+    ws.send(
+      JSON.stringify({
+        type: 'error',
+        data: 'Invalid message format',
+        key: 'INVALID_FORMAT',
+      }),
+    );
+    logger.error(`Failed to handle message: ${err}`);
+  }
+};
+
+export const callSmartlyMessage = async (
+  message: string,
+  ws: WebSocket
+) => {
+  try {
+    const parsedWSMessage = JSON.parse(message) as WSMessage;
+    const parsedMessage = parsedWSMessage.message;
+
+    if (!parsedMessage.content)
+      return ws.send(
+        JSON.stringify({
+          type: 'error',
+          data: 'Invalid message format',
+          key: 'INVALID_FORMAT',
+        }),
+      );
+
+    if (parsedWSMessage.type === 'message') {
+      try {
+        // Call Smartly API
+        const response = await axios.post('https://apis.smartly.ai/api/dialog/chat/', {
+          event_name: 'NEW_INPUT',
+          platform: 'messenger',
+          streaming: true,
+          skill_id: '679276a25d4aa4e2beeddd19',
+          lang: 'fr-fr',
+          input_type: 'text',
+          input: parsedMessage.content,
+          user_id: 'test-api-7778812-29-11-yd111226545oo',
+          user_data: {
+              webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId
+          }
+        });
+        logger.info(response.data);
+        ws.send(JSON.stringify({ type: 'message', data: response.data }));
+        SmartlyHandleEmitterEvents(smartlyEventEmitter, ws, parsedMessage.messageId, parsedMessage.chatId);
+      } catch (error) {
+        logger.error(error);
+        ws.send(JSON.stringify({ type: 'error', data: error.message, key: 'INTERNAL_SERVER_ERROR' }));
+      }
+      
     }
   } catch (err) {
     ws.send(
