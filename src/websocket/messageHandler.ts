@@ -157,43 +157,41 @@ const SmartlyHandleEmitterEvents = (
   messageId: string,
   chatId: string,
 ) => {
-  let recievedMessage = '';
   let sources = [];
 
   emitter.on('data', (data) => {
     try {
       console.log('Smartly data', data);
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
-      if (parsedData.status !== 'sources') {
-      ws.send(
-        JSON.stringify({
-          type: 'message',
-          data: parsedData.data,
-          messageId: messageId,
-        }),
-      );
-      recievedMessage += parsedData.data;
-    } else if (parsedData.status === 'sources') {
-      ws.send(
-        JSON.stringify({
-          type: 'sources',
-          data: parsedData.data,
-          messageId: messageId,
-        }),
-      );
-        sources = parsedData.data;
+      if (parsedData.status === 'completed') {
+        ws.send(
+          JSON.stringify({
+            type: 'message',
+            data: parsedData.sentence,
+            messageId: messageId,
+          }),
+        );
+      } else if (parsedData.status === 'sources') {
+        ws.send(
+          JSON.stringify({
+            type: 'sources',
+            data: parsedData,
+            messageId: messageId,
+          }),
+        );
+        sources = parsedData;
       }
     } catch (error) {
       console.log(error);
     }
   });
-  emitter.on('end', () => {
+  emitter.on('end', (data) => {
     console.log('Smartly end');
     ws.send(JSON.stringify({ type: 'messageEnd', messageId: messageId }));
 
     db.insert(messagesSchema)
       .values({
-        content: recievedMessage,
+        content: data.answer,
         chatId: chatId,
         messageId: messageId,
         role: 'assistant',
@@ -206,11 +204,10 @@ const SmartlyHandleEmitterEvents = (
   });
   emitter.on('error', (data) => {
     console.log('Smartly error', data);
-    const parsedData = JSON.parse(data);
     ws.send(
       JSON.stringify({
         type: 'error',
-        data: parsedData.data,
+        data: data,
         key: 'CHAIN_ERROR',
       }),
     );
