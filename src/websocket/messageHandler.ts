@@ -159,7 +159,7 @@ const SmartlyHandleEmitterEvents = (
 ) => {
   let sources = [];
 
-  emitter.on('data', (data) => {
+  emitter.on('data'+messageId, (data) => {
     try {
       console.log('Smartly data', data);
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
@@ -185,8 +185,14 @@ const SmartlyHandleEmitterEvents = (
       console.log(error);
     }
   });
-  emitter.on('end', (data) => {
-    console.log('Smartly end');
+  emitter.on('end'+messageId, (data) => {
+    // Remove listener
+    emitter.listeners('data'+messageId).forEach(listener => {
+      emitter.removeListener('data'+messageId, listener);
+    });
+    emitter.listeners('end'+messageId).forEach(listener => {
+      emitter.removeListener('end'+messageId, listener);
+    });
     ws.send(JSON.stringify({ type: 'messageEnd', messageId: messageId }));
 
     db.insert(messagesSchema)
@@ -201,16 +207,6 @@ const SmartlyHandleEmitterEvents = (
         }),
       })
       .execute();
-  });
-  emitter.on('error', (data) => {
-    console.log('Smartly error', data);
-    ws.send(
-      JSON.stringify({
-        type: 'error',
-        data: data,
-        key: 'CHAIN_ERROR',
-      }),
-    );
   });
 };
 
@@ -367,7 +363,7 @@ export const callSmartlyMessage = async (
           input: parsedMessage.content,
           user_id: 'test-api-7778812-29-11-yd111226545oo',
           user_data: {
-              webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId
+              webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId + "?messageId=" + parsedMessage.messageId
           }
         });
         SmartlyHandleEmitterEvents(smartlyEventEmitter, ws, parsedMessage.messageId, parsedMessage.chatId);
