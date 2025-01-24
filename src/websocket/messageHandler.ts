@@ -161,9 +161,8 @@ const SmartlyHandleEmitterEvents = (
 
   emitter.on('data'+messageId, (data) => {
     try {
-      console.log('Smartly data', data);
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
-      if (parsedData.status === 'completed') {
+      if (parsedData.status === 'in progress') {
         ws.send(
           JSON.stringify({
             type: 'message',
@@ -198,7 +197,7 @@ const SmartlyHandleEmitterEvents = (
 
     db.insert(messagesSchema)
       .values({
-        content: data.answer,
+        content: data.sentence,
         chatId: chatId,
         messageId: messageId,
         role: 'assistant',
