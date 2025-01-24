@@ -167,6 +167,7 @@ const SmartlyHandleEmitterEvents = (
         ws.send(
           JSON.stringify({
             type: 'message',
+            sentence_time: parsedData.sentence_time,
             data: parsedData.sentence,
             messageId: messageId,
           }),
@@ -355,7 +356,7 @@ export const callSmartlyMessage = async (
         // Call Smartly API
         const response = await axios.post('https://apis.smartly.ai/api/dialog/chat/', {
           event_name: 'NEW_INPUT',
-          platform: 'messenger',
+          platform: 'webchat',
           streaming: true,
           skill_id: '679276a25d4aa4e2beeddd19',
           lang: 'fr-fr',
