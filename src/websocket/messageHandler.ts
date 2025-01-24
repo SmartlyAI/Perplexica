@@ -186,11 +186,11 @@ const SmartlyHandleEmitterEvents = (
     }
   });
   emitter.on('end'+messageId, (data) => {
-    // Remove listener
-    emitter.listeners('data'+messageId).forEach(listener => {
+    // Remove listeners
+    emitter.listeners('data'+messageId).forEach((listener: (...args: any[]) => void) => {
       emitter.removeListener('data'+messageId, listener);
     });
-    emitter.listeners('end'+messageId).forEach(listener => {
+    emitter.listeners('end'+messageId).forEach((listener: (...args: any[]) => void) => {
       emitter.removeListener('end'+messageId, listener);
     });
     ws.send(JSON.stringify({ type: 'messageEnd', messageId: messageId }));
