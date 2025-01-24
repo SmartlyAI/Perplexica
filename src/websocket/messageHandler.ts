@@ -370,8 +370,6 @@ export const callSmartlyMessage = async (
               webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId
           }
         });
-        logger.info(response.data);
-        ws.send(JSON.stringify({ type: 'message', data: response.data }));
         SmartlyHandleEmitterEvents(smartlyEventEmitter, ws, parsedMessage.messageId, parsedMessage.chatId);
       } catch (error) {
         logger.error(error);

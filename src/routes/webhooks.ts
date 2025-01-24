@@ -4,7 +4,7 @@ const router = express.Router();
 
 const COMPLETE_MESSAGE_STREAMING_VALUE = 'completed';
 const SOURCES_MESSAGE_STREAMING_VALUE = 'sources';
-const END_MESSAGE_STREAMING_VALUE = 'end';
+const END_MESSAGE_STREAMING_VALUE = 'final result';
 
 router.post('/:chatId', async (req, res) => {
     try {
