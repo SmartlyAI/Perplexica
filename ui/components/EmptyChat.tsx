@@ -33,15 +33,13 @@ const EmptyChat = ({
 
   return (
     <div className="relative">
-      <div className="fixed z-40 top-0 left-0 right-0 px-4 lg:pl-80 lg:pr-6 lg:px-8 flex flex-row items-center justify-between w-full py-4 text-sm text-black dark:text-white/70 border-b bg-[#efeaf3] dark:bg-dark-primary border-light-100 dark:border-dark-200">
-        <div>
-          <PanelRightOpen size={17} onClick={toggleSidebar} />
-        </div>
+      <div className="absolute flex flex-row items-center ml-5 mt-5 left-0">
+        <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
       </div>
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />
-      <div className="absolute w-full flex flex-row items-center justify-end mr-5 mt-5">
+      <div className="absolute flex flex-row items-center justify-end mr-5 mt-5 right-0">
         <Settings
-          className="cursor-pointer lg:hidden"
+          className="cursor-pointer"
           onClick={() => setIsSettingsOpen(true)}
         />
       </div>

@@ -6,7 +6,6 @@ import { Message } from './ChatWindow';
 import { cn } from '@/lib/utils';
 import {
   BookCopy,
-  Disc3,
   Volume2,
   StopCircle,
   Layers3,
@@ -21,6 +20,7 @@ import MessageSources from './MessageSources';
 import SearchImages from './SearchImages';
 import SearchVideos from './SearchVideos';
 import { useSpeech } from 'react-text-to-speech';
+import Image from 'next/image';
 
 const MessageBox = ({
   message,
@@ -62,7 +62,7 @@ const MessageBox = ({
     }
 
     setSpeechMessage(message.content.replace(regex, ''));
-    setParsedMessage(message.content);
+    // setParsedMessage(message.content);
   }, [message.content, message.sources, message.role]);
 
   const { speechStatus, start, stop } = useSpeech({ text: speechMessage });
@@ -96,13 +96,10 @@ const MessageBox = ({
             )}
             <div className="flex flex-col space-y-2">
               <div className="flex flex-row items-center space-x-2">
-                <Disc3
-                  className={cn(
-                    'text-black dark:text-white',
-                    isLast && loading ? 'animate-spin' : 'animate-none',
-                  )}
-                  size={20}
-                />
+                <Image src="/logo.png" priority alt="Smartly" width={20} height={20} className={cn(
+                  'text-black dark:text-white',
+                  isLast && loading ? 'animate-spin' : 'animate-none',
+                )} />
                 <h3 className="text-black dark:text-white font-medium text-xl">
                   Answer
                 </h3>

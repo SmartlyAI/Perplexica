@@ -33,25 +33,12 @@ const History = () => {
             const data = await res.json();
 
             setChats(data.chats);
-            setFilteredChats(data.chats);
             setLoading(false);
         };
 
         fetchChats();
     }, []);
     const t = useTranslations('History');
-    const [filteredchats, setFilteredChats] = useState<Chat[]>(chats);
-    const [searchQuery, setSearchQuery] = useState<string>("");
-
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const query = e.target.value.toLowerCase();
-        setSearchQuery(query);
-
-        const filtered = chats.filter((item) =>
-            item.title.toLowerCase().includes(query)
-        );
-        setFilteredChats(filtered);
-    };
 
     return loading ? (
         <div className="flex flex-row items-center justify-center min-h-screen">
@@ -74,23 +61,16 @@ const History = () => {
         </div>
     ) : (
         <div>
-            <input
-                className='bg-white dark:bg-dark-secondary px-3 py-2 overflow-hidden border border-light-200 dark:border-dark-200 dark:text-white rounded-lg text-sm w-full mt-2'
-                type="text"
-                name="serach"
-                value={searchQuery}
-                onChange={handleSearch}
-            />
-            {filteredchats?.length === 0 && (
+            {chats?.length === 0 && (
                 <div className="flex flex-row items-center justify-center min-h-screen">
                     <p className="text-black/70 dark:text-white/70 text-sm">
                         {t("message")}
                     </p>
                 </div>
             )}
-            {filteredchats?.length > 0 && (
+            {chats?.length > 0 && (
                 <div className="flex flex-col pb-20 lg:pb-2">
-                    {filteredchats.map((chat, i) => (
+                    {chats.map((chat, i) => (
                         <div
                             className={cn(
                                 'flex flex-col space-y-4 py-6',
