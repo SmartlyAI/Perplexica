@@ -406,6 +406,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
     let sources: Document[] | undefined = undefined;
     let recievedMessage = '';
     let added = false;
+    let lastMessageTime = '';
 
     messageId = messageId ?? crypto.randomBytes(7).toString('hex');
 
@@ -467,36 +468,31 @@ const ChatWindow = ({ id }: { id?: string }) => {
       }
 
       if (data.type === 'message') {
-        if (!added) {
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            {
-              content: data.data,
-              messageId: data.messageId,
-              chatId: chatId!,
-              role: 'assistant',
-              sources: sources,
-              createdAt: new Date(),
-            },
-          ]);
-          added = true;
+        if (!lastMessageTime || data.sentence_time > lastMessageTime) {
+          console.log('inside', messages);
+          lastMessageTime = data.sentence_time;
+          recievedMessage = data.data;
+          setMessageAppeared(true);
         }
-
-        setMessages((prev) =>
-          prev.map((message) => {
-            if (message.messageId === data.messageId) {
-              return { ...message, content: message.content + data.data };
-            }
-
-            return message;
-          }),
-        );
 
         recievedMessage += data.data;
         setMessageAppeared(true);
       }
 
       if (data.type === 'messageEnd') {
+
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            content: recievedMessage,
+            messageId: data.messageId,
+            chatId: chatId!,
+            role: 'assistant',
+            sources: sources,
+            createdAt: new Date()
+          }
+        ]);
+
         setChatHistory((prevHistory) => [
           ...prevHistory,
           ['human', message],
