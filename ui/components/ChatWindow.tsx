@@ -469,13 +469,11 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
       if (data.type === 'message') {
         if (!lastMessageTime || data.sentence_time > lastMessageTime) {
-          console.log('inside', messages);
           lastMessageTime = data.sentence_time;
           recievedMessage = data.data;
           setMessageAppeared(true);
         }
 
-        recievedMessage += data.data;
         setMessageAppeared(true);
       }
 
