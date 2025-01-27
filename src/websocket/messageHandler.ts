@@ -159,6 +159,7 @@ const SmartlyHandleEmitterEvents = (
 ) => {
   let sources = [];
   let recievedMessage = '';
+  let lastTime = new Date().getTime();
   emitter.on('data'+messageId, (data) => {
     try {
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
@@ -171,7 +172,10 @@ const SmartlyHandleEmitterEvents = (
             messageId: messageId,
           }),
         );
-        recievedMessage += parsedData.sentence;
+        if(new Date(parsedData.time).getTime() > lastTime) {
+          recievedMessage = parsedData.sentence;
+          lastTime = new Date(parsedData.time).getTime();
+        }
       } else if (parsedData.status === 'sources') {
         ws.send(
           JSON.stringify({
@@ -344,7 +348,7 @@ export const callSmartlyMessage = async (
 
     const humanMessageId =
       parsedMessage.messageId ?? crypto.randomBytes(7).toString('hex');
-      
+
     if (!parsedMessage.content)
       return ws.send(
         JSON.stringify({
