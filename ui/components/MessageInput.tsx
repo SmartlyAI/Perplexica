@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn, isRtl } from '@/lib/utils';
 import { ArrowUp } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -59,6 +59,14 @@ const MessageInput = ({
     };
   }, []);
 
+  const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const inputValue = e.target.value;
+    setMessage(inputValue)
+    setDirection(isRtl(inputValue) ? "rtl" : "ltr");
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -90,7 +98,11 @@ const MessageInput = ({
       <TextareaAutosize
         ref={inputRef}
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={handleChange}
+        dir={direction}
+        style={{
+          textAlign: direction === "rtl" ? "right" : "left",
+        }}
         onHeightChange={(height, props) => {
           setTextareaRows(Math.ceil(height / props.rowHeight));
         }}
