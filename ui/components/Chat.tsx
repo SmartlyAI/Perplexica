@@ -21,7 +21,7 @@ const Chat = ({
   sendMessage: (message: string) => void;
   loading: boolean;
   messageAppeared: boolean;
-  rewrite: (messageId: string) => void;
+  rewrite?: (messageId: string) => void;
   fileIds: string[];
   setFileIds: (fileIds: string[]) => void;
   files: File[];

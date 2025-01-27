@@ -470,26 +470,40 @@ const ChatWindow = ({ id }: { id?: string }) => {
       if (data.type === 'message') {
         if (!lastMessageTime || data.sentence_time > lastMessageTime) {
           lastMessageTime = data.sentence_time;
-          recievedMessage = data.data;
+
+          setMessages((prev) => {
+            const messageExists = prev.some(
+              (message) => message.messageId === data.messageId && message.role === 'assistant'
+            );
+
+            if (messageExists) {
+              return prev.map((message) =>
+                message.messageId === data.messageId && message.role === 'assistant'
+                  ? { ...message, content: data.data }
+                  : message
+              );
+            } else {
+              // If the message doesn't exist, add a new one
+              return [
+                ...prev,
+                {
+                  content: data.data,
+                  messageId: data.messageId,
+                  chatId: chatId!,
+                  role: 'assistant',
+                  sources: sources,
+                  createdAt: new Date(),
+                },
+              ];
+            }
+          });
+
+          recievedMessage += data.data;
           setMessageAppeared(true);
         }
-
-        setMessageAppeared(true);
       }
 
       if (data.type === 'messageEnd') {
-
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            content: recievedMessage,
-            messageId: data.messageId,
-            chatId: chatId!,
-            role: 'assistant',
-            sources: sources,
-            createdAt: new Date()
-          }
-        ]);
 
         setChatHistory((prevHistory) => [
           ...prevHistory,
@@ -524,22 +538,22 @@ const ChatWindow = ({ id }: { id?: string }) => {
     ws?.addEventListener('message', messageHandler);
   };
 
-  const rewrite = (messageId: string) => {
-    const index = messages.findIndex((msg) => msg.messageId === messageId);
+  // const rewrite = (messageId: string) => {
+  //   const index = messages.findIndex((msg) => msg.messageId === messageId);
 
-    if (index === -1) return;
+  //   if (index === -1) return;
 
-    const message = messages[index - 1];
+  //   const message = messages[index - 1];
 
-    setMessages((prev) => {
-      return [...prev.slice(0, messages.length > 2 ? index - 1 : 0)];
-    });
-    setChatHistory((prev) => {
-      return [...prev.slice(0, messages.length > 2 ? index - 1 : 0)];
-    });
+  //   setMessages((prev) => {
+  //     return [...prev.slice(0, messages.length > 2 ? index - 1 : 0)];
+  //   });
+  //   setChatHistory((prev) => {
+  //     return [...prev.slice(0, messages.length > 2 ? index - 1 : 0)];
+  //   });
 
-    sendMessage(message.content, message.messageId);
-  };
+  //   sendMessage(message.content, message.messageId);
+  // };
 
   useEffect(() => {
     if (isReady && initialMessage && ws?.readyState === 1) {
@@ -571,7 +585,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
               messages={messages}
               sendMessage={sendMessage}
               messageAppeared={messageAppeared}
-              rewrite={rewrite}
+              // rewrite={rewrite}
               fileIds={fileIds}
               setFileIds={setFileIds}
               files={files}
