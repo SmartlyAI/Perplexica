@@ -166,7 +166,7 @@ const SmartlyHandleEmitterEvents = (
         ws.send(
           JSON.stringify({
             type: 'message',
-            sentence_time: parsedData.sentence_time,
+            sentence_time: parsedData.time,
             data: parsedData.sentence,
             messageId: messageId,
           }),
