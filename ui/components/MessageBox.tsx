@@ -38,7 +38,7 @@ const MessageBox = ({
   loading: boolean;
   dividerRef?: MutableRefObject<HTMLDivElement | null>;
   isLast: boolean;
-  rewrite: (messageId: string) => void;
+  rewrite?: (messageId: string) => void;
   sendMessage: (message: string) => void;
 }) => {
   const [parsedMessage, setParsedMessage] = useState(message.content);
@@ -53,11 +53,7 @@ const MessageBox = ({
       message.sources.length > 0
     ) {
       return setParsedMessage(
-        message.content.replace(
-          regex,
-          (_, number) =>
-            `<a href="${message.sources?.[number - 1]?.metadata?.url}" target="_blank" className="bg-light-secondary dark:bg-dark-secondary px-1 rounded ml-1 no-underline text-xs text-black/70 dark:text-white/70 relative">${number}</a>`,
-        ),
+        message.content
       );
     }
 
@@ -110,7 +106,7 @@ const MessageBox = ({
                   'max-w-none break-words text-black dark:text-white',
                 )}
               >
-                {parsedMessage}
+                {message.content}
               </Markdown>
               {loading && isLast ? null : (
                 <div className="flex flex-row items-center justify-between w-full text-black dark:text-white py-4 -mx-2">
@@ -118,7 +114,7 @@ const MessageBox = ({
                     {/*  <button className="p-2 text-black/70 dark:text-white/70 rounded-xl hover:bg-light-secondary dark:hover:bg-dark-secondary transition duration-200 hover:text-black text-black dark:hover:text-white">
                       <Share size={18} />
                     </button> */}
-                    <Rewrite rewrite={rewrite} messageId={message.messageId} />
+                    {/* <Rewrite rewrite={rewrite} messageId={message.messageId} /> */}
                   </div>
                   <div className="flex flex-row items-center space-x-1">
                     <ThumbsUp size={18} />
@@ -184,7 +180,7 @@ const MessageBox = ({
                 )}
             </div>
           </div>
-          <div className="lg:sticky lg:top-20 flex flex-col items-center space-y-3 w-full lg:w-3/12 z-30 h-full pb-4">
+          {/* <div className="lg:sticky lg:top-20 flex flex-col items-center space-y-3 w-full lg:w-3/12 z-30 h-full pb-4">
             <SearchImages
               query={history[messageIndex - 1].content}
               chatHistory={history.slice(0, messageIndex - 1)}
@@ -193,7 +189,7 @@ const MessageBox = ({
               chatHistory={history.slice(0, messageIndex - 1)}
               query={history[messageIndex - 1].content}
             />
-          </div>
+          </div> */}
         </div>
       )}
     </div>

@@ -55,17 +55,17 @@ const Navbar = ({
         <Edit size={17} />
       </a>
       <div>
-        <PanelRightOpen size={17} onClick={toggleSidebar} />
+        <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
       </div>
-      <div className="hidden lg:flex flex-row items-center justify-center space-x-2">
+      {/* <div className="hidden lg:flex flex-row items-center justify-center space-x-2">
         <Clock size={17} />
         <p className="text-xs">{timeAgo} ago</p>
-      </div>
-      <p className="hidden lg:flex">{title}</p>
+      </div> */}
+      {/* <p className="hidden lg:flex">{title}</p> */}
 
-      <div className="flex flex-row items-center space-x-4">
+      {/* <div className="flex flex-row items-center space-x-4">
         <DeleteChat redirect chatId={chatId} chats={[]} setChats={() => { }} />
-      </div>
+      </div> */}
     </div>
   );
 };
