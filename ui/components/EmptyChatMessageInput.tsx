@@ -7,6 +7,7 @@ import Optimization from './MessageInputActions/Optimization';
 import Attach from './MessageInputActions/Attach';
 import { File } from './ChatWindow';
 import { useTranslations } from 'next-intl';
+import { isRtl } from '@/lib/utils';
 
 const EmptyChatMessageInput = ({
   sendMessage,
@@ -59,6 +60,14 @@ const EmptyChatMessageInput = ({
     };
   }, []);
 
+  const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const inputValue = e.target.value;
+    setMessage(inputValue)
+    setDirection(isRtl(inputValue) ? "rtl" : "ltr");
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -79,7 +88,11 @@ const EmptyChatMessageInput = ({
         <TextareaAutosize
           ref={inputRef}
           value={message}
-          onChange={(e) => setMessage(e.target.value)}
+          onChange={handleChange}
+          dir={direction}
+          style={{
+            textAlign: direction === "rtl" ? "right" : "left",
+          }}
           minRows={2}
           className="bg-transparent placeholder:text-black/50 dark:placeholder:text-white/50 text-sm text-black dark:text-white resize-none focus:outline-none w-full max-h-24 lg:max-h-36 xl:max-h-48"
           placeholder={t("placeholder")}
