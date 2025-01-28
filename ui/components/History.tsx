@@ -69,13 +69,13 @@ const History = () => {
                 </div>
             )}
             {chats?.length > 0 && (
-                <div className="flex flex-col pb-20 lg:pb-2">
+                <div className="flex flex-col py-5">
                     {chats.map((chat, i) => (
                         <div
                             className={cn(
-                                'flex flex-col space-y-4 py-6',
+                                'flex items-center justify-between w-full hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200',
                                 i !== chats.length - 1
-                                    ? 'border-b border-white-200 dark:border-dark-200'
+                                    ? 'mb-2'
                                     : '',
                             )}
                             key={i}
@@ -86,19 +86,19 @@ const History = () => {
                             >
                                 {chat.title}
                             </Link>
-                            <div className="flex flex-row items-center justify-between w-full">
-                                <div className="flex flex-row items-center space-x-1 lg:space-x-1.5 text-black/70 dark:text-white/70">
+                            {/* <div className="flex flex-row items-center justify-between w-full"> */}
+                            {/* <div className="flex flex-row items-center space-x-1 lg:space-x-1.5 text-black/70 dark:text-white/70">
                                     <ClockIcon size={15} />
                                     <p className="text-xs">
                                         {formatTimeDifference(new Date(), chat.createdAt)} Ago
                                     </p>
-                                </div>
-                                <DeleteChat
-                                    chatId={chat.id}
-                                    chats={chats}
-                                    setChats={setChats}
-                                />
-                            </div>
+                                </div> */}
+                            <DeleteChat
+                                chatId={chat.id}
+                                chats={chats}
+                                setChats={setChats}
+                            />
+                            {/* </div> */}
                         </div>
                     ))}
                 </div>

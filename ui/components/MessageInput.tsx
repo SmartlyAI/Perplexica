@@ -83,7 +83,7 @@ const MessageInput = ({
         }
       }}
       className={cn(
-        'bg-white dark:bg-dark-secondary p-4 flex items-center overflow-hidden border border-light-200 dark:border-dark-200',
+        'bg-[#f3f4f6] dark:bg-[#2f2f2f] p-4 flex items-center overflow-hidden border border-light-200 dark:border-dark-200 md:gap-5 lg:gap-6 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem]',
         mode === 'multi' ? 'flex-col rounded-lg' : 'flex-row rounded-full',
       )}
     >

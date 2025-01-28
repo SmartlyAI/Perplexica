@@ -1,36 +1,41 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { BookOpenText, Home, Search, SquarePen, Settings } from 'lucide-react';
-import Link from 'next/link';
-import { useSelectedLayoutSegments } from 'next/navigation';
+import { PanelRightOpen, Search, SquareArrowOutUpRight } from 'lucide-react';
 import React, { useState, type ReactNode } from 'react';
 import Layout from './Layout';
-import SettingsDialog from './SettingsDialog';
 import History from './History';
 import Image from 'next/image';
 import useSidebarStore from '@/stores/global-stores';
 import SearxHistory from './SearxHistory';
+import Link from 'next/link';
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const [isSearxOpen, setIsSearxOpen] = useState(false);
+    const { toggleSidebar } = useSidebarStore();
     const { isSidebarOpen } = useSidebarStore();
 
     return (
-        <div>
+        <div className='relative flex h-full w-full overflow-hidden transition-colors'>
             {isSidebarOpen && (
-                <div className="lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-80 lg:flex-col">
-                    <div className="relative flex grow flex-col overflow-y-auto bg-[#efeaf3] dark:bg-dark-secondary pl-5 py-5">
+                <div className="fixed top-0 left-0 h-full transition-all duration-300 w-[260px] overflow-hidden z-50" style={{ zIndex: 50 }}>
+                    <div className="h-full overflow-y-auto bg-[#f9f9f9] dark:bg-dark-secondary px-5 py-5">
                         <div className="flex items-center justify-between">
-                            <a href="/" className="flex items-center">
+                            {/* <a href="/" className="flex items-center">
                                 <Image src="/logo.png" priority alt="Smartly" width={24} height={24} className='mr-3' />
                                 SmartlyChat
-                            </a>
+                            </a> */}
 
-                            <Search
-                                onClick={() => setIsSearxOpen(!isSearxOpen)}
-                                className="cursor-pointer"
-                            />
+                            <div className="">
+                                <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
+                            </div>
+
+                            <div className="flex gap-2">
+                                <Search
+                                    onClick={() => setIsSearxOpen(!isSearxOpen)}
+                                    className="cursor-pointer"
+                                />
+                                <Link href="/"><SquareArrowOutUpRight /></Link>
+                            </div>
                         </div>
 
                         <History />

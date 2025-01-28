@@ -30,3 +30,7 @@ export const isRtl = (text: string): boolean => {
   const rtlRegex = /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/;
   return rtlRegex.test(text);
 };
+
+export const isLg = () => { return typeof window !== 'undefined' ? window.matchMedia("(min-width: 1024px)").matches : null };
+export const isSM = () => { return typeof window !== 'undefined' ? window.matchMedia("(min-width: 640px)").matches : null };
+export const isXsM = () => { return typeof window !== 'undefined' ? window.matchMedia("(max-width: 639px)").matches : null };

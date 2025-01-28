@@ -84,7 +84,7 @@ const EmptyChatMessageInput = ({
       }}
       className="w-full"
     >
-      <div className="flex flex-col bg-light-secondary dark:bg-dark-secondary px-5 pt-5 pb-2 rounded-lg w-full border border-light-200 dark:border-dark-200">
+      <div className="flex flex-col bg-[#f4f4f4] dark:bg-dark-secondary px-5 pt-5 pb-2 rounded-lg w-full border border-light-200 dark:border-dark-200">
         <TextareaAutosize
           ref={inputRef}
           value={message}
@@ -115,7 +115,7 @@ const EmptyChatMessageInput = ({
             /> */}
             <button
               disabled={message.trim().length === 0}
-              className="bg-[#24A0ED] text-white disabled:text-black/50 dark:disabled:text-white/50 disabled:bg-[#e0e0dc] dark:disabled:bg-[#ececec21] hover:bg-opacity-85 transition duration-100 rounded-full p-2"
+              className="bg-[#000000] text-white disabled:text-black/50 dark:disabled:text-white/50 disabled:bg-[#e0e0dc] dark:disabled:bg-[#ececec21] hover:bg-opacity-85 transition duration-100 rounded-full p-2"
             >
               <ArrowRight className="bg-background" size={17} />
             </button>

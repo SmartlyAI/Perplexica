@@ -69,10 +69,12 @@ const MessageBox = ({
   return (
     <div>
       {message.role === 'user' && (
-        <div className={cn('w-full', messageIndex === 0 ? 'pt-16' : 'pt-8')}>
-          <h2 dir={direction} className="text-black dark:text-white font-medium text-3xl lg:w-9/12">
-            {message.content}
-          </h2>
+        <div className={cn('w-full flex justify-end', messageIndex === 0 ? 'pt-16' : 'pt-8')}>
+          <div className="max-w-[70%] w-fit rounded-full bg-[#f3f4f6] dark:bg-[#2f2f2f] px-5 py-2">
+            <h2 dir={direction} className="text-black dark:text-white font-medium text-xl">
+              {message.content}
+            </h2>
+          </div>
         </div>
       )}
 
@@ -80,7 +82,7 @@ const MessageBox = ({
         <div className="flex flex-col space-y-9 lg:space-y-0 lg:flex-row lg:justify-between lg:space-x-9">
           <div
             ref={dividerRef}
-            className="flex flex-col space-y-6 w-full lg:w-9/12"
+            className="flex flex-col space-y-6 w-full"
           >
             {message.sources && message.sources.length > 0 && (
               <div className="flex flex-col space-y-2">

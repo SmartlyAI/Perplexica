@@ -1,3 +1,4 @@
+import { isXsM } from '@/lib/utils';
 import { create } from 'zustand';
 
 interface SidebarState {
@@ -6,7 +7,7 @@ interface SidebarState {
 }
 
 const useSidebarStore = create<SidebarState>((set) => ({
-    isSidebarOpen: true,
+    isSidebarOpen: !isXsM(),
     toggleSidebar: () =>
         set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
 }));

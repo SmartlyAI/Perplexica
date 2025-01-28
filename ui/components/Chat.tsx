@@ -56,7 +56,7 @@ const Chat = ({
   }, [messages]);
 
   return (
-    <div className="flex flex-col space-y-6 pt-8 pb-44 lg:pb-32 sm:mx-4 md:mx-8">
+    <div className="flex flex-col space-y-6 px-5 pt-8 pb-44 lg:pb-32 max-w-screen-lg mx-auto">
       {messages.map((msg, i) => {
         const isLast = i === messages.length - 1;
 
@@ -83,7 +83,7 @@ const Chat = ({
       <div ref={messageEnd} className="h-0" />
       {dividerWidth > 0 && (
         <div
-          className="bottom-24 lg:bottom-10 fixed z-40"
+          className="pb-10 bg-[#ffffff] dark:bg-dark-primary bottom-0 fixed z-40 w-full"
           style={{ width: dividerWidth }}
         >
           <MessageInput
