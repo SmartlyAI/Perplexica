@@ -56,7 +56,7 @@ const Chat = ({
   }, [messages]);
 
   return (
-    <div className="flex flex-col space-y-6 px-5 pt-8 pb-44 lg:pb-32 max-w-screen-lg mx-auto">
+    <div className="flex flex-col space-y-6 px-5 pt-8 pb-44 lg:pb-32 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] mx-auto">
       {messages.map((msg, i) => {
         const isLast = i === messages.length - 1;
 
