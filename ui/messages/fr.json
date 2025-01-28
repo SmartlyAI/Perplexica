@@ -1,7 +1,7 @@
 {
     "EmptyChat": {
         "title": "Bienvenue sur Smartly Chat",
-        "placeholder": "Demandez n'importe quoi..."
+        "placeholder": "Comment puis je vous aider aujourd’hui?"
     },
     "History": {
         "message": "Aucune discussion trouvée."

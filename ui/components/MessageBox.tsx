@@ -143,7 +143,7 @@ const MessageBox = ({
                   </div>
                 </div>
               )}
-              {isLast &&
+              {/* {isLast &&
                 message.suggestions &&
                 message.suggestions.length > 0 &&
                 message.role === 'assistant' &&
@@ -181,7 +181,7 @@ const MessageBox = ({
                       </div>
                     </div>
                   </>
-                )}
+                )} */}
             </div>
           </div>
           {/* <div className="lg:sticky lg:top-20 flex flex-col items-center space-y-3 w-full lg:w-3/12 z-30 h-full pb-4">

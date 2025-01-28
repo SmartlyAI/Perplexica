@@ -1,7 +1,7 @@
 {
     "EmptyChat": {
         "title": "Welcome to Smartly Chat",
-        "placeholder": "Ask anything..."
+        "placeholder": "How can I help you today"
     },
     "History": {
         "message": "No chats found."

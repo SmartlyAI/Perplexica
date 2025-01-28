@@ -1,4 +1,4 @@
-import { PanelRightOpen, Settings } from 'lucide-react';
+import { PanelLeftOpen, PanelRightOpen, Settings } from 'lucide-react';
 import EmptyChatMessageInput from './EmptyChatMessageInput';
 import SettingsDialog from './SettingsDialog';
 import { useState } from 'react';
@@ -30,11 +30,16 @@ const EmptyChat = ({
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const t = useTranslations('EmptyChat');
   const { toggleSidebar } = useSidebarStore();
+  const { isSidebarOpen } = useSidebarStore();
 
   return (
     <div className="relative">
       <div className="absolute flex flex-row items-center ml-5 mt-5 left-0">
-        <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
+        {isSidebarOpen ?
+          <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
+          :
+          <PanelLeftOpen className="cursor-pointer" onClick={toggleSidebar} />
+        }
       </div>
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />
       <div className="absolute flex flex-row items-center justify-end mr-5 mt-5 right-0">
