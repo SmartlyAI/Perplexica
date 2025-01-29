@@ -1,15 +1,17 @@
 import express from 'express';
 import logger from '../utils/logger';
 import db from '../db/index';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { chats, messages } from '../db/schema';
 
 const router = express.Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/:id/:token', async (req, res) => {
     try {
+        const { id, token } = req.params;
+
         const chatExists = await db.query.chats.findFirst({
-            where: eq(chats.id, req.params.id),
+            where: and(eq(chats.id, id), eq(chats.token, token)),
         });
 
         if (!chatExists) {
