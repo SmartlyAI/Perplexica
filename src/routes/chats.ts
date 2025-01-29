@@ -66,4 +66,28 @@ router.delete(`/:id`, async (req, res) => {
   }
 });
 
+router.patch('/:id/title', async (req, res) => {
+  try {
+    const { title } = req.body;
+    if (!title) {
+      return res.status(400).json({ message: 'Title is required' });
+    }
+
+    const chatExists = await db.query.chats.findFirst({
+      where: eq(chats.id, req.params.id),
+    });
+
+    if (!chatExists) {
+      return res.status(404).json({ message: 'Chat not found' });
+    }
+
+    await db.update(chats).set({ title }).where(eq(chats.id, req.params.id)).execute();
+
+    return res.status(200).json({ message: 'Chat title updated successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'An error has occurred.' });
+    logger.error(`Error in updating chat title: ${err.message}`);
+  }
+});
+
 export default router;
