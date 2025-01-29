@@ -252,6 +252,7 @@ const useSocket = (
 
 const loadMessages = async (
   chatId: string,
+  token: string,
   setMessages: (messages: Message[]) => void,
   setIsMessagesLoaded: (loaded: boolean) => void,
   setChatHistory: (history: [string, string][]) => void,
@@ -261,7 +262,7 @@ const loadMessages = async (
   setFileIds: (fileIds: string[]) => void,
 ) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/chatsmessages/${chatId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/chatsmessages/${chatId}/${token}`,
     {
       method: 'GET',
       headers: {
@@ -354,6 +355,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
     ) {
       loadMessages(
         chatId,
+        token,
         setMessages,
         setIsMessagesLoaded,
         setChatHistory,
