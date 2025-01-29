@@ -1,4 +1,4 @@
-import { Trash } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import {
   Description,
   Dialog,
@@ -68,9 +68,10 @@ const DeleteChat = ({
         onClick={() => {
           setConfirmationDialogOpen(true);
         }}
-        className="bg-transparent text-red-500 hover:scale-105 transition duration-200"
+        className="bg-transparent flex text-red-500 items-center px-4 py-3 hover:bg-light-200 dark:hover:bg-dark-200"
       >
-        <Trash size={17} />
+        <Trash2 size={17} className='mr-3' />
+        <span>Delete</span>
       </button>
       <Transition appear show={confirmationDialogOpen} as={Fragment}>
         <Dialog

@@ -1,11 +1,13 @@
 'use client';
 
 import DeleteChat from '@/components/DeleteChat';
-import { cn, formatTimeDifference } from '@/lib/utils';
-import { ClockIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
+import { Ellipsis } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import RenameChat from './RenameChat';
 
 export interface Chat {
     id: string;
@@ -19,22 +21,23 @@ const History = () => {
     const [chats, setChats] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const fetchChats = async () => {
+        setLoading(true);
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats/${localStorage.getItem('token')}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const data = await res.json();
+
+        setChats(data.chats);
+        setLoading(false);
+    };
+
     useEffect(() => {
-        const fetchChats = async () => {
-            setLoading(true);
-
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chats/${localStorage.getItem('token')}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const data = await res.json();
-
-            setChats(data.chats);
-            setLoading(false);
-        };
 
         fetchChats();
     }, []);
@@ -86,24 +89,30 @@ const History = () => {
                             >
                                 {chat.title}
                             </Link>
-                            {/* <div className="flex flex-row items-center justify-between w-full"> */}
-                            {/* <div className="flex flex-row items-center space-x-1 lg:space-x-1.5 text-black/70 dark:text-white/70">
-                                    <ClockIcon size={15} />
-                                    <p className="text-xs">
-                                        {formatTimeDifference(new Date(), chat.createdAt)} Ago
-                                    </p>
-                                </div> */}
-                            <DeleteChat
-                                chatId={chat.id}
-                                chats={chats}
-                                setChats={setChats}
-                            />
-                            {/* </div> */}
+
+                            <Popover className="relative flex items-center">
+                                <PopoverButton>
+                                    <Ellipsis className="cursor-pointer" />
+                                </PopoverButton>
+                                <PopoverPanel anchor="bottom start" className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg">
+                                    <RenameChat
+                                        chatId={chat.id}
+                                        chatTitle={chat.title}
+                                        fetchChats={fetchChats}
+                                    />
+                                    <DeleteChat
+                                        chatId={chat.id}
+                                        chats={chats}
+                                        setChats={setChats}
+                                    />
+                                </PopoverPanel>
+                            </Popover>
                         </div>
                     ))}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 };
 
