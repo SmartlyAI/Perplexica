@@ -6,15 +6,16 @@ import { chats, messages } from '../db/schema';
 
 const router = express.Router();
 
-router.get('/:id/:token', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const { id, token } = req.params;
+        const { id } = req.params;
 
         const chatExists = await db.query.chats.findFirst({
             where: eq(chats.id, id),
         });
 
         if (chatExists && chatExists.shared === 0) {
+            const token = req.query.token as string;
             const isShared = await db.query.chats.findFirst({
                 where: and(eq(chats.id, id), eq(chats.token, token)),
             });
