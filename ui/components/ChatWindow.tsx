@@ -262,7 +262,7 @@ const loadMessages = async (
   setFileIds: (fileIds: string[]) => void,
 ) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/chatsmessages/${chatId}/${token}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/chatsmessages/${chatId}?token=${token}`,
     {
       method: 'GET',
       headers: {

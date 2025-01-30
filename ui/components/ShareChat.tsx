@@ -1,5 +1,6 @@
-import { Pencil } from 'lucide-react';
+import { Share } from 'lucide-react';
 import {
+    Description,
     Dialog,
     DialogBackdrop,
     DialogPanel,
@@ -10,38 +11,31 @@ import {
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
 
-const RenameChat = ({
+const ShareChat = ({
     chatId,
-    chatTitle,
-    fetchChats,
 }: {
     chatId: string;
-    chatTitle: string;
-    fetchChats: () => void;
 }) => {
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
-    const [title, setTitle] = useState<string>(chatTitle);
     const [loading, setLoading] = useState(false);
 
-    const handleRename = async () => {
+    const handleShare = async () => {
         setLoading(true);
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/chats/${chatId}/title`,
+                `${process.env.NEXT_PUBLIC_API_URL}/chats/${chatId}/share`,
                 {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ title: title }),
+                    body: JSON.stringify({ shared: 1 }),
                 },
             );
 
             if (res.status != 200) {
                 throw new Error('Failed to delete chat');
             }
-
-            fetchChats();
         } catch (err: any) {
             toast.error(err.message);
         } finally {
@@ -58,8 +52,8 @@ const RenameChat = ({
                 }}
                 className="bg-transparent flex items-center px-4 py-3 hover:bg-light-200 dark:hover:bg-dark-200"
             >
-                <Pencil size={17} className='mr-3' />
-                <span>Rename</span>
+                <Share size={17} className='mr-3' />
+                <span>Share</span>
             </button>
             <Transition appear show={confirmationDialogOpen} as={Fragment}>
                 <Dialog
@@ -85,17 +79,11 @@ const RenameChat = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Rename Chat
+                                        Share Chat
                                     </DialogTitle>
-                                    <input
-                                        type="text"
-                                        className='bg-white dark:bg-dark-secondary px-3 py-2 flex items-center overflow-hidden border border-light-200 dark:border-dark-200 dark:text-white rounded-lg text-sm w-full mt-4'
-                                        placeholder="Model name"
-                                        defaultValue={title!}
-                                        onChange={(e) =>
-                                            setTitle(e.target.value)
-                                        }
-                                    />
+                                    <Description className="text-sm dark:text-white/70 text-black/70">
+                                        Your name, custom instructions, and any messages you add after sharing will be visible to anyone with the link.
+                                    </Description>
                                     <div className="flex flex-row items-end justify-end space-x-4 mt-6">
                                         <button
                                             onClick={() => {
@@ -108,10 +96,10 @@ const RenameChat = ({
                                             Cancel
                                         </button>
                                         <button
-                                            onClick={handleRename}
+                                            onClick={handleShare}
                                             className="text-sm transition duration200"
                                         >
-                                            Rename
+                                            Share
                                         </button>
                                     </div>
                                 </DialogPanel>
@@ -124,4 +112,4 @@ const RenameChat = ({
     );
 };
 
-export default RenameChat;
+export default ShareChat;

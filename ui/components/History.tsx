@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import RenameChat from './RenameChat';
+import ShareChat from './ShareChat';
 
 export interface Chat {
     id: string;
@@ -99,6 +100,9 @@ const History = () => {
                                         chatId={chat.id}
                                         chatTitle={chat.title}
                                         fetchChats={fetchChats}
+                                    />
+                                    <ShareChat
+                                        chatId={chat.id}
                                     />
                                     <DeleteChat
                                         chatId={chat.id}
