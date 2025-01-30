@@ -11,11 +11,17 @@ router.get('/:id/:token', async (req, res) => {
         const { id, token } = req.params;
 
         const chatExists = await db.query.chats.findFirst({
-            where: and(eq(chats.id, id), eq(chats.token, token)),
+            where: eq(chats.id, id),
         });
 
-        if (!chatExists) {
-            return res.status(404).json({ message: 'Chat not found' });
+        if (chatExists && chatExists.shared === 0) {
+            const isShared = await db.query.chats.findFirst({
+                where: and(eq(chats.id, id), eq(chats.token, token)),
+            });
+
+            if (!isShared) {
+                return res.status(404).json({ message: 'Chat not found' });
+            }
         }
 
         const chatMessages = await db.query.messages.findMany({
