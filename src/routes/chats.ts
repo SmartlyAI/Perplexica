@@ -1,7 +1,7 @@
 import express from 'express';
 import logger from '../utils/logger';
 import db from '../db/index';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { chats, messages } from '../db/schema';
 
 const router = express.Router();
@@ -108,6 +108,26 @@ router.patch('/:id/share', async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'An error has occurred.' });
     logger.error(`Error in sharing chat: ${err.message}`);
+  }
+});
+
+router.get('/:token/shared', async (req, res) => {
+  try {
+    const token = req.params.token;
+    let Chats = await db.query.chats.findMany({
+      where: and(eq(chats.token, token), eq(chats.shared, 1)),
+    });
+
+    if (!Chats) {
+      return res.status(404).json({ message: 'Shared Chats not found' });
+    }
+
+    Chats = Chats.reverse();
+
+    return res.status(200).json({ chats: Chats });
+  } catch (err) {
+    res.status(500).json({ message: 'An error has occurred.' });
+    logger.error(`Error in getting chats: ${err.message}`);
   }
 });
 
