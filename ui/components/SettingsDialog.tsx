@@ -6,7 +6,7 @@ import {
   Transition,
   TransitionChild,
 } from '@headlessui/react';
-import { CloudUpload, RefreshCcw, RefreshCw } from 'lucide-react';
+import { RefreshCcw, RefreshCw } from 'lucide-react';
 import React, {
   Fragment,
   useEffect,
@@ -16,8 +16,8 @@ import React, {
 } from 'react';
 import ThemeSwitcher from './theme/Switcher';
 import { getUserLocale, setUserLocale } from '@/lib/services';
-import { Locale } from '@/i18n/config';
 import { useTranslations } from 'next-intl';
+import SharedChats from './SharedChats';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 
@@ -57,20 +57,6 @@ export const Select = ({ className, options, ...restProps }: SelectProps) => {
   );
 };
 
-interface SettingsType {
-  chatModelProviders: {
-    [key: string]: [Record<string, any>];
-  };
-  embeddingModelProviders: {
-    [key: string]: [Record<string, any>];
-  };
-  openaiApiKey: string;
-  groqApiKey: string;
-  anthropicApiKey: string;
-  geminiApiKey: string;
-  ollamaApiUrl: string;
-}
-
 const SettingsDialog = ({
   isOpen,
   setIsOpen,
@@ -78,24 +64,6 @@ const SettingsDialog = ({
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) => {
-  const [config, setConfig] = useState<SettingsType | null>(null);
-  const [chatModels, setChatModels] = useState<Record<string, any>>({});
-  const [embeddingModels, setEmbeddingModels] = useState<Record<string, any>>(
-    {},
-  );
-  const [selectedChatModelProvider, setSelectedChatModelProvider] = useState<
-    string | null
-  >(null);
-  const [selectedChatModel, setSelectedChatModel] = useState<string | null>(
-    null,
-  );
-  const [selectedEmbeddingModelProvider, setSelectedEmbeddingModelProvider] =
-    useState<string | null>(null);
-  const [selectedEmbeddingModel, setSelectedEmbeddingModel] = useState<
-    string | null
-  >(null);
-  const [customOpenAIApiKey, setCustomOpenAIApiKey] = useState<string>('');
-  const [customOpenAIBaseURL, setCustomOpenAIBaseURL] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -103,58 +71,6 @@ const SettingsDialog = ({
     if (isOpen) {
       const fetchConfig = async () => {
         setIsLoading(true);
-        // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/config`, {
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        // });
-
-        // const data = (await res.json()) as SettingsType;
-        // setConfig(data);
-
-        // const chatModelProvidersKeys = Object.keys(
-        //   data.chatModelProviders || {},
-        // );
-        // const embeddingModelProvidersKeys = Object.keys(
-        //   data.embeddingModelProviders || {},
-        // );
-
-        // const defaultChatModelProvider =
-        //   chatModelProvidersKeys.length > 0 ? chatModelProvidersKeys[0] : '';
-        // const defaultEmbeddingModelProvider =
-        //   embeddingModelProvidersKeys.length > 0
-        //     ? embeddingModelProvidersKeys[0]
-        //     : '';
-
-        // const chatModelProvider =
-        //   localStorage.getItem('chatModelProvider') ||
-        //   defaultChatModelProvider ||
-        //   '';
-        // const chatModel =
-        //   localStorage.getItem('chatModel') ||
-        //   (data.chatModelProviders &&
-        //     data.chatModelProviders[chatModelProvider]?.length > 0
-        //     ? data.chatModelProviders[chatModelProvider][0].name
-        //     : undefined) ||
-        //   '';
-        // const embeddingModelProvider =
-        //   localStorage.getItem('embeddingModelProvider') ||
-        //   defaultEmbeddingModelProvider ||
-        //   '';
-        // const embeddingModel =
-        //   localStorage.getItem('embeddingModel') ||
-        //   (data.embeddingModelProviders &&
-        //     data.embeddingModelProviders[embeddingModelProvider]?.[0].name) ||
-        //   '';
-
-        // setSelectedChatModelProvider(chatModelProvider);
-        // setSelectedChatModel(chatModel);
-        // setSelectedEmbeddingModelProvider(embeddingModelProvider);
-        // setSelectedEmbeddingModel(embeddingModel);
-        // setCustomOpenAIApiKey(localStorage.getItem('openAIApiKey') || '');
-        // setCustomOpenAIBaseURL(localStorage.getItem('openAIBaseURL') || '');
-        // setChatModels(data.chatModelProviders || {});
-        // setEmbeddingModels(data.embeddingModelProviders || {});
         const locale = await getUserLocale();
         setLang(locale)
         setIsLoading(false);
@@ -168,29 +84,6 @@ const SettingsDialog = ({
 
   const handleSubmit = async () => {
     setIsUpdating(true);
-
-    // try {
-    //   await fetch(`${process.env.NEXT_PUBLIC_API_URL}/config`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(config),
-    //   });
-
-    //   localStorage.setItem('chatModelProvider', selectedChatModelProvider!);
-    //   localStorage.setItem('chatModel', selectedChatModel!);
-    //   localStorage.setItem(
-    //     'embeddingModelProvider',
-    //     selectedEmbeddingModelProvider!,
-    //   );
-    //   localStorage.setItem('embeddingModel', selectedEmbeddingModel!);
-    //   localStorage.setItem('openAIApiKey', customOpenAIApiKey!);
-    //   localStorage.setItem('openAIBaseURL', customOpenAIBaseURL!);
-    // } catch (err) {
-    //   console.log(err);
-    // } finally {
-    // }
     setIsUpdating(false);
     setIsOpen(false);
 
@@ -277,6 +170,12 @@ const SettingsDialog = ({
                           }),
                         )}
                       />
+                    </div>
+                    <div className="flex justify-between items-center space-y-1">
+                      <p className="text-black/70 dark:text-white/70 text-sm">
+                        Shared chats
+                      </p>
+                      <SharedChats />
                     </div>
                     {/* {selectedChatModelProvider &&
                       selectedChatModelProvider != 'custom_openai' && (
