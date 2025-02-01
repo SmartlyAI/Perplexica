@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import RenameChat from './RenameChat';
 import ShareChat from './ShareChat';
+import ArchiveChat from './ArchiveChat';
 
 export interface Chat {
     id: string;
@@ -103,6 +104,10 @@ const History = () => {
                                     />
                                     <ShareChat
                                         chatId={chat.id}
+                                    />
+                                    <ArchiveChat
+                                        chatId={chat.id}
+                                        fetchChats={fetchChats}
                                     />
                                     <DeleteChat
                                         chatId={chat.id}

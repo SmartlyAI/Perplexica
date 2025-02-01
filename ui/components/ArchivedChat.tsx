@@ -20,20 +20,22 @@ export interface Chat {
     shared: boolean;
 }
 
-const SharedChats = ({
+const ArchivedChats = ({
     token,
+    redirect = true,
 }: {
     token: string;
+    redirect?: boolean;
 }) => {
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [chats, setChats] = useState<Chat[]>([]);
 
-    const fetchSharedChats = async () => {
+    const fetchArchivedChats = async () => {
         setLoading(true);
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/chats/${token}/shared`,
+                `${process.env.NEXT_PUBLIC_API_URL}/chats/${token}/archived`,
                 {
                     method: 'GET',
                     headers: {
@@ -43,7 +45,7 @@ const SharedChats = ({
             );
 
             if (res.status != 200) {
-                throw new Error('Failed to fetch shared chats');
+                throw new Error('Failed to fetch archived chats');
             }
 
             const data = await res.json();
@@ -56,24 +58,27 @@ const SharedChats = ({
         }
     };
 
-    const deleteSharedChats = async (chatId: string) => {
+    const deleteArchivedChats = async (chatId: string) => {
         setLoading(true);
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/chats/${chatId}/share`,
+                `${process.env.NEXT_PUBLIC_API_URL}/chats/${chatId}/archive`,
                 {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ shared: 0 }),
+                    body: JSON.stringify({ archived: 0 }),
                 },
             );
 
             if (res.status != 200) {
-                throw new Error('Failed to delete shared chat');
+                throw new Error('Failed to delete archived chat');
             }
-            fetchSharedChats();
+            fetchArchivedChats();
+            if (redirect) {
+                window.location.href = '/';
+            }
         } catch (err: any) {
             toast.error(err.message);
         } finally {
@@ -83,7 +88,7 @@ const SharedChats = ({
     };
 
     useEffect(() => {
-        fetchSharedChats();
+        fetchArchivedChats();
     }, []);
 
     return (
@@ -121,18 +126,18 @@ const SharedChats = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Shared chats
+                                        Archived chats
                                     </DialogTitle>
                                     <div className="mt-3">
                                         {chats.length === 0 ? (
                                             <p className="text-black/70 dark:text-white/70 text-sm">
-                                                No shared chats
+                                                No Archived chats
                                             </p>
                                         )
                                             : chats.map((chat, i) => (
                                                 <div key={i} className="flex flex-row items-center justify-between text-black/70 dark:text-white/70 hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200">
                                                     <Link href={`/c/${chat.id}`}>{chat.title}</Link>
-                                                    <Trash2 size={17} className='cursor-pointer' onClick={() => deleteSharedChats(chat.id)} />
+                                                    <Trash2 size={17} className='cursor-pointer' onClick={() => deleteArchivedChats(chat.id)} />
                                                 </div>
                                             ))
                                         }
@@ -148,4 +153,4 @@ const SharedChats = ({
     );
 };
 
-export default SharedChats;
+export default ArchivedChats;
