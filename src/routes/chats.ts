@@ -10,7 +10,7 @@ router.get('/:token', async (req, res) => {
   try {
     const token = req.params.token;
     let Chats = await db.query.chats.findMany({
-      where: eq(chats.token, token),
+      where: and(eq(chats.token, token), eq(chats.archived, 0)),
     });
 
     Chats = Chats.reverse();
@@ -152,5 +152,45 @@ router.delete('/deleteAll/:token', async (req, res) => {
   }
 });
 
+router.patch('/:id/archive', async (req, res) => {
+  try {
+    const { archived } = req.body;
+
+    const chatExists = await db.query.chats.findFirst({
+      where: eq(chats.id, req.params.id),
+    });
+
+    if (!chatExists) {
+      return res.status(404).json({ message: 'Chat not found' });
+    }
+
+    await db.update(chats).set({ archived }).where(eq(chats.id, req.params.id)).execute();
+
+    return res.status(200).json({ message: 'Chat archived successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'An error has occurred.' });
+    logger.error(`Error in archiving chat: ${err.message}`);
+  }
+});
+
+router.get('/:token/archived', async (req, res) => {
+  try {
+    const token = req.params.token;
+    let Chats = await db.query.chats.findMany({
+      where: and(eq(chats.token, token), eq(chats.archived, 1)),
+    });
+
+    if (!Chats) {
+      return res.status(404).json({ message: 'Archived Chats not found' });
+    }
+
+    Chats = Chats.reverse();
+
+    return res.status(200).json({ chats: Chats });
+  } catch (err) {
+    res.status(500).json({ message: 'An error has occurred.' });
+    logger.error(`Error in getting archived chats: ${err.message}`);
+  }
+});
 
 export default router;
