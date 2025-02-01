@@ -18,6 +18,7 @@ import ThemeSwitcher from './theme/Switcher';
 import { getUserLocale, setUserLocale } from '@/lib/services';
 import { useTranslations } from 'next-intl';
 import SharedChats from './SharedChats';
+import DeleteAllChats from './DeleteAllChats';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 
@@ -108,6 +109,7 @@ const SettingsDialog = ({
   const [isPending, startTransition] = useTransition();
   const [lang, setLang] = useState<string>('en');
   const t = useTranslations('Settings');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') ?? '' : '';
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -175,7 +177,13 @@ const SettingsDialog = ({
                       <p className="text-black/70 dark:text-white/70 text-sm">
                         Shared chats
                       </p>
-                      <SharedChats />
+                      <SharedChats token={token} />
+                    </div>
+                    <div className="flex justify-between items-center space-y-1">
+                      <p className="text-black/70 dark:text-white/70 text-sm">
+                        Delete all chats
+                      </p>
+                      <DeleteAllChats token={token} />
                     </div>
                     {/* {selectedChatModelProvider &&
                       selectedChatModelProvider != 'custom_openai' && (

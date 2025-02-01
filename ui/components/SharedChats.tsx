@@ -21,7 +21,11 @@ export interface Chat {
     shared: boolean;
 }
 
-const SharedChats = () => {
+const SharedChats = ({
+    token,
+}: {
+    token: string;
+}) => {
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [chats, setChats] = useState<Chat[]>([]);
