@@ -1,7 +1,7 @@
 import express from 'express';
 import logger from '../utils/logger';
 import db from '../db/index';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { chats, messages } from '../db/schema';
 
 const router = express.Router();
@@ -130,5 +130,27 @@ router.get('/:token/shared', async (req, res) => {
     logger.error(`Error in getting chats: ${err.message}`);
   }
 });
+
+router.delete('/deleteAll/:token', async (req, res) => {
+  try {
+    const chatsToDelete = await db.query.chats.findMany({
+      where: eq(chats.token, req.params.token),
+    });
+
+    if (!chatsToDelete.length) {
+      return res.status(404).json({ message: 'No chats found' });
+    }
+
+    const chatIds = chatsToDelete.map((chat) => chat.id);
+    await db.delete(messages).where(inArray(messages.chatId, chatIds)).execute();
+    await db.delete(chats).where(eq(chats.token, req.params.token)).execute();
+
+    return res.status(200).json({ message: 'Chats and associated messages deleted successfully' });
+  } catch (err) {
+    logger.error(`Error in deleting chats: ${err.message}`);
+    return res.status(500).json({ message: 'An error has occurred.' });
+  }
+});
+
 
 export default router;
