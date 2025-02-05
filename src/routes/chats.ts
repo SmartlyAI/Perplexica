@@ -193,4 +193,25 @@ router.get('/:token/archived', async (req, res) => {
   }
 });
 
+router.patch('/:token/archiveAll', async (req, res) => {
+  try {
+    const token = req.params.token;
+    const updatedChats = await db
+      .update(chats)
+      .set({ archived: 1 })
+      .where(and(eq(chats.token, token), eq(chats.archived, 0)))
+      .returning();
+
+    if (!updatedChats.length) {
+      return res.status(404).json({ message: 'No unarchived chats found to archive' });
+    }
+
+    return res.status(200).json({ message: 'Unarchived chats archived successfully', chats: updatedChats });
+  } catch (err) {
+    res.status(500).json({ message: 'An error has occurred.' });
+    logger.error(`Error in archiving chats: ${err.message}`);
+  }
+});
+
+
 export default router;
