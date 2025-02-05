@@ -3,10 +3,8 @@ import { toast } from 'sonner';
 
 const ArchiveChat = ({
     chatId,
-    fetchChats,
 }: {
     chatId: string;
-    fetchChats: () => void;
 }) => {
 
     const handleArchive = async () => {
@@ -26,7 +24,7 @@ const ArchiveChat = ({
                 throw new Error('Failed to archive chat');
             }
 
-            fetchChats();
+            window.location.reload();
         } catch (err: any) {
             toast.error(err.message);
         }

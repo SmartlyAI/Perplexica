@@ -261,6 +261,7 @@ const loadMessages = async (
   setNotFound: (notFound: boolean) => void,
   setFiles: (files: File[]) => void,
   setFileIds: (fileIds: string[]) => void,
+  setIsArchived: (isArchived: boolean) => void,
 ) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/chatsmessages/${chatId}?token=${token}`,
@@ -288,6 +289,8 @@ const loadMessages = async (
   }) as Message[];
 
   setMessages(messages);
+
+  setIsArchived(data.chat.archived === 1 ? true : false);
 
   const history = messages.map((msg) => {
     return [msg.role, msg.content];
@@ -347,6 +350,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   const [notFound, setNotFound] = useState(false);
 
+  const [isArchived, setIsArchived] = useState<boolean>(false);
+
   useEffect(() => {
     if (
       chatId &&
@@ -364,6 +369,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
         setNotFound,
         setFiles,
         setFileIds,
+        setIsArchived,
       );
     } else if (!chatId) {
       setNewChatCreated(true);
@@ -597,6 +603,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
               setFileIds={setFileIds}
               files={files}
               setFiles={setFiles}
+              isArchived={isArchived}
+              chatId={chatId}
             />
           </>
         ) : (

@@ -109,7 +109,6 @@ const History = () => {
                                     />
                                     <ArchiveChat
                                         chatId={chat.id}
-                                        fetchChats={fetchChats}
                                     />
                                     <DeleteChat
                                         chatId={chat.id}

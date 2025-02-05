@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
 interface HistoryState {
-    updateHistory: string;
-    setUpdateHistory: (newData: string) => void;
+    updateHistory: string | undefined;
+    setUpdateHistory: (newData: string | undefined) => void;
 }
 
 const useHistoryStore = create<HistoryState>((set) => ({
