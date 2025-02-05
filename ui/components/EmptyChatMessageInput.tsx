@@ -8,6 +8,7 @@ import Attach from './MessageInputActions/Attach';
 import { File } from './ChatWindow';
 import { useTranslations } from 'next-intl';
 import { isRtl } from '@/lib/utils';
+import useHistoryStore from '@/stores/history-store';
 
 const EmptyChatMessageInput = ({
   sendMessage,
@@ -62,6 +63,8 @@ const EmptyChatMessageInput = ({
 
   const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
 
+  const { setUpdateHistory } = useHistoryStore();
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     setMessage(inputValue)
@@ -73,6 +76,7 @@ const EmptyChatMessageInput = ({
       onSubmit={(e) => {
         e.preventDefault();
         sendMessage(message);
+        setUpdateHistory(message);
         setMessage('');
       }}
       onKeyDown={(e) => {

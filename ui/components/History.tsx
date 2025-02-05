@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import RenameChat from './RenameChat';
 import ShareChat from './ShareChat';
 import ArchiveChat from './ArchiveChat';
+import useHistoryStore from '@/stores/history-store';
 
 export interface Chat {
     id: string;
@@ -39,10 +40,11 @@ const History = () => {
         setLoading(false);
     };
 
-    useEffect(() => {
+    const { updateHistory } = useHistoryStore();
 
+    useEffect(() => {
         fetchChats();
-    }, []);
+    }, [updateHistory]);
     const t = useTranslations('History');
 
     return loading ? (
@@ -78,7 +80,7 @@ const History = () => {
                     {chats.map((chat, i) => (
                         <div
                             className={cn(
-                                'flex items-center justify-between w-full hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200',
+                                'flex items-center justify-between w-full hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200 group',
                                 i !== chats.length - 1
                                     ? 'mb-2'
                                     : '',
@@ -87,12 +89,12 @@ const History = () => {
                         >
                             <Link
                                 href={`/c/${chat.id}`}
-                                className="text-black dark:text-white lg:text-xl font-medium truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
+                                className="text-black dark:text-white lg:text-[16px] font-medium truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
                             >
                                 {chat.title}
                             </Link>
 
-                            <Popover className="relative flex items-center">
+                            <Popover className="relative flex items-center invisible group-hover:visible">
                                 <PopoverButton>
                                     <Ellipsis className="cursor-pointer" />
                                 </PopoverButton>

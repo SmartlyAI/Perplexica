@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { useSearchParams } from 'next/navigation';
 import { getSuggestions } from '@/lib/actions';
 import Error from 'next/error';
+import useHistoryStore from '@/stores/history-store';
 
 export type Message = {
   messageId: string;
@@ -399,6 +400,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
     }
   }, [isMessagesLoaded, isWSReady]);
 
+  const { setUpdateHistory } = useHistoryStore();
+
   const sendMessage = async (message: string, messageId?: string) => {
     if (loading) return;
 
@@ -430,6 +433,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
       }),
     );
 
+
     setMessages((prevMessages) => [
       ...prevMessages,
       {
@@ -443,6 +447,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
     const messageHandler = async (e: MessageEvent) => {
       const data = JSON.parse(e.data);
+      setUpdateHistory(message);
 
       if (data.type === 'error') {
         toast.error(data.data);

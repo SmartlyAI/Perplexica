@@ -160,7 +160,7 @@ const SmartlyHandleEmitterEvents = (
   let sources = [];
   let recievedMessage = '';
   let lastTime = new Date().getTime();
-  emitter.on('data'+messageId, (data) => {
+  emitter.on('data' + messageId, (data) => {
     try {
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
       if (parsedData.status === 'in progress') {
@@ -172,7 +172,7 @@ const SmartlyHandleEmitterEvents = (
             messageId: messageId,
           }),
         );
-        if(new Date(parsedData.time).getTime() > lastTime) {
+        if (new Date(parsedData.time).getTime() > lastTime) {
           recievedMessage = parsedData.sentence;
           lastTime = new Date(parsedData.time).getTime();
         }
@@ -190,13 +190,13 @@ const SmartlyHandleEmitterEvents = (
       console.log(error);
     }
   });
-  emitter.on('end'+messageId, (data) => {
+  emitter.on('end' + messageId, (data) => {
     // Remove listeners
-    emitter.listeners('data'+messageId).forEach((listener: (...args: any[]) => void) => {
-      emitter.removeListener('data'+messageId, listener);
+    emitter.listeners('data' + messageId).forEach((listener: (...args: any[]) => void) => {
+      emitter.removeListener('data' + messageId, listener);
     });
-    emitter.listeners('end'+messageId).forEach((listener: (...args: any[]) => void) => {
-      emitter.removeListener('end'+messageId, listener);
+    emitter.listeners('end' + messageId).forEach((listener: (...args: any[]) => void) => {
+      emitter.removeListener('end' + messageId, listener);
     });
     ws.send(JSON.stringify({ type: 'messageEnd', messageId: messageId }));
 
@@ -365,13 +365,13 @@ export const callSmartlyMessage = async (
           event_name: 'NEW_INPUT',
           platform: 'webchat',
           streaming: true,
-          skill_id: '679276a25d4aa4e2beeddd19',
+          skill_id: '6732efb8397a97154e90f583',
           lang: 'fr-fr',
           input_type: 'text',
           input: parsedMessage.content,
           user_id: 'test-api-7778812-29-11-yd111226545oo',
           user_data: {
-              webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId + "?messageId=" + parsedMessage.messageId
+            webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId + "?messageId=" + parsedMessage.messageId
           }
         });
         SmartlyHandleEmitterEvents(smartlyEventEmitter, ws, parsedMessage.messageId, parsedMessage.chatId);
@@ -422,7 +422,7 @@ export const callSmartlyMessage = async (
         logger.error(error);
         ws.send(JSON.stringify({ type: 'error', data: error.message, key: 'INTERNAL_SERVER_ERROR' }));
       }
-      
+
     }
   } catch (err) {
     ws.send(
