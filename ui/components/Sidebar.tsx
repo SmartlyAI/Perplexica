@@ -16,7 +16,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className='relative flex h-full w-full overflow-hidden transition-colors'>
             {isSidebarOpen && (
-                <div className="fixed top-0 left-0 h-full transition-all duration-300 w-[260px] z-50" style={{ zIndex: 50 }}>
+                <div className="fixed top-0 left-0 lg:static h-full transition-all duration-300 w-[260px] z-50" style={{ zIndex: 50 }}>
                     <div className="h-full bg-[#f9f9f9] dark:bg-dark-secondary px-5 py-5">
                         <div className="flex items-center justify-between">
                             {/* <a href="/" className="flex items-center">
