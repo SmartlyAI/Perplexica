@@ -1,4 +1,3 @@
-import { Trash2 } from 'lucide-react';
 import {
     Dialog,
     DialogBackdrop,
@@ -7,85 +6,47 @@ import {
     Transition,
     TransitionChild,
 } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
-import Link from 'next/link';
-import useHistoryStore from '@/stores/history-store';
 
-export interface Chat {
-    id: string;
-    title: string;
-    createdAt: string;
-    focusMode: string;
-    token: string;
-    shared: boolean;
-}
-
-const ArchivedChats = ({
+const ArchiveAllChats = ({
     token,
+    redirect = true,
 }: {
     token: string;
+    redirect?: boolean;
 }) => {
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [chats, setChats] = useState<Chat[]>([]);
-    const { setUpdateHistory } = useHistoryStore();
 
-    const fetchArchivedChats = async () => {
+    const handleArchiveChat = async () => {
         setLoading(true);
         try {
             const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/chats/${token}/archived`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                },
-            );
-
-            if (res.status != 200) {
-                throw new Error('Failed to fetch archived chats');
-            }
-
-            const data = await res.json();
-            setChats(data.chats);
-        } catch (err: any) {
-            toast.error(err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const deleteArchivedChats = async (chatId: string) => {
-        setLoading(true);
-        try {
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL}/chats/${chatId}/archive`,
+                `${process.env.NEXT_PUBLIC_API_URL}/chats/${token}/archiveAll`,
                 {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ archived: 0 }),
+                    body: JSON.stringify({ archived: 1 }),
                 },
             );
 
             if (res.status != 200) {
-                throw new Error('Failed to delete archived chat');
+                throw new Error('Failed to archive chats');
             }
-            fetchArchivedChats();
-            setUpdateHistory(chatId);
+
+            if (redirect) {
+                window.location.href = '/';
+            }
         } catch (err: any) {
             toast.error(err.message);
         } finally {
+            setConfirmationDialogOpen(false);
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        fetchArchivedChats();
-    }, []);
 
     return (
         <>
@@ -96,7 +57,7 @@ const ArchivedChats = ({
                 style={{ marginTop: 'unset' }}
                 className="bg-transparent border rounded-lg p-2 mt-0 hover:bg-light-200 dark:hover:bg-dark-200"
             >
-                <span>Manage</span>
+                <span>Archive all</span>
             </button>
             <Transition appear show={confirmationDialogOpen} as={Fragment}>
                 <Dialog
@@ -122,22 +83,25 @@ const ArchivedChats = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Archived chats
+                                        Archive your chat history - are you sure?
                                     </DialogTitle>
-                                    <div className="mt-3">
-                                        {chats.length === 0 ? (
-                                            <p className="text-black/70 dark:text-white/70 text-sm">
-                                                No Archived chats
-                                            </p>
-                                        )
-                                            : chats.map((chat, i) => (
-                                                <div key={i} className="flex flex-row items-center justify-between text-black/70 dark:text-white/70 hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200">
-                                                    <Link href={`/c/${chat.id}`}>{chat.title}</Link>
-                                                    <Trash2 size={17} className='cursor-pointer' onClick={() => deleteArchivedChats(chat.id)} />
-                                                </div>
-                                            ))
-                                        }
-
+                                    <div className="flex flex-row items-end justify-end space-x-4 mt-6">
+                                        <button
+                                            onClick={() => {
+                                                if (!loading) {
+                                                    setConfirmationDialogOpen(false);
+                                                }
+                                            }}
+                                            className="text-black/50 dark:text-white/50 text-sm hover:text-black/70 hover:dark:text-white/70 transition duration-200"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            onClick={handleArchiveChat}
+                                            className="text-sm transition duration200"
+                                        >
+                                            Confirm archive
+                                        </button>
                                     </div>
                                 </DialogPanel>
                             </TransitionChild>
@@ -149,4 +113,4 @@ const ArchivedChats = ({
     );
 };
 
-export default ArchivedChats;
+export default ArchiveAllChats;

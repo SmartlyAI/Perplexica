@@ -20,6 +20,7 @@ import { useTranslations } from 'next-intl';
 import SharedChats from './SharedChats';
 import DeleteAllChats from './DeleteAllChats';
 import ArchivedChats from './ArchivedChat';
+import ArchiveAllChats from './ArchiveAllChat';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> { }
 
@@ -185,6 +186,12 @@ const SettingsDialog = ({
                         Archived chats
                       </p>
                       <ArchivedChats token={token} />
+                    </div>
+                    <div className="flex justify-between items-center space-y-1">
+                      <p className="text-black/70 dark:text-white/70 text-sm">
+                        Archive all chats
+                      </p>
+                      <ArchiveAllChats token={token} />
                     </div>
                     <div className="flex justify-between items-center space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
