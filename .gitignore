@@ -14,14 +14,14 @@ yarn-error.log
 *.iml
 
 # Environment variables
-# .env
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
 # Config files
-# config.toml
+config.toml
 
 # Log files
 logs/
