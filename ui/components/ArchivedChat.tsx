@@ -10,6 +10,7 @@ import {
 import { Fragment, useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export interface Chat {
     id: string;
@@ -30,6 +31,7 @@ const ArchivedChats = ({
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [chats, setChats] = useState<Chat[]>([]);
+    const t = useTranslations('Settings.ArchivedChats');
 
     const fetchArchivedChats = async () => {
         setLoading(true);
@@ -100,7 +102,7 @@ const ArchivedChats = ({
                 style={{ marginTop: 'unset' }}
                 className="bg-transparent border rounded-lg p-2 mt-0 hover:bg-light-200 dark:hover:bg-dark-200"
             >
-                <span>Manage</span>
+                <span>{t("action")}</span>
             </button>
             <Transition appear show={confirmationDialogOpen} as={Fragment}>
                 <Dialog
@@ -126,12 +128,12 @@ const ArchivedChats = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Archived chats
+                                        {t("title")}
                                     </DialogTitle>
                                     <div className="mt-3">
                                         {chats.length === 0 ? (
                                             <p className="text-black/70 dark:text-white/70 text-sm">
-                                                No Archived chats
+                                                {t("message")}
                                             </p>
                                         )
                                             : chats.map((chat, i) => (

@@ -10,6 +10,7 @@ import {
 } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 const ShareChat = ({
     chatId,
@@ -18,6 +19,7 @@ const ShareChat = ({
 }) => {
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const t = useTranslations('Options.Share');
 
     const handleShare = async () => {
         setLoading(true);
@@ -53,7 +55,7 @@ const ShareChat = ({
                 className="bg-transparent flex items-center px-4 py-3 hover:bg-light-200 dark:hover:bg-dark-200"
             >
                 <Share size={17} className='mr-3' />
-                <span>Share</span>
+                <span>{t("action")}</span>
             </button>
             <Transition appear show={confirmationDialogOpen} as={Fragment}>
                 <Dialog
@@ -79,10 +81,10 @@ const ShareChat = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Share Chat
+                                        {t("title")}
                                     </DialogTitle>
                                     <Description className="text-sm dark:text-white/70 text-black/70">
-                                        Your name, custom instructions, and any messages you add after sharing will be visible to anyone with the link.
+                                        {t("message")}
                                     </Description>
                                     <div className="flex flex-row items-end justify-end space-x-4 mt-6">
                                         <button
@@ -93,13 +95,13 @@ const ShareChat = ({
                                             }}
                                             className="text-black/50 dark:text-white/50 text-sm hover:text-black/70 hover:dark:text-white/70 transition duration-200"
                                         >
-                                            Cancel
+                                            {t("cancel")}
                                         </button>
                                         <button
                                             onClick={handleShare}
                                             className="text-sm transition duration200"
                                         >
-                                            Share
+                                            {t("action")}
                                         </button>
                                     </div>
                                 </DialogPanel>

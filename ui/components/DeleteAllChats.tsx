@@ -7,6 +7,7 @@ import {
     Transition,
     TransitionChild,
 } from '@headlessui/react';
+import { useTranslations } from 'next-intl';
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -19,6 +20,7 @@ const DeleteAllChats = ({
 }) => {
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const t = useTranslations('Settings.DeleteAllChats');
 
     const handleDeleteAll = async () => {
         setLoading(true);
@@ -56,7 +58,7 @@ const DeleteAllChats = ({
                 }}
                 className="bg-red-500 text-white rounded-lg flex items-center px-4 py-2 hover:bg-red-700"
             >
-                <span>Delete All</span>
+                <span>{t('action')}</span>
             </button>
             <Transition appear show={confirmationDialogOpen} as={Fragment}>
                 <Dialog
@@ -82,10 +84,10 @@ const DeleteAllChats = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Delete Confirmation
+                                        {t('Confirm.title')}
                                     </DialogTitle>
                                     <Description className="text-sm dark:text-white/70 text-black/70">
-                                        Clear your chat history - are you sure?
+                                        {t('Confirm.message')}
                                     </Description>
                                     <div className="flex flex-row items-end justify-end space-x-4 mt-6">
                                         <button
@@ -96,13 +98,13 @@ const DeleteAllChats = ({
                                             }}
                                             className="text-black/50 dark:text-white/50 text-sm hover:text-black/70 hover:dark:text-white/70 transition duration-200"
                                         >
-                                            Cancel
+                                            {t('Confirm.cancel')}
                                         </button>
                                         <button
                                             onClick={handleDeleteAll}
                                             className="text-red-400 text-sm hover:text-red-500 transition duration200"
                                         >
-                                            Delete All
+                                            {t('Confirm.action')}
                                         </button>
                                     </div>
                                 </DialogPanel>
