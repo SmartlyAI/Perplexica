@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react';
+import { Trash2, X } from 'lucide-react';
 import {
     Dialog,
     DialogBackdrop,
@@ -125,9 +125,17 @@ const ArchivedChats = ({
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
+                                <div className="flex items-center justify-between mb-4">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
                                         Archived chats
                                     </DialogTitle>
+                                    <button
+                                      className="absolute right-0 text-black/50 dark:text-white/50 hover:text-black/70 hover:dark:text-white/70 transition duration-200 mr-4"
+                                      onClick={() => setConfirmationDialogOpen(false)}
+        >
+                                      <X size={20} />
+                                    </button>
+                                </div>
                                     <div className="mt-3">
                                         {chats.length === 0 ? (
                                             <p className="text-black/70 dark:text-white/70 text-sm">

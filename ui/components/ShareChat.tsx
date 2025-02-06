@@ -1,4 +1,4 @@
-import { Share } from 'lucide-react';
+import { Share, X } from 'lucide-react';
 import {
     Description,
     Dialog,
@@ -78,9 +78,17 @@ const ShareChat = ({
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
+                                <div className="flex items-center justify-between mb-4">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
                                         Share Chat
                                     </DialogTitle>
+                                    <button
+                                      className="absolute right-0 text-black/50 dark:text-white/50 hover:text-black/70 hover:dark:text-white/70 transition duration-200 mr-4"
+                                      onClick={() => setConfirmationDialogOpen(false)}
+        >
+                                      <X size={20} />
+                                    </button>
+                                </div>
                                     <Description className="text-sm dark:text-white/70 text-black/70">
                                         Your name, custom instructions, and any messages you add after sharing will be visible to anyone with the link.
                                     </Description>

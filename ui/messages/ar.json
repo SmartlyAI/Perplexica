@@ -1,6 +1,6 @@
 {
     "EmptyChat": {
-        "title": "Smartly Chat مرحباً بكم في",
+        "title": "كيف يمكنني مساعدتك اليوم؟",
         "placeholder": "كيف يمكنني مساعدتك اليوم؟"
     },
     "History": {
@@ -8,6 +8,7 @@
     },
     "Settings": {
         "title": "إعدادات",
+        "message":"",
         "Theme": "الوضع",
         "Language": "لغة",
         "desc": ".سنقوم بتحديث الصفحة بعد تحديث الإعدادات",

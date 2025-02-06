@@ -1,6 +1,6 @@
 {
     "EmptyChat": {
-        "title": "Welcome to Smartly Chat",
+        "title": "How can I help you today?",
         "placeholder": "How can I help you today"
     },
     "History": {
@@ -8,6 +8,7 @@
     },
     "Settings": {
         "title": "Settings",
+        "message":"",
         "Theme": "Theme",
         "Language": "Language",
         "desc": "We'll refresh the page after updating the settings.",
