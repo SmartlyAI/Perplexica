@@ -1,9 +1,15 @@
-import { PanelLeftOpen, PanelRightOpen, Settings } from 'lucide-react';
+import {
+  PanelLeftOpen,
+  PanelRightOpen,
+  Settings,
+  SquarePen,
+} from 'lucide-react';
 import { useState } from 'react';
 import useSidebarStore from '@/stores/global-stores';
 import SettingsDialog from './SettingsDialog';
 import ShareButton from './ShareButton';
 import { getChatId } from '@/lib/utils';
+import Link from 'next/link';
 
 const Navbar = () => {
   const { toggleSidebar } = useSidebarStore();
@@ -13,8 +19,17 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
-
-      <PanelLeftOpen className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
+      <div className="flex items-center gap-4">
+        <PanelLeftOpen
+          className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`}
+          onClick={toggleSidebar}
+        />
+        {!isSidebarOpen && (
+          <Link href="/">
+            <SquarePen />
+          </Link>
+        )}
+      </div>
 
       <div
         className={`flex items-center ${isSidebarOpen ? 'fixed top-5 right-5' : ''}`}
