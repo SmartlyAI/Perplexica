@@ -213,5 +213,44 @@ router.patch('/:token/archiveAll', async (req, res) => {
   }
 });
 
+router.get('/:token/download', async (req, res) => {
+  try {
+    const { token } = req.params;
+
+    let chatList = await db.query.chats.findMany({
+      where: eq(chats.token, token),
+    });
+
+    if (!chatList.length) {
+      return res.status(404).json({ message: "No chats found for this token." });
+    }
+
+    const chatIds = chatList.map((chat) => chat.id);
+    let messagesList = await db.query.messages.findMany({
+      where: inArray(messages.chatId, chatIds),
+    });
+
+    const messagesByChat = messagesList.reduce((acc, message) => {
+      if (!acc[message.chatId]) acc[message.chatId] = [];
+      acc[message.chatId].push(message);
+      return acc;
+    }, {});
+
+    const responseData = chatList.map((chat) => ({
+      ...chat,
+      messages: messagesByChat[chat.id] || [],
+    }));
+
+    const jsonData = JSON.stringify({ chats: responseData }, null, 2);
+
+    res.setHeader("Content-Disposition", `attachment; filename="chats_${token}.json"`);
+    res.setHeader("Content-Type", "application/json");
+
+    return res.status(200).send(jsonData);
+  } catch (err) {
+    res.status(500).json({ message: 'An error has occurred.' });
+    logger.error(`Error in getting chat: ${err.message}`);
+  }
+});
 
 export default router;
