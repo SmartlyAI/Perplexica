@@ -16,12 +16,14 @@ const Navbar = () => {
 
       <PanelLeftOpen className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
 
-      <div className="flex items-center space-x-5">
+      <div
+        className={`flex items-center ${isSidebarOpen ? 'fixed top-5 right-5' : ''}`}
+      >
         {getChatId() && (
           <ShareButton isOpen={isShareOpen} setIsOpen={setIsShareOpen} />
         )}
         <Settings
-          className={`cursor-pointer ${isSidebarOpen ? 'fixed top-5 right-5' : ''}`}
+          className="cursor-pointer"
           onClick={() => setIsSettingsOpen(true)}
         />
       </div>
