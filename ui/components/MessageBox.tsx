@@ -21,6 +21,7 @@ import SearchImages from './SearchImages';
 import SearchVideos from './SearchVideos';
 import { useSpeech } from 'react-text-to-speech';
 import Image from 'next/image';
+import Tooltip from './Tooltip';
 
 const MessageBox = ({
   message,
@@ -125,7 +126,9 @@ const MessageBox = ({
                   <div className="flex flex-row items-center space-x-1">
                     <ThumbsUp size={18} />
                     <ThumbsDown size={18} />
-                    <Copy initialMessage={message.content} message={message} />
+                    <Tooltip content='Copy' position='bottom'>
+                      <Copy initialMessage={message.content} message={message} />
+                    </Tooltip>
                     <button
                       onClick={() => {
                         if (speechStatus === 'started') {
