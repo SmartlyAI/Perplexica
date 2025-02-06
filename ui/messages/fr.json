@@ -1,16 +1,67 @@
 {
-    "EmptyChat": {
-        "title": "Bienvenue sur Smartly Chat",
-        "placeholder": "Comment puis je vous aider aujourd’hui?"
+  "EmptyChat": {
+    "title": "Bienvenue sur Smartly Chat",
+    "placeholder": "Comment puis je vous aider aujourd’hui?"
+  },
+  "History": {
+    "message": "Aucune discussion trouvée."
+  },
+  "Search": {
+    "title": "Rechercher des discussions",
+    "placeholder": "Rechercher...",
+    "message": "Aucune discussion trouvée.",
+    "timeSuffix": "Il y a"
+  },
+  "Options": {
+    "Rename": {
+      "title": "Renommer la conversation",
+      "action": "Renommer",
+      "cancel": "Annuler"
     },
-    "History": {
-        "message": "Aucune discussion trouvée."
+    "Share": {
+      "title": "Partager la conversation",
+      "message": "Votre nom, vos instructions personnalisées et tous les messages que vous ajoutez après le partage seront visibles par toute personne disposant du lien.",
+      "action": "Partager",
+      "cancel": "Annuler"
     },
-    "Settings": {
-        "title": "Paramètres",
-        "Theme": "Thème",
-        "Language": "Langue",
-        "desc": "Nous actualiserons la page après avoir mis à jour les paramètres.",
-        "Save": "Sauvegarder"
+    "Archive": "Archiver",
+    "Delete": {
+      "title": "Supprimer la conversation",
+      "Confirm": {
+        "title": "Confirmation de suppression",
+        "message": "Êtes-vous sûr de vouloir supprimer cette conversation ?",
+        "action": "Supprimer",
+        "cancel": "Annuler"
+      },
+      "action": "Supprimer"
     }
+  },
+  "Settings": {
+    "title": "Paramètres",
+    "Theme": "Thème",
+    "Language": "Langue",
+    "message": "Aucune discussion trouvée.",
+    "desc": "Nous actualiserons la page après avoir mis à jour les paramètres.",
+    "Save": "Sauvegarder",
+    "SharedChats": {
+      "title": "Chats partagés",
+      "action": "Gérer",
+      "message": "Aucun chat partagé"
+    },
+    "ArchivedChats": {
+      "title": "Chats archivés",
+      "action": "Gérer",
+      "message": "Aucun chat archivé"
+    },
+    "DeleteAllChats": {
+      "title": "Supprimer tous les chats",
+      "Confirm": {
+        "title": "Confirmation de suppression",
+        "message": "Effacer votre historique de chat - êtes-vous sûr ?",
+        "action": "Supprimer tout",
+        "cancel": "Annuler"
+      },
+      "action": "Supprimer tout"
+    }
+  }
 }

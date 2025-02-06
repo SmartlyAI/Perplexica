@@ -1,4 +1,5 @@
 import { Archive } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
 const ArchiveChat = ({
@@ -6,7 +7,7 @@ const ArchiveChat = ({
 }: {
     chatId: string;
 }) => {
-
+    const t = useTranslations('Options');
     const handleArchive = async () => {
         try {
             const res = await fetch(
@@ -36,7 +37,7 @@ const ArchiveChat = ({
             className="bg-transparent flex items-center px-4 py-3 hover:bg-light-200 dark:hover:bg-dark-200"
         >
             <Archive size={17} className='mr-3' />
-            <span>Archive</span>
+            <span>{t("Archive")}</span>
         </button>
     );
 };

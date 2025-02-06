@@ -177,13 +177,13 @@ const SettingsDialog = ({
                     </div>
                     <div className="flex justify-between items-center space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
-                        Shared chats
+                        {t('SharedChats.title')}
                       </p>
                       <SharedChats token={token} />
                     </div>
                     <div className="flex justify-between items-center space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
-                        Archived chats
+                        {t('ArchivedChats.title')}
                       </p>
                       <ArchivedChats token={token} />
                     </div>
@@ -195,7 +195,7 @@ const SettingsDialog = ({
                     </div>
                     <div className="flex justify-between items-center space-y-1">
                       <p className="text-black/70 dark:text-white/70 text-sm">
-                        Delete all chats
+                        {t('DeleteAllChats.title')}
                       </p>
                       <DeleteAllChats token={token} />
                     </div>

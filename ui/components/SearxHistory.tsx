@@ -104,7 +104,7 @@ const SearxHistory = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
   const [lang, setLang] = useState<string>('en');
-  const t = useTranslations('Settings');
+  const t = useTranslations('Search');
 
   const [chats, setChats] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(true);
@@ -143,6 +143,14 @@ const SearxHistory = ({
     setFilteredChats(filtered);
   };
 
+  const formatTimeWithSuffix = (timeDifference: string) => {
+    const isFrench = t('timeSuffix') === 'Il y a';
+    if (isFrench) {
+      return `${t('timeSuffix')} ${timeDifference}`;
+    }
+    return `${timeDifference} ${t('timeSuffix')}`;
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -174,7 +182,7 @@ const SearxHistory = ({
             >
               <DialogPanel className="w-full max-w-lg transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle className="text-xl font-medium leading-6 dark:text-white">
-                  Search chats
+                  {t('title')}
                 </DialogTitle>
                 {!isLoading && (
                   <div className="flex flex-col space-y-4 mt-6">
@@ -185,7 +193,7 @@ const SearxHistory = ({
                         name="serach"
                         value={searchQuery}
                         onChange={handleSearch}
-                        placeholder='Search...'
+                        placeholder={t('placeholder')}
                       />
                       {filteredchats?.length === 0 && (
                         <div className="flex flex-row items-center justify-center min-h-screen">
@@ -216,7 +224,12 @@ const SearxHistory = ({
                                 <div className="flex flex-row items-center space-x-1 lg:space-x-1.5 text-black/70 dark:text-white/70">
                                   <ClockIcon size={15} />
                                   <p className="text-xs">
-                                    {formatTimeDifference(new Date(), chat.createdAt)} Ago
+                                    {formatTimeWithSuffix(
+                                      formatTimeDifference(
+                                        new Date(),
+                                        chat.createdAt,
+                                      ),
+                                    )}
                                   </p>
                                 </div>
                               </div>

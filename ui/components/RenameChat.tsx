@@ -9,6 +9,7 @@ import {
 } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 const RenameChat = ({
     chatId,
@@ -22,6 +23,7 @@ const RenameChat = ({
     const [confirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [title, setTitle] = useState<string>(chatTitle);
     const [loading, setLoading] = useState(false);
+    const t = useTranslations('Options.Rename');
 
     const handleRename = async () => {
         setLoading(true);
@@ -59,7 +61,7 @@ const RenameChat = ({
                 className="bg-transparent flex items-center px-4 py-3 hover:bg-light-200 dark:hover:bg-dark-200"
             >
                 <Pencil size={17} className='mr-3' />
-                <span>Rename</span>
+                <span>{t("action")}</span>
             </button>
             <Transition appear show={confirmationDialogOpen} as={Fragment}>
                 <Dialog
@@ -85,7 +87,7 @@ const RenameChat = ({
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                                     <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                        Rename Chat
+                                       {t("title")}
                                     </DialogTitle>
                                     <input
                                         type="text"
@@ -105,13 +107,13 @@ const RenameChat = ({
                                             }}
                                             className="text-black/50 dark:text-white/50 text-sm hover:text-black/70 hover:dark:text-white/70 transition duration-200"
                                         >
-                                            Cancel
+                                            {t("cancel")}
                                         </button>
                                         <button
                                             onClick={handleRename}
                                             className="text-sm transition duration200"
                                         >
-                                            Rename
+                                           {t("action")}
                                         </button>
                                     </div>
                                 </DialogPanel>

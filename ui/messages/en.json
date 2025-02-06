@@ -1,16 +1,67 @@
 {
-    "EmptyChat": {
-        "title": "Welcome to Smartly Chat",
-        "placeholder": "How can I help you today"
+  "EmptyChat": {
+    "title": "Welcome to Smartly Chat",
+    "placeholder": "How can I help you today"
+  },
+  "History": {
+    "message": "No chats found."
+  },
+  "Search": {
+    "title": "Search chats",
+    "placeholder": "Search...",
+    "message": "No chats found.",
+    "timeSuffix": "Ago"
+  },
+  "Options": {
+    "Rename": {
+      "title": "Rename Chat",
+      "action": "Rename",
+      "cancel": "Cancel"
     },
-    "History": {
-        "message": "No chats found."
+    "Share": {
+      "title": "Share Chat",
+      "message": "Your name, custom instructions, and any messages you add after sharing will be visible to anyone with the link.",
+      "action": "Share",
+      "cancel": "Cancel"
     },
-    "Settings": {
-        "title": "Settings",
-        "Theme": "Theme",
-        "Language": "Language",
-        "desc": "We'll refresh the page after updating the settings.",
-        "Save": "Save"
+    "Archive": "Archive",
+    "Delete": {
+      "title": "Delete Chat",
+      "Confirm": {
+        "title": "Delete Confirmation",
+        "message": "Are you sure you want to delete this chat?",
+        "action": "Delete",
+        "cancel": "Cancel"
+      },
+      "action": "Delete"
     }
+  },
+  "Settings": {
+    "title": "Settings",
+    "message": "Update your settings",
+    "Theme": "Theme",
+    "Language": "Language",
+    "desc": "We'll refresh the page after updating the settings.",
+    "Save": "Save",
+    "SharedChats": {
+      "title": "Shared Chats",
+      "action": "Manage",
+      "message": "No shared chats"
+    },
+    "ArchivedChats": {
+      "title": "Archived chats",
+      "action": "Manage",
+      "message": "No archived chats"
+    },
+    "DeleteAllChats": {
+      "title": "Delete all chats",
+      "Confirm": {
+        "title": "Delete Confirmation",
+        "message": "Clear your chat history - are you sure?",
+        "action": "Delete All",
+        "cancel": "Cancel"
+      },
+      "action": "Delete All"
+    }
+  }
 }
