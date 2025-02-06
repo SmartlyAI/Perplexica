@@ -71,7 +71,7 @@ const MessageBox = ({
       {message.role === 'user' && (
         <div className={cn('w-full flex justify-end', messageIndex === 0 ? 'pt-16' : 'pt-8')}>
           <div className="max-w-[70%] w-fit rounded-full bg-[#f3f4f6] dark:bg-[#2f2f2f] px-5 py-2">
-            <h2 dir={direction} className="text-black dark:text-white font-medium text-xl">
+            <h2 dir={direction} className="text-black dark:text-white  font-[400] lg:text-[16px]">
               {message.content}
             </h2>
           </div>
