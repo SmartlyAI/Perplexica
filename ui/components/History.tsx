@@ -11,6 +11,7 @@ import RenameChat from './RenameChat';
 import ShareChat from './ShareChat';
 import ArchiveChat from './ArchiveChat';
 import useHistoryStore from '@/stores/history-store';
+import Tooltip from './Tooltip';
 
 export interface Chat {
     id: string;
@@ -96,7 +97,9 @@ const History = () => {
 
                             <Popover className="relative flex items-center invisible group-hover:visible">
                                 <PopoverButton>
-                                    <Ellipsis className="cursor-pointer" />
+                                    <Tooltip content='Options'>
+                                        <Ellipsis className="cursor-pointer" />
+                                    </Tooltip>
                                 </PopoverButton>
                                 <PopoverPanel anchor="bottom start" className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg">
                                     <RenameChat
