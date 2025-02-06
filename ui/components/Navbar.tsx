@@ -3,6 +3,7 @@ import { useState } from 'react';
 import useSidebarStore from '@/stores/global-stores';
 import SettingsDialog from './SettingsDialog';
 import ShareButton from './ShareButton';
+import { getChatId } from '@/lib/utils';
 
 const Navbar = () => {
   const { toggleSidebar } = useSidebarStore();
@@ -17,7 +18,9 @@ const Navbar = () => {
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />
 
       <div className="flex items-center space-x-5">
-        <ShareButton isOpen={isShareOpen} setIsOpen={setIsShareOpen} />
+        {getChatId() && (
+          <ShareButton isOpen={isShareOpen} setIsOpen={setIsShareOpen} />
+        )}
         <Settings
           className="cursor-pointer"
           onClick={() => setIsSettingsOpen(true)}

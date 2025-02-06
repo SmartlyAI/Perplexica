@@ -9,6 +9,8 @@ import { create } from 'domain';
 import { Link, LinkIcon, X } from 'lucide-react';
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
+import { getChatId } from '@/lib/utils';
+
 
 const ShareDialog = ({
   isOpen,
@@ -21,10 +23,6 @@ const ShareDialog = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const getChatId = () => {
-    const match = window.location.pathname.match(/\/c\/([^/]+)/);
-    return match ? match[1] : null;
-  };
 
   const createLink = async () => {
     const chatId = getChatId();
@@ -57,7 +55,7 @@ const ShareDialog = ({
 
       await navigator.clipboard.writeText(window.location.href);
       toast.success('Link copied to clipboard!');
-      
+
     } catch (error) {
       setError('Failed to create share link');
       toast.error('Failed to create share link');

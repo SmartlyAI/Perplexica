@@ -26,6 +26,11 @@ export const formatTimeDifference = (
     return `${Math.floor(diffInSeconds / 31536000)} year${Math.floor(diffInSeconds / 31536000) !== 1 ? 's' : ''}`;
 };
 
+export const getChatId = () => {
+  const match = window.location.pathname.match(/\/c\/([^/]+)/);
+  return match ? match[1] : null;
+};
+
 export const isRtl = (text: string): boolean => {
   const rtlRegex = /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/;
   return rtlRegex.test(text);
