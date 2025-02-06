@@ -50,7 +50,7 @@ const History = () => {
     const t = useTranslations('History');
     
     const handleChatClick = (chatId: string) => {
-        router.push(`/c/${chatId}`); // Utilisation correcte avec App Router
+        router.push(`/c/${chatId}`); 
     };
 
     return loading ? (
