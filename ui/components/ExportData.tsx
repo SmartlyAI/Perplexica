@@ -74,7 +74,7 @@ const ExportData = ({
                 >
                     <DialogBackdrop className="fixed inset-0 bg-black/30" />
                     <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                        <div className="flex min-h-full items-center justify-center text-center">
                             <TransitionChild
                                 as={Fragment}
                                 enter="ease-out duration-200"
@@ -84,24 +84,41 @@ const ExportData = ({
                                 leaveFrom="opacity-100 scale-200"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
-                                    <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
+                                <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary p-6 text-left align-middle shadow-xl transition-all border border-gray-300">
+                                    <DialogTitle className="text-lg font-medium text-black dark:text-white">
                                         Request data export - are you sure?
                                     </DialogTitle>
-                                    <div className="flex flex-row items-end justify-end space-x-4 mt-6">
+                                    <hr className='my-5' />
+                                    <div className="mt-4 text-xs text-black dark:text-white leading-relaxed">
+                                        <ul className="list-disc list-inside space-y-2">
+                                            <li>Your account details and chats will be included in the export.</li>
+                                            <li>The data will be sent to your registered email in a downloadable file.</li>
+                                            <li>The download link will expire 24 hours after you receive it.</li>
+                                            <li>Processing may take some time. You&apos;ll be notified when its ready.</li>
+                                        </ul>
+                                    </div>
+
+                                    <p className="text-xs mt-4 text-black dark:text-white">
+                                        To proceed, click &quot;Confirm export&quot; below.
+                                    </p>
+                                    <div className="flex justify-end space-x-3 mt-6">
                                         <button
                                             onClick={() => {
                                                 if (!loading) {
                                                     setConfirmationDialogOpen(false);
                                                 }
                                             }}
-                                            className="text-black/50 dark:text-white/50 text-sm hover:text-black/70 hover:dark:text-white/70 transition duration-200"
+                                            className="px-4 py-2 border border-gray-200 text-black dark:text-gray-100 text-sm
+                                            font-medium hover:bg-gray-100
+                                            rounded-full dark:hover:text-white transition duration-200"
                                         >
                                             Cancel
                                         </button>
                                         <button
                                             onClick={handleExportData}
-                                            className="text-sm transition duration200"
+                                            className="px-4 py-2
+                                            bg-black text-white text-sm rounded-full
+                                            font-medium hover:bg-black/85 transition duration-200"
                                         >
                                             Confirm export
                                         </button>
