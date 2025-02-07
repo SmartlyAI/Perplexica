@@ -1,4 +1,4 @@
-import { Pencil } from 'lucide-react';
+import { Pencil, X } from 'lucide-react';
 import {
     Dialog,
     DialogBackdrop,
@@ -86,9 +86,17 @@ const RenameChat = ({
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
-                                    <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
-                                       {t("title")}
-                                    </DialogTitle>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <DialogTitle className="text-lg font-medium leading-6 dark:text-white">
+                                            {t("title")}
+                                        </DialogTitle>
+                                        <button
+                                            className="absolute right-0 text-black/50 dark:text-white/50 hover:text-black/70 hover:dark:text-white/70 transition duration-200 mr-4"
+                                            onClick={() => setConfirmationDialogOpen(false)}
+                                        >
+                                            <X size={20} />
+                                        </button>
+                                    </div>
                                     <input
                                         type="text"
                                         className='bg-white dark:bg-dark-secondary px-3 py-2 flex items-center overflow-hidden border border-light-200 dark:border-dark-200 dark:text-white rounded-lg text-sm w-full mt-4'
@@ -113,7 +121,7 @@ const RenameChat = ({
                                             onClick={handleRename}
                                             className="text-sm transition duration200"
                                         >
-                                           {t("action")}
+                                            {t("action")}
                                         </button>
                                     </div>
                                 </DialogPanel>

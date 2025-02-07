@@ -12,6 +12,7 @@ import ShareChat from './ShareChat';
 import ArchiveChat from './ArchiveChat';
 import useHistoryStore from '@/stores/history-store';
 import Tooltip from './Tooltip';
+import { useRouter } from 'next/navigation';
 
 export interface Chat {
     id: string;
@@ -24,6 +25,7 @@ export interface Chat {
 const History = () => {
     const [chats, setChats] = useState<Chat[]>([]);
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     const fetchChats = async () => {
         setLoading(true);
@@ -47,6 +49,8 @@ const History = () => {
         fetchChats();
     }, [updateHistory]);
     const t = useTranslations('History');
+
+
 
     return loading ? (
         <div className="flex flex-row items-center justify-center min-h-screen">
@@ -80,44 +84,34 @@ const History = () => {
                 <div className="flex flex-col py-5">
                     {chats.map((chat, i) => (
                         <div
+                            key={i}
                             className={cn(
                                 'flex items-center justify-between w-full hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200 group',
-                                i !== chats.length - 1
-                                    ? 'mb-2'
-                                    : '',
+                                i !== chats.length - 1 ? 'mb-2' : '',
                             )}
-                            key={i}
+                            onClick={() => router.push(`/c/${chat.id}`)}
                         >
-                            <Link
-                                href={`/c/${chat.id}`}
-                                className="text-black dark:text-white lg:text-[16px] font-medium truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
+                            <div
+                                className="flex-1 text-black dark:text-white lg:text-[16px]  font-[400] truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
                             >
                                 {chat.title}
-                            </Link>
+                            </div>
 
                             <Popover className="relative flex items-center invisible group-hover:visible">
-                                <PopoverButton>
+                                <PopoverButton className="flex items-center">
                                     <Tooltip content='Options'>
                                         <Ellipsis className="cursor-pointer" />
                                     </Tooltip>
                                 </PopoverButton>
-                                <PopoverPanel anchor="bottom start" className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg">
-                                    <RenameChat
-                                        chatId={chat.id}
-                                        chatTitle={chat.title}
-                                        fetchChats={fetchChats}
-                                    />
-                                    <ShareChat
-                                        chatId={chat.id}
-                                    />
-                                    <ArchiveChat
-                                        chatId={chat.id}
-                                    />
-                                    <DeleteChat
-                                        chatId={chat.id}
-                                        chats={chats}
-                                        setChats={setChats}
-                                    />
+                                <PopoverPanel
+                                    anchor="bottom start"
+                                    className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <RenameChat chatId={chat.id} chatTitle={chat.title} fetchChats={fetchChats} />
+                                    <ShareChat chatId={chat.id} />
+                                    <ArchiveChat chatId={chat.id} />
+                                    <DeleteChat chatId={chat.id} chats={chats} setChats={setChats} />
                                 </PopoverPanel>
                             </Popover>
                         </div>

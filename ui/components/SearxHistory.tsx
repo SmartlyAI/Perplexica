@@ -1,4 +1,5 @@
 import { cn, formatTimeDifference } from '@/lib/utils';
+import { X } from "lucide-react";
 import {
   Dialog,
   DialogPanel,
@@ -181,9 +182,17 @@ const SearxHistory = ({
               leaveTo="opacity-0 scale-95"
             >
               <DialogPanel className="w-full max-w-lg transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
+              <div className="flex items-center justify-between mb-4">
                 <DialogTitle className="text-xl font-medium leading-6 dark:text-white">
                   {t('title')}
                 </DialogTitle>
+                <button
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white mr-1"
+                onClick={() => setIsOpen(false)}
+                >
+                  <X size={20} />
+                </button>
+              </div>
                 {!isLoading && (
                   <div className="flex flex-col space-y-4 mt-6">
                     <div className="flex flex-col space-y-1">
