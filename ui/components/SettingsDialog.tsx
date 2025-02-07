@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { X } from "lucide-react";
 import {
   Dialog,
   DialogPanel,
@@ -150,7 +151,7 @@ const SettingsDialog = ({
                 className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white mr-1"
                 onClick={() => setIsOpen(false)}
               >
-                ✕
+                 <X size={20} />
               </button>
               </div>
                 {!isLoading && (

@@ -49,9 +49,7 @@ const History = () => {
     }, [updateHistory]);
     const t = useTranslations('History');
     
-    const handleChatClick = (chatId: string) => {
-        router.push(`/c/${chatId}`); 
-    };
+   
 
     return loading ? (
         <div className="flex flex-row items-center justify-center min-h-screen">
@@ -90,7 +88,7 @@ const History = () => {
                                 'flex items-center justify-between w-full hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200 group',
                                  i !== chats.length - 1 ? 'mb-2' : '',
                             )}
-                            onClick={() => handleChatClick(chat.id)}
+                            onClick={() => router.push(`/c/${chat.id}`)}
                         >
                             <div
                                 className="flex-1 text-black dark:text-white lg:text-[16px]  font-[400] truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
