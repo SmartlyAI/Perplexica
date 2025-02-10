@@ -124,11 +124,17 @@ const MessageBox = ({
                     {/* <Rewrite rewrite={rewrite} messageId={message.messageId} /> */}
                   </div>
                   <div className="flex flex-row items-center space-x-1">
-                    <ThumbsUp size={18} />
-                    <ThumbsDown size={18} />
+                    <Tooltip content="good response" position="bottom">
+                      <ThumbsUp size={18} className="cursor-pointer" />
+                    </Tooltip>
+                    <Tooltip content="bad response" position="bottom">
+                      <ThumbsDown size={18} className="cursor-pointer" />
+                    </Tooltip>
+                    
                     <Tooltip content='Copy' position='bottom'>
                       <Copy initialMessage={message.content} message={message} />
                     </Tooltip>
+                    
                     <button
                       onClick={() => {
                         if (speechStatus === 'started') {
@@ -140,9 +146,13 @@ const MessageBox = ({
                       className="p-2 text-black/70 dark:text-white/70 rounded-xl hover:bg-light-secondary dark:hover:bg-dark-secondary transition duration-200 hover:text-black dark:hover:text-white"
                     >
                       {speechStatus === 'started' ? (
+                        <Tooltip content="Stop" position="bottom">
                         <StopCircle size={18} />
+                        </Tooltip>
                       ) : (
+                        <Tooltip content="Read aloud" position="bottom">  
                         <Volume2 size={18} />
+                        </Tooltip>
                       )}
                     </button>
                   </div>

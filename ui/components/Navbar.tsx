@@ -4,6 +4,7 @@ import useSidebarStore from '@/stores/global-stores';
 import SettingsDialog from './SettingsDialog';
 import ShareButton from './ShareButton';
 import { getChatId } from '@/lib/utils';
+import Tooltip from './Tooltip';
 
 const Navbar = () => {
   const { toggleSidebar } = useSidebarStore();
@@ -13,9 +14,9 @@ const Navbar = () => {
 
   return (
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
-
+      <Tooltip content='open sidebar' position="right" >
       <PanelLeftOpen className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
-
+      </Tooltip>
       <div
         className={`flex items-center ${isSidebarOpen ? 'fixed top-5 right-5' : ''}`}
       >
@@ -25,7 +26,7 @@ const Navbar = () => {
         <Settings
           className="cursor-pointer"
           onClick={() => setIsSettingsOpen(true)}
-        />
+        /> 
       </div>
 
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />

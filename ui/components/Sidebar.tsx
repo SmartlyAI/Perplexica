@@ -7,6 +7,7 @@ import History from './History';
 import useSidebarStore from '@/stores/global-stores';
 import SearxHistory from './SearxHistory';
 import Link from 'next/link';
+import Tooltip from './Tooltip';
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const [isSearxOpen, setIsSearxOpen] = useState(false);
@@ -23,17 +24,23 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                                 <Image src="/logo.png" priority alt="Smartly" width={24} height={24} className='mr-3' />
                                 SmartlyChat
                             </a> */}
-
+                             
                             <div className="">
+                            <Tooltip content='close sidebar' position="right" >
                                 <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
+                             </Tooltip>
                             </div>
 
                             <div className="flex gap-2">
+                                <Tooltip content='Search chats' position="bottom" >
                                 <Search
                                     onClick={() => setIsSearxOpen(!isSearxOpen)}
                                     className="cursor-pointer"
                                 />
-                                <Link href="/"><SquarePen /></Link>
+                                </Tooltip>
+                                <Tooltip content="New Chat" position="bottom">
+                                <Link href="/"><SquarePen className="cursor-pointer" /></Link>
+                                </Tooltip>
                             </div>
                         </div>
 
