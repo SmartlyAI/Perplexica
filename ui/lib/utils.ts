@@ -43,18 +43,13 @@ export const isXsM = () => { return typeof window !== 'undefined' ? window.match
 
 
 export const isToday = (date: Date) => {
-  const today = new Date();
-  return date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear();
+  return new Date().toDateString() === date.toDateString();
 };
 
 export const isYesterday = (date: Date) => {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  return date.getDate() === yesterday.getDate() &&
-      date.getMonth() === yesterday.getMonth() &&
-      date.getFullYear() === yesterday.getFullYear();
+  return yesterday.toDateString() === date.toDateString();
 };
 
 export const isWithinDays = (date: Date, days: number) => {
@@ -71,32 +66,34 @@ export const monthNames = [
 export const groupChatsByDate = (chats: Chat[]) => {
   return chats.reduce((groups, chat) => {
       const chatDate = new Date(chat.createdAt);
+      const currentYear = new Date().getFullYear();
+      const chatYear = chatDate.getFullYear();
 
-      if (isToday(chatDate)) {
-          if (!groups.Today) groups.Today = [];
-          groups.Today.push(chat);
-      } else if (isYesterday(chatDate)) {
-          if (!groups.Yesterday) groups.Yesterday = [];
-          groups.Yesterday.push(chat);
-      } else if (isWithinDays(chatDate, 7)) {
-          if (!groups['Previous 7 Days']) groups['Previous 7 Days'] = [];
-          groups['Previous 7 Days'].push(chat);
-      } else if (isWithinDays(chatDate, 30)) {
-          if (!groups['Previous 30 Days']) groups['Previous 30 Days'] = [];
-          groups['Previous 30 Days'].push(chat);
-      } else {
-          const currentYear = new Date().getFullYear();
-          const chatYear = chatDate.getFullYear();
+      switch (true) {
+          case isToday(chatDate):
+              (groups.Today ||= []).push(chat);
+              break;
 
-          if (chatYear === currentYear) {
+          case isYesterday(chatDate):
+              (groups.Yesterday ||= []).push(chat);
+              break;
+
+          case isWithinDays(chatDate, 7):
+              (groups['Previous 7 Days'] ||= []).push(chat);
+              break;
+
+          case isWithinDays(chatDate, 30):
+              (groups['Previous 30 Days'] ||= []).push(chat);
+              break;
+
+          case chatYear === currentYear:
               const monthName = monthNames[chatDate.getMonth()];
-              if (!groups[monthName]) groups[monthName] = [];
-              groups[monthName].push(chat);
-          } else {
-              const yearName = chatYear.toString();
-              if (!groups[yearName]) groups[yearName] = [];
-              groups[yearName].push(chat);
-          }
+              (groups[monthName] ||= []).push(chat);
+              break;
+
+          default:
+              (groups[chatYear.toString()] ||= []).push(chat);
+              break;
       }
 
       return groups;
