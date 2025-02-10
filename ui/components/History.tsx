@@ -1,7 +1,7 @@
 'use client';
 
 import DeleteChat from '@/components/DeleteChat';
-import { cn } from '@/lib/utils';
+import { cn, groupChatsByDate, orderedGroups } from '@/lib/utils';
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { Ellipsis } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -48,6 +48,15 @@ const History = () => {
     useEffect(() => {
         fetchChats();
     }, [updateHistory]);
+
+    const sortedGroupEntries = Object.entries(groupChatsByDate(chats)).sort(
+        ([a], [b]) => {
+            const aIndex = orderedGroups.indexOf(a);
+            const bIndex = orderedGroups.indexOf(b);
+            return (aIndex !== -1 ? aIndex : Infinity) - (bIndex !== -1 ? bIndex : Infinity);
+        }
+      );
+
     const t = useTranslations('History');
 
 
@@ -82,12 +91,20 @@ const History = () => {
             )}
             {chats?.length > 0 && (
                 <div className="flex flex-col py-5">
-                    {chats.map((chat, i) => (
+                  {sortedGroupEntries.map(
+                  ([group, groupChats]) => (
+                  <div key={group} className="mb-6">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 px-2">
+                      {group}
+                    </h3>
+                    {groupChats.map((chat, i) => (
                         <div
                             key={i}
                             className={cn(
                                 'flex items-center justify-between w-full hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200 group',
-                                i !== chats.length - 1 ? 'mb-2' : '',
+                                i !== groupChats.length - 1
+                                    ? 'mb-2'
+                                    : '',
                             )}
                             onClick={() => router.push(`/c/${chat.id}`)}
                         >
@@ -116,9 +133,10 @@ const History = () => {
                             </Popover>
                         </div>
                     ))}
-                </div>
-            )
-            }
+                </div >
+            ))}
+            </div>
+            )}
         </div>
     );
 };

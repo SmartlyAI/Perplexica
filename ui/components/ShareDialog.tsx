@@ -5,17 +5,18 @@ import {
   Transition,
   TransitionChild,
 } from '@headlessui/react';
-import { create } from 'domain';
-import { Link, LinkIcon, X } from 'lucide-react';
+import { Link, X } from 'lucide-react';
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
 import { getChatId } from '@/lib/utils';
 
 
 const ShareDialog = ({
+  chatId = null,
   isOpen,
   setIsOpen,
 }: {
+  chatId?: string | null;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }) => {
@@ -25,7 +26,10 @@ const ShareDialog = ({
 
 
   const createLink = async () => {
-    const chatId = getChatId();
+    if (chatId === null) {
+      chatId = getChatId();
+    }
+
     if (!chatId) {
       setError('Invalid chat ID');
       toast.error('Invalid chat ID');
@@ -111,15 +115,8 @@ const ShareDialog = ({
                 <div className="mt-4 space-y-4">
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     Your name, custom instructions, and any messages you add
-                    after sharing stay private.{' '}
-                    <a
-                      href="#"
-                      className="text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      Learn more
-                    </a>
+                    after sharing stay private.
                   </p>
-
                   <div className="flex space-x-2">
                     <input
                       type="text"

@@ -115,7 +115,7 @@ const Chat = ({
       <div ref={messageEnd} className="h-0" />
       {dividerWidth > 0 && !isArchived ? (
         <div
-          className="pb-10 bg-[#ffffff] dark:bg-dark-primary bottom-0 fixed z-40 w-full"
+          className="pb-10 bg-[#ffffff] dark:bg-dark-primary bottom-0 fixed z-40 w-full text-center"
           style={{ width: dividerWidth }}
         >
           <MessageInput
@@ -126,6 +126,9 @@ const Chat = ({
             files={files}
             setFiles={setFiles}
           />
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            ChatGPT can make mistakes. Check important info.
+          </p>
         </div>
       )
         :
