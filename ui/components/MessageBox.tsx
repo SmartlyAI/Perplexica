@@ -23,6 +23,15 @@ import { useSpeech } from 'react-text-to-speech';
 import Image from 'next/image';
 import Tooltip from './Tooltip';
 
+const detectLanguage = (text: string): string => {
+  const arabicPattern = /[\u0600-\u06FF]/;
+  const frenchPattern = /[éèêëàâùûçîïüÿæœ]/i;
+  
+  if (arabicPattern.test(text)) return 'ar-SA';
+  if (frenchPattern.test(text)) return 'fr-FR';
+  return 'en-US'; 
+};
+
 const MessageBox = ({
   message,
   messageIndex,
@@ -44,6 +53,32 @@ const MessageBox = ({
 }) => {
   const [parsedMessage, setParsedMessage] = useState(message.content);
   const [speechMessage, setSpeechMessage] = useState(message.content);
+  const [speechLang, setSpeechLang] = useState('en-US');
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
+
+ 
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+    };
+  }, []);
+
+  
+  useEffect(() => {
+    if (voices.length > 0) {
+      const voice = voices.find(v => v.lang.startsWith(speechLang)) || voices[0];
+      setSelectedVoice(voice);
+    }
+  }, [voices, speechLang]);
 
   useEffect(() => {
     const regex = /\[(\d+)\]/g;
@@ -56,15 +91,35 @@ const MessageBox = ({
       return setParsedMessage(
         message.content
       );
+      return;
     }
+    const detectedDirection = isRtl(message.content) ? "rtl" : "ltr";
+    setDirection(detectedDirection);
 
-    setDirection(isRtl(message.content) ? "rtl" : "ltr");
-
-    setSpeechMessage(message.content.replace(regex, ''));
-    // setParsedMessage(message.content);
+    const cleanMessage = message.content.replace(regex, '');
+    setSpeechMessage(cleanMessage);
+    setSpeechLang(detectLanguage(cleanMessage));
   }, [message.content, message.sources, message.role]);
 
-  const { speechStatus, start, stop } = useSpeech({ text: speechMessage });
+  const { speechStatus, start, stop } = useSpeech({
+    text: speechMessage,
+    lang: speechLang,
+    voice: selectedVoice,
+    rate: 1.0,
+    pitch: 1.0,
+    volume: 1.0
+  });
+
+
+    
+
+   
+
+   
+    // setParsedMessage(message.content);
+ 
+
+  
   const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
 
   return (
