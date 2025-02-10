@@ -74,7 +74,7 @@ const ExportData = ({
                 >
                     <DialogBackdrop className="fixed inset-0 bg-black/30" />
                     <div className="fixed inset-0 overflow-y-auto">
-                        <div className="flex min-h-full items-center justify-center text-center">
+                        <div className="flex p-4 min-h-full items-center justify-center text-center">
                             <TransitionChild
                                 as={Fragment}
                                 enter="ease-out duration-200"
