@@ -263,6 +263,7 @@ const loadMessages = async (
   setFiles: (files: File[]) => void,
   setFileIds: (fileIds: string[]) => void,
   setIsArchived: (isArchived: boolean) => void,
+  setUpdateAssistant: (assistant: { id: string; name: string } | undefined) => void,
 ) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/chatsmessages/${chatId}?token=${token}`,
@@ -281,6 +282,10 @@ const loadMessages = async (
   }
 
   const data = await res.json();
+  
+  setUpdateAssistant(
+    data.chat ? { id: data.chat.assistantId, name: data.chat.assistantName } : undefined,
+  );
 
   const messages = data.messages.map((msg: any) => {
     return {
@@ -353,7 +358,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   const [isArchived, setIsArchived] = useState<boolean>(false);
 
-  const { updateAssistant } = useAssistantStore();
+  const { updateAssistant, setUpdateAssistant } = useAssistantStore();
 
   useEffect(() => {
     if (
@@ -373,6 +378,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
         setFiles,
         setFileIds,
         setIsArchived,
+        setUpdateAssistant
       );
     } else if (!chatId) {
       setNewChatCreated(true);
@@ -434,7 +440,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
           chatId: chatId!,
           content: message,
           token: token,
-          skill: updateAssistant?.id,
+          assistantId: updateAssistant?.id,
+          assistantName: updateAssistant?.name,
         },
         files: fileIds,
         focusMode: focusMode,
