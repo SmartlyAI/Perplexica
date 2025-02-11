@@ -19,9 +19,11 @@
       "cancel": "Cancel"
     },
     "Share": {
-      "title": "Share Chat",
-      "message": "Your name, custom instructions, and any messages you add after sharing will be visible to anyone with the link.",
+      "title": "Share public link to chat",
+      "message": "Your name, custom instructions, and any messages you add after sharing stay private.",
       "action": "Share",
+      "create": "Create link",
+      "creating": "Creating...",
       "cancel": "Cancel"
     },
     "Archive": "Archive",
@@ -62,6 +64,12 @@
         "cancel": "Cancel"
       },
       "action": "Delete All"
+    }
+  },
+  "toast": {
+    "LinkCopied": {
+      "success": "Link copied to clipboard!",
+      "error": "Failed to copy link to clipboard"
     }
   }
 }
