@@ -3,8 +3,17 @@
     "title": "Comment puis je vous aider aujourd’hui?",
     "placeholder": "Comment puis je vous aider aujourd’hui?"
   },
+  
   "History": {
-    "message": "Aucune discussion trouvée."
+    "message": "Aucune discussion trouvée.",
+    "options": "Options",
+    "dateGroups":{
+      "today": "aujourd’hui",
+      "yesterday": "Hier",
+      "previous7Days": "Les 7 derniers jours",
+      "previous30Days": "Les 30 derniers jours"
+
+    }
   },
   "Search": {
     "title": "Rechercher des discussions",
@@ -46,12 +55,14 @@
     "SharedChats": {
       "title": "Chats partagés",
       "action": "Gérer",
-      "message": "Aucun chat partagé"
+      "message": "Aucun chat partagé",
+       "deleteTooltip": "Supprimer le lien partagé"
     },
     "ArchivedChats": {
       "title": "Chats archivés",
       "action": "Gérer",
-      "message": "Aucun chat archivé"
+      "message": "Aucun chat archivé",
+      "deleteChat": "Supprimer la discussion"
     },
     "DeleteAllChats": {
       "title": "Supprimer tous les chats",
@@ -63,5 +74,11 @@
       },
       "action": "Supprimer tout"
     }
+  },
+  "Sidebar": {
+    "closeSidebar": "Fermer la barre latérale",
+    "openSidebar": "ouvrir la barre latérale",
+    "searchChats": "Rechercher des discussions",
+    "newChat": "Nouveau chat"
   }
 }

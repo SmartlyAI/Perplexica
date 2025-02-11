@@ -3,8 +3,16 @@
     "title": "How can I help you today?",
     "placeholder": "How can I help you today"
   },
+  
   "History": {
-    "message": "No chats found."
+    "message": "No chats found.",
+    "options": "Options",
+    "dateGroups": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "previous7Days": "Previous 7 Days",
+      "previous30Days": "Previous 30 Days"
+    }
   },
   "Search": {
     "title": "Search chats",
@@ -46,12 +54,15 @@
     "SharedChats": {
       "title": "Shared Chats",
       "action": "Manage",
-      "message": "No shared chats"
+      "message": "No shared chats",
+      "deleteTooltip": "Delete shared link"
     },
     "ArchivedChats": {
       "title": "Archived chats",
       "action": "Manage",
-      "message": "No archived chats"
+      "message": "No archived chats",
+      "deleteChat": "Delete chat"
+      
     },
     "DeleteAllChats": {
       "title": "Delete all chats",
@@ -63,5 +74,12 @@
       },
       "action": "Delete All"
     }
+  },
+  "Sidebar": {
+    "closeSidebar": "Close sidebar",
+    "openSidebar": "open sidebar",
+    "searchChats": "Search chats",
+    "newChat": "New chat"
   }
+
 }

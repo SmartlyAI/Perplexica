@@ -58,6 +58,7 @@ const History = () => {
       );
 
     const t = useTranslations('History');
+    
 
 
 
@@ -116,7 +117,7 @@ const History = () => {
 
                             <Popover className="relative flex items-center invisible group-hover:visible">
                                 <PopoverButton className="flex items-center">
-                                    <Tooltip content='Options'>
+                                    <Tooltip content={t("options")}>
                                         <Ellipsis className="cursor-pointer" />
                                     </Tooltip>
                                 </PopoverButton>
