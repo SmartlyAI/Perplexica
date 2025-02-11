@@ -21,6 +21,8 @@ export const chats = sqliteTable('chats', {
   id: text('id').primaryKey(),
   title: text('title').notNull(),
   token: text('token').notNull(),
+  assistantId: text('assistantId').notNull(),
+  assistantName: text('assistantName').notNull(),
   shared: integer('shared').notNull().default(sql`0`),
   archived: integer('archived').notNull().default(sql`0`),
   createdAt: text('createdAt').notNull(),

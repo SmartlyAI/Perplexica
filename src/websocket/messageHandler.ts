@@ -24,7 +24,8 @@ type Message = {
   chatId: string;
   content: string;
   token: string;
-  skill: string;
+  assistantId: string;
+  assistantName: string;
 };
 
 type WSMessage = {
@@ -34,7 +35,8 @@ type WSMessage = {
   focusMode: string;
   history: Array<[string, string]>;
   files: Array<string>;
-  skill: string;
+  assistantId: string;
+  assistantName: string;
 };
 
 export const searchHandlers = {
@@ -288,6 +290,8 @@ export const handleMessage = async (
                 focusMode: parsedWSMessage.focusMode,
                 files: parsedWSMessage.files.map(getFileDetails),
                 token: parsedMessage.token,
+                assistantId: parsedWSMessage.assistantId,
+                assistantName: parsedWSMessage.assistantName,
               })
               .execute();
           }
@@ -367,7 +371,7 @@ export const callSmartlyMessage = async (
           event_name: 'NEW_INPUT',
           platform: 'webchat',
           streaming: true,
-          skill_id: parsedMessage.skill,
+          skill_id: parsedMessage.assistantId,
           lang: 'fr-fr',
           input_type: 'text',
           input: parsedMessage.content,
@@ -392,6 +396,8 @@ export const callSmartlyMessage = async (
               focusMode: parsedWSMessage.focusMode,
               files: parsedWSMessage.files.map(getFileDetails),
               token: parsedMessage.token,
+              assistantId: parsedMessage.assistantId,
+              assistantName: parsedMessage.assistantName,
             })
             .execute();
         }
