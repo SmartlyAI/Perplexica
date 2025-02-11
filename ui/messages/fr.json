@@ -19,9 +19,11 @@
       "cancel": "Annuler"
     },
     "Share": {
-      "title": "Partager la conversation",
-      "message": "Votre nom, vos instructions personnalisées et tous les messages que vous ajoutez après le partage seront visibles par toute personne disposant du lien.",
+      "title": "Partager le lien public vers le chat",
+      "message": "Votre nom, vos instructions personnalisées et tous les messages ajoutés après le partage restent privés.",
       "action": "Partager",
+      "create": "Créer un lien",
+      "creating": "Création en cours...",
       "cancel": "Annuler"
     },
     "Archive": "Archiver",
@@ -63,5 +65,11 @@
       },
       "action": "Supprimer tout"
     }
+  },
+  "toast": {
+  "LinkCopied": {
+    "success": "Lien copié dans le presse-papiers !",
+    "error": "Échec de la copie du lien dans le presse-papiers"
   }
+}
 }

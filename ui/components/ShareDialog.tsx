@@ -9,6 +9,7 @@ import { Link, X } from 'lucide-react';
 import { Fragment, useState } from 'react';
 import { toast } from 'sonner';
 import { getChatId } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 
 const ShareDialog = ({
@@ -23,7 +24,8 @@ const ShareDialog = ({
   const [shareUrl, setShareUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
+  const t =  useTranslations('Options.Share');
+  const tt = useTranslations('toast');
 
   const createLink = async () => {
     if (chatId === null) {
@@ -58,11 +60,11 @@ const ShareDialog = ({
       setShareUrl(window.location.href);
 
       await navigator.clipboard.writeText(window.location.href);
-      toast.success('Link copied to clipboard!');
+      toast.success(tt('LinkCopied.success'));
 
     } catch (error) {
       setError('Failed to create share link');
-      toast.error('Failed to create share link');
+      toast.error(tt('LinkCopied.error'));
       console.error('Error creating share link:', error);
     } finally {
       setIsLoading(false);
@@ -101,21 +103,20 @@ const ShareDialog = ({
               <DialogPanel className="w-full max-w-md transform rounded-2xl bg-white dark:bg-dark-secondary border border-light-200 dark:border-dark-200 p-6 text-left align-middle shadow-xl transition-all">
                 <div className="flex justify-between items-center">
                   <DialogTitle className="text-xl font-medium leading-6 dark:text-white">
-                    Share public link to chat
+                    {t('title')}
                   </DialogTitle>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   >
                     <X className="h-4 w-4" />
-                    <span className="sr-only">Close</span>
+                    {/* <span className="sr-only">Close</span> */}
                   </button>
                 </div>
                 <hr className="my-4 border-gray-200 dark:border-dark-200" />
                 <div className="mt-4 space-y-4">
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    Your name, custom instructions, and any messages you add
-                    after sharing stay private.
+                    {t('message')}
                   </p>
                   <div className="flex space-x-2">
                     <input
@@ -130,7 +131,7 @@ const ShareDialog = ({
                       className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 flex items-center gap-2"
                     >
                       <Link className="h-6 w-6" />
-                      {isLoading ? 'Creating...' : 'Create link'}
+                      {isLoading ? t('creating') : t('create')}
                     </button>
                   </div>
                 </div>
