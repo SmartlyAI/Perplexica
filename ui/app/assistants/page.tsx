@@ -87,7 +87,9 @@ const Page = () => {
                 key={item._id}
                 className="cursor-pointer p-4 border border-gray-200 rounded-lg shadow-md w-full text-black dark:text-white lg:text-[16px]  font-[400] truncate transition duration-200"
                 onClick={() => {
-                  setUpdateAssistant(item._id);
+                  setUpdateAssistant(
+                    item._id && item.name ? { id: item._id, name: item.name } : undefined,
+                  );
                   Router.push('/');
                 }}
               >

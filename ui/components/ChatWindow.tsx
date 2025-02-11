@@ -434,7 +434,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
           chatId: chatId!,
           content: message,
           token: token,
-          skill: updateAssistant,
+          skill: updateAssistant?.id,
         },
         files: fileIds,
         focusMode: focusMode,
