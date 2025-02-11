@@ -127,7 +127,7 @@ const Chat = ({
             setFiles={setFiles}
           />
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-            ChatGPT can make mistakes. Check important info.
+            Smartly Chat can make mistakes. Check important info.
           </p>
         </div>
       )
