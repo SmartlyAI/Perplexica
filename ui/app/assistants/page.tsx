@@ -25,8 +25,7 @@ const Page = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTk0ZDIyMTAzYzhiOTEwMDA3ZDNlYWE0Iiwic2tpbGxfaWQiOiJhcGlfdG9rZW4iLCJpYXQiOjE3MzQwMjI2OTF9.imH6ejzZ_BppzDpXEorYlU2jgwFgK-Zk4jhW_r_gGtM'
-            // Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc3N2ZlM2Y3ZDMyOTc0MzNlOGRlYTc0Iiwic2tpbGxfaWQiOiJhcGlfdG9rZW4iLCJpYXQiOjE3MzkyMjg3NTh9.scOecsZERL2_fpfDhaj_Tg9tSUo380uqO3h1dIn7nho'
+            ...(process.env.NEXT_PUBLIC_USER_TOKEN && { Authorization: process.env.NEXT_PUBLIC_USER_TOKEN }),
           },
         });
 
