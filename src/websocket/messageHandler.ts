@@ -24,6 +24,7 @@ type Message = {
   chatId: string;
   content: string;
   token: string;
+  skill: string;
 };
 
 type WSMessage = {
@@ -33,6 +34,7 @@ type WSMessage = {
   focusMode: string;
   history: Array<[string, string]>;
   files: Array<string>;
+  skill: string;
 };
 
 export const searchHandlers = {
@@ -365,7 +367,7 @@ export const callSmartlyMessage = async (
           event_name: 'NEW_INPUT',
           platform: 'webchat',
           streaming: true,
-          skill_id: '6732efb8397a97154e90f583',
+          skill_id: parsedMessage.skill,
           lang: 'fr-fr',
           input_type: 'text',
           input: parsedMessage.content,
