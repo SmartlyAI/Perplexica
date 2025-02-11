@@ -12,6 +12,7 @@ import {
   Plus,
   ThumbsUp,
   ThumbsDown,
+  
 } from 'lucide-react';
 import Markdown from 'markdown-to-jsx';
 import Copy from './MessageActions/Copy';
@@ -22,6 +23,7 @@ import SearchVideos from './SearchVideos';
 import { useSpeech } from 'react-text-to-speech';
 import Image from 'next/image';
 import Tooltip from './Tooltip';
+
 
 const detectLanguage = (text: string): string => {
   const arabicPattern = /[\u0600-\u06FF]/;
@@ -104,7 +106,7 @@ const MessageBox = ({
   const { speechStatus, start, stop } = useSpeech({
     text: speechMessage,
     lang: speechLang,
-    voice: selectedVoice,
+    //voice: selectedVoice,
     rate: 1.0,
     pitch: 1.0,
     volume: 1.0
@@ -121,7 +123,6 @@ const MessageBox = ({
 
   
   const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
-
   return (
     <div>
       {message.role === 'user' && (
@@ -178,16 +179,22 @@ const MessageBox = ({
                     </button> */}
                     {/* <Rewrite rewrite={rewrite} messageId={message.messageId} /> */}
                   </div>
-                  <div className="flex flex-row items-center space-x-1">
+                  <div className="flex flex-row items-center ">
                     <Tooltip content="good response" position="bottom">
+                    <button className="p-2 flex items-center justify-center rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                       <ThumbsUp size={18} className="cursor-pointer" />
+                    </button>
                     </Tooltip>
                     <Tooltip content="bad response" position="bottom">
+                    <button className="p-1 flex items-center justify-center rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                       <ThumbsDown size={18} className="cursor-pointer" />
+                      </button>
                     </Tooltip>
                     
                     <Tooltip content='Copy' position='bottom'>
+                    <button className="p-1 flex items-center justify-center rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
                       <Copy initialMessage={message.content} message={message} />
+                      </button>
                     </Tooltip>
                     
                     <button
@@ -198,7 +205,7 @@ const MessageBox = ({
                           start();
                         }
                       }}
-                      className="p-2 text-black/70 dark:text-white/70 rounded-xl hover:bg-light-secondary dark:hover:bg-dark-secondary transition duration-200 hover:text-black dark:hover:text-white"
+                      className="p-1 flex items-center justify-center h-full text-black/70 dark:text-white/70 rounded-xl hover:bg-light-secondary dark:hover:bg-dark-secondary transition duration-200 hover:text-black dark:hover:text-white"
                     >
                       {speechStatus === 'started' ? (
                         <Tooltip content="Stop" position="bottom">
