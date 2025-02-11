@@ -26,10 +26,10 @@ import Tooltip from './Tooltip';
 const detectLanguage = (text: string): string => {
   const arabicPattern = /[\u0600-\u06FF]/;
   const frenchPattern = /[éèêëàâùûçîïüÿæœ]/i;
-  
+
   if (arabicPattern.test(text)) return 'ar-SA';
   if (frenchPattern.test(text)) return 'fr-FR';
-  return 'en-US'; 
+  return 'en-US';
 };
 
 const MessageBox = ({
@@ -57,7 +57,7 @@ const MessageBox = ({
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<SpeechSynthesisVoice | null>(null);
 
- 
+
   useEffect(() => {
     const loadVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
@@ -72,7 +72,7 @@ const MessageBox = ({
     };
   }, []);
 
-  
+
   useEffect(() => {
     if (voices.length > 0) {
       const voice = voices.find(v => v.lang.startsWith(speechLang)) || voices[0];
@@ -111,15 +111,15 @@ const MessageBox = ({
   });
 
 
-    
 
-   
 
-   
+
+
+
     // setParsedMessage(message.content);
- 
 
-  
+
+
   const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
 
   return (
@@ -152,15 +152,7 @@ const MessageBox = ({
               </div>
             )}
             <div className="flex flex-col space-y-2">
-              <div className="flex flex-row items-center space-x-2">
-                <Image src="/logo.png" priority alt="Smartly" width={20} height={20} className={cn(
-                  'text-black dark:text-white',
-                  isLast && loading ? 'animate-spin' : 'animate-none',
-                )} />
-                <h3 className="text-black dark:text-white font-medium text-xl">
-                  Answer
-                </h3>
-              </div>
+
               <Markdown
                 dir={direction}
                 className={cn(
@@ -185,11 +177,11 @@ const MessageBox = ({
                     <Tooltip content="bad response" position="bottom">
                       <ThumbsDown size={18} className="cursor-pointer" />
                     </Tooltip>
-                    
+
                     <Tooltip content='Copy' position='bottom'>
                       <Copy initialMessage={message.content} message={message} />
                     </Tooltip>
-                    
+
                     <button
                       onClick={() => {
                         if (speechStatus === 'started') {
@@ -205,7 +197,7 @@ const MessageBox = ({
                         <StopCircle size={18} />
                         </Tooltip>
                       ) : (
-                        <Tooltip content="Read aloud" position="bottom">  
+                        <Tooltip content="Read aloud" position="bottom">
                         <Volume2 size={18} />
                         </Tooltip>
                       )}
