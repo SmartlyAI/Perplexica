@@ -1,9 +1,11 @@
 'use client';
 
 import { Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { toast } from 'sonner';
+import useAssistantStore from '@/stores/assistant.stores';
+import { useRouter } from 'next/navigation';
 
 interface Discover {
   title: string;
@@ -13,16 +15,18 @@ interface Discover {
 }
 
 const Page = () => {
-  const [discover, setDiscover] = useState<Discover[] | null>(null);
+  const [skills, setSkills] = useState<any>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/discover`, {
+        const res = await fetch(`https://bots.smartly.ai/apis/builder/api/skills`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNTk0ZDIyMTAzYzhiOTEwMDA3ZDNlYWE0Iiwic2tpbGxfaWQiOiJhcGlfdG9rZW4iLCJpYXQiOjE3MzQwMjI2OTF9.imH6ejzZ_BppzDpXEorYlU2jgwFgK-Zk4jhW_r_gGtM'
+            // Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc3N2ZlM2Y3ZDMyOTc0MzNlOGRlYTc0Iiwic2tpbGxfaWQiOiJhcGlfdG9rZW4iLCJpYXQiOjE3MzkyMjg3NTh9.scOecsZERL2_fpfDhaj_Tg9tSUo380uqO3h1dIn7nho'
           },
         });
 
@@ -32,9 +36,11 @@ const Page = () => {
           throw new Error(data.message);
         }
 
-        data.blogs = data.blogs.filter((blog: Discover) => blog.thumbnail);
+        console.log(data.skills);
 
-        setDiscover(data.blogs);
+        // data.blogs = data.blogs.filter((blog: Discover) => blog.thumbnail);
+
+        setSkills(data.skills);
       } catch (err: any) {
         console.error('Error fetching data:', err.message);
         toast.error('Error fetching data');
@@ -45,6 +51,9 @@ const Page = () => {
 
     fetchData();
   }, []);
+
+  const { setUpdateAssistant } = useAssistantStore();
+  const Router = useRouter();
 
   return loading ? (
     <div className="flex flex-row items-center justify-center min-h-screen">
@@ -67,42 +76,24 @@ const Page = () => {
     </div>
   ) : (
     <>
-      <div>
-        <div className="flex flex-col pt-4">
-          <div className="flex items-center">
-            <Search />
-            <h1 className="text-3xl font-medium p-2">Discover</h1>
-          </div>
-          <hr className="border-t border-[#2B2C2C] my-4 w-full" />
+      <div className="flex flex-col space-y-6 px-5 pt-8 pb-44 lg:pb-32 md:max-w-3xl lg:max-w-[40rem] xl:max-w-[48rem] mx-auto">
+        <div>
+          <h1 className="text-3xl font-medium p-2">Assistants</h1>
         </div>
 
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 pb-28 lg:pb-8 w-full justify-items-center lg:justify-items-start">
-          {discover &&
-            discover?.map((item, i) => (
-              <Link
-                href={`/?q=Summary: ${item.url}`}
-                key={i}
-                className="max-w-sm rounded-lg overflow-hidden bg-light-secondary dark:bg-dark-secondary hover:-translate-y-[1px] transition duration-200"
-                target="_blank"
+          {skills &&
+            skills?.map((item: any, i: any) => (
+              <button
+                key={item._id}
+                className="cursor-pointer p-4 border border-gray-200 rounded-lg shadow-md w-full text-black dark:text-white lg:text-[16px]  font-[400] truncate transition duration-200"
+                onClick={() => {
+                  setUpdateAssistant(item._id);
+                  Router.push('/');
+                }}
               >
-                <img
-                  className="object-cover w-full aspect-video"
-                  src={
-                    new URL(item.thumbnail).origin +
-                    new URL(item.thumbnail).pathname +
-                    `?id=${new URL(item.thumbnail).searchParams.get('id')}`
-                  }
-                  alt={item.title}
-                />
-                <div className="px-6 py-4">
-                  <div className="font-bold text-lg mb-2">
-                    {item.title.slice(0, 100)}...
-                  </div>
-                  <p className="text-black-70 dark:text-white/70 text-sm">
-                    {item.content.slice(0, 100)}...
-                  </p>
-                </div>
-              </Link>
+                {item.name}
+              </button>
             ))}
         </div>
       </div>

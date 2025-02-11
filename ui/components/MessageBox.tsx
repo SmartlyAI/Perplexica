@@ -104,7 +104,7 @@ const MessageBox = ({
   const { speechStatus, start, stop } = useSpeech({
     text: speechMessage,
     lang: speechLang,
-    voice: selectedVoice,
+    // voice: selectedVoice,
     rate: 1.0,
     pitch: 1.0,
     volume: 1.0

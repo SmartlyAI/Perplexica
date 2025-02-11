@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import { getSuggestions } from '@/lib/actions';
 import Error from 'next/error';
 import useHistoryStore from '@/stores/history-store';
+import useAssistantStore from '@/stores/assistant.stores';
 
 export type Message = {
   messageId: string;
@@ -352,6 +353,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   const [isArchived, setIsArchived] = useState<boolean>(false);
 
+  const { updateAssistant } = useAssistantStore();
+
   useEffect(() => {
     if (
       chatId &&
@@ -431,6 +434,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
           chatId: chatId!,
           content: message,
           token: token,
+          skill: updateAssistant,
         },
         files: fileIds,
         focusMode: focusMode,
