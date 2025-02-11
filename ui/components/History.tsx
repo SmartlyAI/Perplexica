@@ -94,7 +94,7 @@ const History = () => {
                   {sortedGroupEntries.map(
                   ([group, groupChats]) => (
                   <div key={group} className="mb-6">
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 px-2">
+                    <h3 className="text-sm font-bold text-black dark:text-white mb-2 px-2">
                       {group}
                     </h3>
                     {groupChats.map((chat, i) => (
