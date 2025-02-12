@@ -8,11 +8,23 @@
     "message": "No chats found.",
     "options": "Options",
     "dateGroups": {
-      "today": "Today",
-      "yesterday": "Yesterday",
-      "previous7Days": "Previous 7 Days",
-      "previous30Days": "Previous 30 Days"
-    }
+      "Today": "Today",
+      "Yesterday": "Yesterday",
+      "Previous 7 Days": "Previous 7 Days",
+      "Previous 30 Days": "Previous 30 Days",
+      "January": "January",
+      "February": "February",
+      "March": "March",
+      "April": "April",
+      "May": "May",
+      "June": "June",
+      "July": "July",
+      "August": "August",
+      "September": "September",
+      "October": "October",
+      "November": "November",
+      "December": "December"
+    }  
   },
   "Search": {
     "title": "Search chats",

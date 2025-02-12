@@ -7,12 +7,23 @@
   "History": {
     "message": "Aucune discussion trouvée.",
     "options": "Options",
-    "dateGroups":{
-      "today": "aujourd’hui",
-      "yesterday": "Hier",
-      "previous7Days": "Les 7 derniers jours",
-      "previous30Days": "Les 30 derniers jours"
-
+    "dateGroups": {
+      "Today": "Aujourd’hui",
+      "Yesterday": "Hier",
+      "Previous 7 Days": "Les 7 derniers jours",
+      "Previous 30 Days": "Les 30 derniers jours",
+      "January": "Janvier",
+      "February": "Février",
+      "March": "Mars",
+      "April": "Avril",
+      "May": "Mai",
+      "June": "Juin",
+      "July": "Juillet",
+      "August": "Août",
+      "September": "Septembre",
+      "October": "Octobre",
+      "November": "Novembre",
+      "December": "Décembre"
     }
   },
   "Search": {

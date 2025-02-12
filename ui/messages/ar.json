@@ -5,16 +5,26 @@
   },
 
   "History": {
-    
-    "dateGroups": {
-      "today": "اليوم",
-      "yesterday": "أمس",
-      "previous7Days": "السبعة أيام الماضية",
-      "previous30Days": "الثلاثين يومًا الماضية"
-    },
     "message": ".لم يتم العثور على أي محادثات",
-    "options": "الخيارات"
-
+    "options": "الخيارات",
+    "dateGroups": {
+      "Today": "اليوم",
+      "Yesterday": "أمس",
+      "Previous 7 Days": "آخر 7 أيام",
+      "Previous 30 Days": "آخر 30 يومًا",
+      "January": "يناير",
+      "February": "فبراير",
+      "March": "مارس",
+      "April": "أبريل",
+      "May": "مايو",
+      "June": "يونيو",
+      "July": "يوليو",
+      "August": "أغسطس",
+      "September": "سبتمبر",
+      "October": "أكتوبر",
+      "November": "نوفمبر",
+      "December": "ديسمبر"
+    }
   },
   "Search": {
     "title": "بحث المحادثات",
