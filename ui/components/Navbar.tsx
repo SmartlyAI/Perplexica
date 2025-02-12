@@ -11,17 +11,19 @@ import ShareButton from './ShareButton';
 import { getChatId } from '@/lib/utils';
 import Tooltip from './Tooltip';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const Navbar = () => {
   const { toggleSidebar } = useSidebarStore();
   const { isSidebarOpen } = useSidebarStore();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
+  const t = useTranslations('Sidebar');
 
   return (
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
       <div className="flex items-center gap-4">
-        <Tooltip content='open sidebar' position="right" >
+        <Tooltip content={t('openSidebar')} position="right" >
           <PanelLeftOpen className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
         </Tooltip>
         {!isSidebarOpen && (

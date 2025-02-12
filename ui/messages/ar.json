@@ -1,10 +1,20 @@
 {
   "EmptyChat": {
     "title": "كيف يمكنني مساعدتك اليوم؟",
-    "placeholder": "كيف يمكنني مساعدتك اليوم؟"
+    "placeholder": "تحدث مع SmartlyChat"
   },
+
   "History": {
-    "message": ".لم يتم العثور على أي محادثات"
+    
+    "dateGroups": {
+      "today": "اليوم",
+      "yesterday": "أمس",
+      "previous7Days": "السبعة أيام الماضية",
+      "previous30Days": "الثلاثين يومًا الماضية"
+    },
+    "message": ".لم يتم العثور على أي محادثات",
+    "options": "الخيارات"
+
   },
   "Search": {
     "title": "بحث المحادثات",
@@ -48,12 +58,14 @@
     "SharedChats": {
       "title": "الدردشات المشتركة",
       "action": "إدارة",
-      "message": "لا توجد دردشات مشتركة"
+      "message": "لا توجد دردشات مشتركة",
+      "deleteTooltip": "حذف الرابط المشترك"
     },
     "ArchivedChats": {
       "title": "الدردشات المؤرشفة",
       "action": "إدارة",
-      "message": "لا توجد دردشات مؤرشفة"
+      "message": "لا توجد دردشات مؤرشفة",
+       "deleteChat": "حذف المحادثة"
     },
     "DeleteAllChats": {
       "title": "حذف جميع الدردشات",
@@ -71,5 +83,12 @@
       "success": "تم نسخ الرابط إلى الحافظة!",
       "error": "فشل في نسخ الرابط إلى الحافظة"
     }
+    
+  },
+  "Sidebar": {
+    "closeSidebar": "إغلاق الشريط الجانبي",
+    "openSidebar": "فتح الشريط الجانبي",
+    "searchChats": "البحث في المحادثات",
+    "newChat": "محادثة جديدة"
   }
 }

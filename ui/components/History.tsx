@@ -58,6 +58,7 @@ const History = () => {
       );
 
     const t = useTranslations('History');
+    
 
 
 
@@ -94,7 +95,7 @@ const History = () => {
                   {sortedGroupEntries.map(
                   ([group, groupChats]) => (
                   <div key={group} className="mb-6">
-                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 px-2">
+                    <h3 className="text-sm font-bold text-black dark:text-white mb-2 px-2">
                       {group}
                     </h3>
                     {groupChats.map((chat, i) => (
@@ -116,7 +117,7 @@ const History = () => {
 
                             <Popover className="relative flex items-center invisible group-hover:visible">
                                 <PopoverButton className="flex items-center">
-                                    <Tooltip content='Options'>
+                                    <Tooltip content={t("options")}>
                                         <Ellipsis className="cursor-pointer" />
                                     </Tooltip>
                                 </PopoverButton>

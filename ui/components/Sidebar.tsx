@@ -8,11 +8,13 @@ import useSidebarStore from '@/stores/global-stores';
 import SearxHistory from './SearxHistory';
 import Link from 'next/link';
 import Tooltip from './Tooltip';
+import { useTranslations } from 'next-intl';
 
 const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const [isSearxOpen, setIsSearxOpen] = useState(false);
     const { toggleSidebar } = useSidebarStore();
     const { isSidebarOpen } = useSidebarStore();
+    const t = useTranslations('Sidebar');
 
     return (
         <div className='relative flex h-full w-full overflow-hidden transition-colors'>
@@ -26,19 +28,19 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                             </a> */}
                              
                             <div className="">
-                            <Tooltip content='close sidebar' position="right" >
+                            <Tooltip content={t("closeSidebar")} position="right" >
                                 <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
                              </Tooltip>
                             </div>
 
                             <div className="flex gap-2">
-                                <Tooltip content='Search chats' position="bottom" >
+                                <Tooltip content={t("searchChats")} position="bottom" >
                                 <Search
                                     onClick={() => setIsSearxOpen(!isSearxOpen)}
                                     className="cursor-pointer"
                                 />
                                 </Tooltip>
-                                <Tooltip content="New Chat" position="bottom">
+                                <Tooltip content={t("newChat")} position="bottom">
                                 <Link href="/"><SquarePen className="cursor-pointer" /></Link>
                                 </Tooltip>
                             </div>

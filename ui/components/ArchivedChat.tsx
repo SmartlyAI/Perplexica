@@ -144,7 +144,7 @@ const ArchivedChats = ({
                                             : chats.map((chat, i) => (
                                                 <div key={i} className="flex flex-row items-center justify-between text-black/70 dark:text-white/70 hover:bg-light-200 dark:hover:bg-dark-200 p-2 rounded-lg transition duration-200">
                                                     <Link href={`/c/${chat.id}`}>{chat.title}</Link>
-                                                    <Tooltip content="Delete chat">
+                                                    <Tooltip content={t("deleteChat")}>
                                                     <Trash2 size={17} className='cursor-pointer' onClick={() => deleteArchivedChats(chat.id)} />
                                                     </Tooltip>
                                                 </div>
