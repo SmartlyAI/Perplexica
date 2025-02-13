@@ -7,7 +7,6 @@ import Chat from './Chat';
 import EmptyChat from './EmptyChat';
 import crypto from 'crypto';
 import { toast } from 'sonner';
-import { useSearchParams } from 'next/navigation';
 import { getSuggestions } from '@/lib/actions';
 import Error from 'next/error';
 import useHistoryStore from '@/stores/history-store';
@@ -323,9 +322,6 @@ const loadMessages = async (
 };
 
 const ChatWindow = ({ id }: { id?: string }) => {
-  const searchParams = useSearchParams();
-  const initialMessage = searchParams.get('q');
-
   const [chatId, setChatId] = useState<string | undefined>(id);
   const [token, setToken] = useState<string>(typeof window !== 'undefined' ? localStorage.getItem('token') ?? '' : '');
   const [newChatCreated, setNewChatCreated] = useState(false);
@@ -415,7 +411,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
     }
   }, [isMessagesLoaded, isWSReady]);
 
-  const { setUpdateHistory } = useHistoryStore();
+  const { updateHistory, setUpdateHistory } = useHistoryStore();
 
   const sendMessage = async (message: string, messageId?: string) => {
     if (loading) return;
@@ -464,7 +460,9 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
     const messageHandler = async (e: MessageEvent) => {
       const data = JSON.parse(e.data);
-      setUpdateHistory(message);
+      if (updateHistory !== chatId) {
+        setUpdateHistory(chatId);
+      }
 
       if (data.type === 'error') {
         toast.error(data.data);
@@ -527,6 +525,38 @@ const ChatWindow = ({ id }: { id?: string }) => {
         }
       }
 
+      if (data.type === 'final result') {
+        setMessages((prev) => {
+          const messageExists = prev.some(
+            (message) => message.messageId === data.messageId && message.role === 'assistant'
+          );
+
+          if (messageExists) {
+            return prev.map((message) =>
+              message.messageId === data.messageId && message.role === 'assistant'
+                ? { ...message, content: data.data }
+                : message
+            );
+          } else {
+            // If the message doesn't exist, add a new one
+            return [
+              ...prev,
+              {
+                content: data.data,
+                messageId: data.messageId,
+                chatId: chatId!,
+                role: 'assistant',
+                sources: sources,
+                createdAt: new Date(),
+              },
+            ];
+          }
+        });
+
+        recievedMessage += data.data;
+        setMessageAppeared(true);
+      }
+
       if (data.type === 'messageEnd') {
 
         setChatHistory((prevHistory) => [
@@ -578,13 +608,6 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   //   sendMessage(message.content, message.messageId);
   // };
-
-  useEffect(() => {
-    if (isReady && initialMessage && ws?.readyState === 1) {
-      sendMessage(initialMessage);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ws?.readyState, isReady, initialMessage, isWSReady]);
 
   if (hasError) {
     return (

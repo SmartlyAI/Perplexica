@@ -180,6 +180,27 @@ const SmartlyHandleEmitterEvents = (
           recievedMessage = parsedData.sentence;
           lastTime = new Date(parsedData.time).getTime();
         }
+      } else if (parsedData.status === 'final result') {
+        ws.send(
+          JSON.stringify({
+            type: 'final result',
+            data: parsedData.answer,
+            messageId: messageId,
+          }),
+        );
+        recievedMessage = parsedData.answer;
+        db.insert(messagesSchema)
+        .values({
+          content: recievedMessage,
+          chatId: chatId,
+          messageId: messageId,
+          role: 'assistant',
+          metadata: JSON.stringify({
+            createdAt: new Date(),
+            ...(sources && sources.length > 0 && { sources }),
+          }),
+        })
+        .execute();
       } else if (parsedData.status === 'sources') {
         ws.send(
           JSON.stringify({

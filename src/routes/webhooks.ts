@@ -10,7 +10,7 @@ router.post('/:chatId', async (req, res) => {
     try {
         const body = req.body;
         const messageId = req.query.messageId;
-        if(body.status === IN_PROGRESS_MESSAGE_STREAMING_VALUE || body.status === SOURCES_MESSAGE_STREAMING_VALUE) {
+        if(body.status === IN_PROGRESS_MESSAGE_STREAMING_VALUE || body.status === SOURCES_MESSAGE_STREAMING_VALUE || body.status === 'final result') {
             smartlyEmitter.emit('data'+messageId, body);
         } else if(body.status === END_MESSAGE_STREAMING_VALUE) {
             smartlyEmitter.emit('end'+messageId, body);
