@@ -107,7 +107,7 @@ const History = () => {
                             onClick={() => router.push(`/c/${chat.id}`)}
                         >
                             <div
-                                className="flex-1 text-black dark:text-white lg:text-[16px]  font-[400] truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
+                                className="flex-1 text-black dark:text-white lg:text-[14px]  font-[400] truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
                             >
                                 {chat.title}
                             </div>
