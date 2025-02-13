@@ -24,7 +24,7 @@ const Navbar = () => {
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
       <div className="flex items-center gap-4">
         <Tooltip content={t('openSidebar')} position="right" >
-          <PanelLeftOpen className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
+          <PanelLeftOpen className={`cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
         </Tooltip>
         {!isSidebarOpen && (
           <Link href="/">
@@ -40,7 +40,7 @@ const Navbar = () => {
           <ShareButton isOpen={isShareOpen} setIsOpen={setIsShareOpen} />
         )}
         <Settings
-          className="cursor-pointer"
+          className="cursor-pointer hover:bg-gray-200/30 dark:hover:bg-gray-600/20 transition-colors"
           onClick={() => setIsSettingsOpen(true)}
         /> 
       </div>
