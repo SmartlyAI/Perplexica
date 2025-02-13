@@ -100,6 +100,12 @@
     "openSidebar": "open sidebar",
     "searchChats": "Search chats",
     "newChat": "New chat"
+  },
+  "tooltips": {
+    "good_response": "Good response",
+    "bad_response": "Bad response",
+    "copy": "Copy",
+    "stop": "Stop",
+    "read_aloud": "Read aloud"
   }
-
 }

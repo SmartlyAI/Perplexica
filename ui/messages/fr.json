@@ -99,5 +99,12 @@
     "openSidebar": "ouvrir la barre latérale",
     "searchChats": "Rechercher des discussions",
     "newChat": "Nouveau chat"
+  },
+  "tooltips": {
+    "good_response": "Bonne réponse",
+    "bad_response": "Mauvaise réponse",
+    "copy": "Copier",
+    "stop": "Arrêter",
+    "read_aloud": "Lire à haute voix"  
   }
 }

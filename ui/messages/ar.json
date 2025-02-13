@@ -100,5 +100,12 @@
     "openSidebar": "فتح الشريط الجانبي",
     "searchChats": "البحث في المحادثات",
     "newChat": "محادثة جديدة"
+  },
+  "tooltips": {
+    "good_response": "إجابة جيدة",
+    "bad_response": "إجابة سيئة",
+    "copy": "نسخ",
+    "stop": "إيقاف",
+    "read_aloud": "قراءة بصوت عالٍ"
   }
 }
