@@ -113,7 +113,7 @@ const Chat = ({
       })}
       {loading && !messageAppeared && <MessageBoxLoading />}
       <div ref={messageEnd} className="h-0" />
-      {dividerWidth > 0 && !isArchived ? (
+      {dividerWidth > 0 && !isArchived && (
         <div
           className="pb-10 bg-[#ffffff] dark:bg-dark-primary bottom-0 fixed z-40 w-full text-center"
           style={{ width: dividerWidth }}
@@ -131,7 +131,8 @@ const Chat = ({
           </p>
         </div>
       )
-        :
+      }
+      {isArchived && (
         <div
           className="pb-10 bg-[#ffffff] dark:bg-dark-primary bottom-0 fixed z-40 w-full"
           style={{ width: dividerWidth }}
@@ -144,6 +145,7 @@ const Chat = ({
             <span>Unarchive</span>
           </button>
         </div>
+      )
       }
     </div>
   );

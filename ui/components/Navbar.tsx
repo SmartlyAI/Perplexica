@@ -1,4 +1,5 @@
 import {
+  ChevronDown,
   PanelLeftOpen,
   PanelRightOpen,
   Settings,
@@ -12,6 +13,7 @@ import { getChatId } from '@/lib/utils';
 import Tooltip from './Tooltip';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import useAssistantStore from '@/stores/assistant.stores';
 
 const Navbar = () => {
   const { toggleSidebar } = useSidebarStore();
@@ -20,6 +22,7 @@ const Navbar = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const t = useTranslations('Sidebar');
 
+  const { updateAssistant } = useAssistantStore();
   return (
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
       <div className="flex items-center gap-4">
@@ -27,9 +30,21 @@ const Navbar = () => {
           <PanelLeftOpen className={`cursor-pointer ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
         </Tooltip>
         {!isSidebarOpen && (
-          <Link href="/">
-            <SquarePen />
-          </Link>
+          <>
+            <Link href="/">
+              <SquarePen />
+            </Link>
+            <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
+            <h1>{updateAssistant?.name}</h1>
+            <ChevronDown />
+          </button>
+          </>
+        )}
+        {isSidebarOpen && (
+          <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
+            <h1>{updateAssistant?.name}</h1>
+            <ChevronDown />
+          </button>
         )}
       </div>
 
@@ -42,7 +57,7 @@ const Navbar = () => {
         <Settings
           className="cursor-pointer"
           onClick={() => setIsSettingsOpen(true)}
-        /> 
+        />
       </div>
 
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />

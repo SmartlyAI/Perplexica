@@ -43,18 +43,19 @@ export const isXsM = () => { return typeof window !== 'undefined' ? window.match
 
 
 export const isToday = (date: Date) => {
-  return new Date().toDateString() === date.toDateString();
+  const today = new Date().toISOString().slice(0, 10);
+  return date.toISOString().slice(0, 10) === today;
 };
 
 export const isYesterday = (date: Date) => {
   const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  return yesterday.toDateString() === date.toDateString();
+  yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+  return date.toISOString().slice(0, 10) === yesterday.toISOString().slice(0, 10);
 };
 
 export const isWithinDays = (date: Date, days: number) => {
   const compareDate = new Date();
-  compareDate.setDate(compareDate.getDate() - days);
+  compareDate.setUTCDate(compareDate.getUTCDate() - days);
   return date > compareDate;
 };
 
