@@ -15,7 +15,6 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
     const { toggleSidebar } = useSidebarStore();
     const { isSidebarOpen } = useSidebarStore();
     const t = useTranslations('Sidebar');
-
     return (
         <div className='relative flex h-full w-full overflow-hidden transition-colors'>
             {isSidebarOpen && (
@@ -29,7 +28,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                              
                             <div className="">
                             <Tooltip content={t("closeSidebar")} position="right" >
-                                <PanelRightOpen className="cursor-pointer" onClick={toggleSidebar} />
+                                <PanelRightOpen className="cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors" onClick={toggleSidebar} />
                              </Tooltip>
                             </div>
 
@@ -37,11 +36,11 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                                 <Tooltip content={t("searchChats")} position="bottom" >
                                 <Search
                                     onClick={() => setIsSearxOpen(!isSearxOpen)}
-                                    className="cursor-pointer"
+                                    className="cursor-pointer hover:bg-gray-200/30 dark:hover:bg-gray-600/20 transition-color"
                                 />
                                 </Tooltip>
                                 <Tooltip content={t("newChat")} position="bottom">
-                                <Link href="/"><SquarePen className="cursor-pointer" /></Link>
+                                <Link href="/"><SquarePen className="cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors " /></Link>
                                 </Tooltip>
                             </div>
                         </div>

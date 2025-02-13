@@ -22,7 +22,7 @@ import SearchVideos from './SearchVideos';
 import { useSpeech } from 'react-text-to-speech';
 import Image from 'next/image';
 import Tooltip from './Tooltip';
-
+import { useTranslations } from 'next-intl';
 const detectLanguage = (text: string): string => {
   const arabicPattern = /[\u0600-\u06FF]/;
   const frenchPattern = /[éèêëàâùûçîïüÿæœ]/i;
@@ -111,17 +111,9 @@ const MessageBox = ({
   });
 
 
-
-
-
-
-
     // setParsedMessage(message.content);
-
-
-
   const [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
-
+  const t = useTranslations('tooltips');
   return (
     <div>
       {message.role === 'user' && (
@@ -170,19 +162,19 @@ const MessageBox = ({
                     </button> */}
                     {/* <Rewrite rewrite={rewrite} messageId={message.messageId} /> */}
                   </div>
-                  <div className="flex flex-row items-center space-x-1">
-                    <Tooltip content="good response" position="bottom">
+                 <div className="flex flex-row items-center space-x-1">
+                 {/* <Tooltip content={t('good_response')} position="bottom">
                       <ThumbsUp size={18} className="cursor-pointer" />
                     </Tooltip>
-                    <Tooltip content="bad response" position="bottom">
+                    <Tooltip content={t('bad_response')} position="bottom">
                       <ThumbsDown size={18} className="cursor-pointer" />
-                    </Tooltip>
+                    </Tooltip>*/}
 
-                    <Tooltip content='Copy' position='bottom'>
+                    <Tooltip content={t('copy')} position='bottom'>
                       <Copy initialMessage={message.content} message={message} />
                     </Tooltip>
 
-                    <button
+                    {/*<button
                       onClick={() => {
                         if (speechStatus === 'started') {
                           stop();
@@ -193,15 +185,15 @@ const MessageBox = ({
                       className="p-2 text-black/70 dark:text-white/70 rounded-xl hover:bg-light-secondary dark:hover:bg-dark-secondary transition duration-200 hover:text-black dark:hover:text-white"
                     >
                       {speechStatus === 'started' ? (
-                        <Tooltip content="Stop" position="bottom">
+                        <Tooltip content={t('stop')} position="bottom">
                         <StopCircle size={18} />
                         </Tooltip>
                       ) : (
-                        <Tooltip content="Read aloud" position="bottom">
+                        <Tooltip content={t('read_aloud')} position="bottom">
                         <Volume2 size={18} />
                         </Tooltip>
                       )}
-                    </button>
+                    </button>*/}
                   </div>
                 </div>
               )}

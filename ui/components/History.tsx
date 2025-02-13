@@ -57,10 +57,7 @@ const History = () => {
         }
       );
 
-    const t = useTranslations('History');
-    
-
-
+    const t = useTranslations('History');     
 
     return loading ? (
         <div className="flex flex-row items-center justify-center min-h-screen">
@@ -96,7 +93,7 @@ const History = () => {
                   ([group, groupChats]) => (
                   <div key={group} className="mb-6">
                     <h3 className="text-sm font-bold text-black dark:text-white mb-2 px-2">
-                      {group}
+                      {t(`dateGroups.${group}`)}
                     </h3>
                     {groupChats.map((chat, i) => (
                         <div
@@ -110,7 +107,7 @@ const History = () => {
                             onClick={() => router.push(`/c/${chat.id}`)}
                         >
                             <div
-                                className="flex-1 text-black dark:text-white lg:text-[16px]  font-[400] truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
+                                className="flex-1 text-black dark:text-white lg:text-[14px]  font-[400] truncate transition duration-200 hover:text-[#24A0ED] dark:hover:text-[#24A0ED] cursor-pointer"
                             >
                                 {chat.title}
                             </div>
