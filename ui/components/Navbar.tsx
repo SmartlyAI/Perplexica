@@ -30,22 +30,14 @@ const Navbar = () => {
           <PanelLeftOpen className={`cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
         </Tooltip>
         {!isSidebarOpen && (
-          <>
             <Link href="/">
               <SquarePen />
             </Link>
-            <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
-            <h1>{updateAssistant?.name}</h1>
-            <ChevronDown />
-          </button>
-          </>
         )}
-        {isSidebarOpen && (
-          <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
-            <h1>{updateAssistant?.name}</h1>
-            <ChevronDown />
-          </button>
-        )}
+        <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
+          <h1>{updateAssistant?.name}</h1>
+          <ChevronDown />
+        </button>
       </div>
 
       <div
