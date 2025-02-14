@@ -24,8 +24,13 @@ const Navbar = () => {
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
       <div className="flex items-center gap-4">
         <Tooltip content={t('openSidebar')} position="right" >
-          <PanelLeftOpen className={`cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
-        </Tooltip>
+        <div
+        className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
+        onClick={toggleSidebar}
+        >
+            <PanelLeftOpen className={`${isSidebarOpen ? 'hidden' : 'block'}`} />
+        </div>
+         </Tooltip>
         {!isSidebarOpen && (
           <Link href="/">
             <SquarePen />
@@ -39,10 +44,12 @@ const Navbar = () => {
         {getChatId() && (
           <ShareButton isOpen={isShareOpen} setIsOpen={setIsShareOpen} />
         )}
-        <Settings
-          className="cursor-pointer hover:bg-gray-200/30 dark:hover:bg-gray-600/20 transition-colors"
+        <div
+          className='cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg'
           onClick={() => setIsSettingsOpen(true)}
-        /> 
+        >
+          <Settings />  
+        </div> 
       </div>
 
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />

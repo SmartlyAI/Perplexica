@@ -28,19 +28,30 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                              
                             <div className="">
                             <Tooltip content={t("closeSidebar")} position="right" >
-                                <PanelRightOpen className="cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors" onClick={toggleSidebar} />
+                            <div
+                                className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
+                                onClick={toggleSidebar}
+                            >
+                                <PanelRightOpen />
+                            </div>
                              </Tooltip>
                             </div>
 
                             <div className="flex gap-2">
                                 <Tooltip content={t("searchChats")} position="bottom" >
-                                <Search
+                                <div
+                                    className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
                                     onClick={() => setIsSearxOpen(!isSearxOpen)}
-                                    className="cursor-pointer hover:bg-gray-200/30 dark:hover:bg-gray-600/20 transition-color"
-                                />
+                                >
+                                    <Search />
+                                </div>
                                 </Tooltip>
                                 <Tooltip content={t("newChat")} position="bottom">
-                                <Link href="/"><SquarePen className="cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors " /></Link>
+                                <Link href="/">
+                                <div className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg">
+                                    <SquarePen />
+                                </div>
+                                </Link>
                                 </Tooltip>
                             </div>
                         </div>
