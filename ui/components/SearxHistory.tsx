@@ -130,6 +130,7 @@ const SearxHistory = ({
 
         const data = await res.json();
         setAssistants(data.skills);
+        
       } catch (err) {
         console.error('Error fetching assistants:', err);
       }
@@ -160,10 +161,9 @@ const SearxHistory = ({
 
   const [filteredchats, setFilteredChats] = useState<Chat[]>(chats);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const filterChats = (query: string, assistantId: string) => {
-    let filtered = chats;
+  const filterChats = (chatsList: Chat[], query: string, assistantId: string) => {
+    let filtered = [...chatsList];
     
-   
     if (query) {
       filtered = filtered.filter((item) =>
         item.title.toLowerCase().includes(query.toLowerCase())
@@ -174,21 +174,19 @@ const SearxHistory = ({
       filtered = filtered.filter((item) => item.assistantId === assistantId);
     }
     
-    setFilteredChats(filtered);
+    return filtered;
   };
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearchQuery(query);
-
-    const filtered = chats.filter((item) =>
-      item.title.toLowerCase().includes(query)
-    );
+    const filtered = filterChats(chats, query, selectedAssistant);
     setFilteredChats(filtered);
   };
   const handleAssistantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const assistantId = e.target.value;
     setSelectedAssistant(assistantId);
-    filterChats(searchQuery, assistantId);
+    const filtered = filterChats(chats, searchQuery, assistantId);
+    setFilteredChats(filtered);
   };
 
   const formatTimeWithSuffix = (timeDifference: string) => {
