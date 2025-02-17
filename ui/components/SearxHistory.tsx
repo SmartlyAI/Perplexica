@@ -301,9 +301,7 @@ const SearxHistory = ({
                                       ),
                                     )}
                                   </p>
-                                  <span className="text-xs ml-2">
-                                    • {getAssistantName(chat.assistantId)}
-                                  </span>
+                                  
                                 </div>
                               </div>
                             </div>
