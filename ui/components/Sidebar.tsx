@@ -29,7 +29,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                             <div className="">
                             
                             <div
-                                className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
+                                className="flex cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
                                 onClick={toggleSidebar}
                             >
                                 <Tooltip content={t("closeSidebar")} position="right" >
@@ -42,7 +42,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                             <div className="flex gap-2">
                                
                                 <div
-                                    className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
+                                    className="flex cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
                                     onClick={() => setIsSearxOpen(!isSearxOpen)}
                                 >
                                     <Tooltip content={t("searchChats")} position="bottom" >
@@ -52,7 +52,7 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                                 
                                 
                                 <Link href="/">
-                                <div className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg">
+                                <div className="flex cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg">
                                   <Tooltip content={t("newChat")} position="bottom">
                                     <SquarePen />
                                   </Tooltip>
