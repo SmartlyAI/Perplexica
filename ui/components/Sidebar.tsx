@@ -27,32 +27,38 @@ const Sidebar = ({ children }: { children: React.ReactNode }) => {
                             </a> */}
                              
                             <div className="">
-                            <Tooltip content={t("closeSidebar")} position="right" >
+                            
                             <div
                                 className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
                                 onClick={toggleSidebar}
                             >
-                                <PanelRightOpen />
+                                <Tooltip content={t("closeSidebar")} position="right" >
+                                 <PanelRightOpen />
+                                </Tooltip>
                             </div>
-                             </Tooltip>
+                             
                             </div>
 
                             <div className="flex gap-2">
-                                <Tooltip content={t("searchChats")} position="bottom" >
+                               
                                 <div
                                     className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
                                     onClick={() => setIsSearxOpen(!isSearxOpen)}
                                 >
-                                    <Search />
+                                    <Tooltip content={t("searchChats")} position="bottom" >
+                                      <Search />
+                                    </Tooltip>
                                 </div>
-                                </Tooltip>
-                                <Tooltip content={t("newChat")} position="bottom">
+                                
+                                
                                 <Link href="/">
                                 <div className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg">
+                                  <Tooltip content={t("newChat")} position="bottom">
                                     <SquarePen />
+                                  </Tooltip>
                                 </div>
                                 </Link>
-                                </Tooltip>
+                               
                             </div>
                         </div>
 

@@ -23,18 +23,20 @@ const Navbar = () => {
   return (
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
       <div className="flex items-center gap-4">
-        <Tooltip content={t('openSidebar')} position="right" >
-        <div
-        className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg"
-        onClick={toggleSidebar}
-        >
-            <PanelLeftOpen className={`${isSidebarOpen ? 'hidden' : 'block'}`} />
-        </div>
-         </Tooltip>
+      <div
+          className={`cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg ${isSidebarOpen ? 'hidden' : 'block'}`}
+          onClick={toggleSidebar}
+      >
+          <Tooltip content={t('openSidebar')} position="right">
+              <PanelLeftOpen />
+          </Tooltip>
+      </div>
         {!isSidebarOpen && (
           <Link href="/">
-             <div className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg">
-                <SquarePen />
+            <div className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg ">
+               <Tooltip content={t("newChat")} position="bottom">
+                   <SquarePen />
+               </Tooltip>
             </div>
           </Link>
         )}
