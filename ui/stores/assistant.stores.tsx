@@ -14,7 +14,7 @@ interface AssistantState {
 const useAssistantStore = create<AssistantState>()(
     persist(
         (set) => ({
-            updateAssistant: { id: '6732efb8397a97154e90f583', name: 'SGMA' },
+            updateAssistant: { id: '67b381bf96489a7875a9688d', name: 'Smartly Chat' },
             setUpdateAssistant: (newData) => set({ updateAssistant: newData }),
         }),
         {
