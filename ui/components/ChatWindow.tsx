@@ -11,6 +11,7 @@ import { getSuggestions } from '@/lib/actions';
 import Error from 'next/error';
 import useHistoryStore from '@/stores/history-store';
 import useAssistantStore from '@/stores/assistant.stores';
+import { useRouter } from 'next/navigation';
 
 export type Message = {
   messageId: string;
@@ -356,6 +357,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
   const { updateAssistant, setUpdateAssistant } = useAssistantStore();
 
+  const Router = useRouter();
+
   useEffect(() => {
     if (
       chatId &&
@@ -587,6 +590,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
           );
         }
       }
+
+      Router.push(`/c/${chatId}`);
     };
 
     ws?.addEventListener('message', messageHandler);
