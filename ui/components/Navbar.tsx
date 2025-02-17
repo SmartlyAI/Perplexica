@@ -25,14 +25,23 @@ const Navbar = () => {
   const { updateAssistant } = useAssistantStore();
   return (
     <div className="fixed top-0 z-40 flex justify-between p-5 items-center w-full bg-[#ffffff] dark:bg-dark-secondary">
-      <div className="flex items-center gap-4">
-        <Tooltip content={t('openSidebar')} position="right" >
-          <PanelLeftOpen className={`cursor-pointer hover:bg-gray-200/50 dark:hover:bg-gray-600/20 transition-colors ${isSidebarOpen ? 'hidden' : 'block'}`} onClick={toggleSidebar} />
-        </Tooltip>
+      <div className="flex items-center">
+        <div
+          className={`flex cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg ${isSidebarOpen ? 'hidden' : 'block'}`}
+          onClick={toggleSidebar}
+        >
+          <Tooltip content={t('openSidebar')} position="right">
+            <PanelLeftOpen />
+          </Tooltip>
+        </div>
         {!isSidebarOpen && (
-            <Link href="/">
-              <SquarePen />
-            </Link>
+          <Link href="/" className="flex text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg ">
+            {/* <div className="cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg "> */}
+               <Tooltip content={t("newChat")} position="bottom">
+                   <SquarePen />
+               </Tooltip>
+            {/* </div> */}
+          </Link>
         )}
         <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
           <h1>{updateAssistant?.name}</h1>
@@ -46,10 +55,12 @@ const Navbar = () => {
         {getChatId() && (
           <ShareButton isOpen={isShareOpen} setIsOpen={setIsShareOpen} />
         )}
-        <Settings
-          className="cursor-pointer hover:bg-gray-200/30 dark:hover:bg-gray-600/20 transition-colors"
+        <div
+          className='cursor-pointer text-[#5d5d5d] p-2 hover:bg-[#e7e7e7] dark:hover:bg-gray-600 transition-colors rounded-lg'
           onClick={() => setIsSettingsOpen(true)}
-        />
+        >
+          <Settings />  
+        </div> 
       </div>
 
       <SettingsDialog isOpen={isSettingsOpen} setIsOpen={setIsSettingsOpen} />

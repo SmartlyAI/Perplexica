@@ -26,8 +26,12 @@ export interface Chat {
   createdAt: string;
   focusMode: string;
   token: string;
+  assistantId: string;
 }
-
+interface Assistant {
+  _id: string;
+  name: string;
+}
 const SearxHistory = ({
   isOpen,
   setIsOpen,
@@ -109,7 +113,31 @@ const SearxHistory = ({
 
   const [chats, setChats] = useState<Chat[]>([]);
   const [loading, setLoading] = useState(true);
+  const [assistants, setAssistants] = useState<Assistant[]>([]);
+  const [selectedAssistant, setSelectedAssistant] = useState<string>("all");
+  useEffect(() => {
+    const fetchAssistants = async () => {
+      try {
+        const res = await fetch(`https://bots.smartly.ai/apis/builder/api/skills`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(process.env.NEXT_PUBLIC_USER_TOKEN && { 
+              Authorization: process.env.NEXT_PUBLIC_USER_TOKEN 
+            }),
+          },
+        });
 
+        const data = await res.json();
+        setAssistants(data.skills);
+        
+      } catch (err) {
+        console.error('Error fetching assistants:', err);
+      }
+    };
+
+    fetchAssistants();
+  }, []);
   useEffect(() => {
     const fetchChats = async () => {
       setLoading(true);
@@ -133,14 +161,31 @@ const SearxHistory = ({
 
   const [filteredchats, setFilteredChats] = useState<Chat[]>(chats);
   const [searchQuery, setSearchQuery] = useState<string>("");
-
+  const filterChats = (chatsList: Chat[], query: string, assistantId: string) => {
+    let filtered = [...chatsList];
+    
+    if (query) {
+      filtered = filtered.filter((item) =>
+        item.title.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+    
+    if (assistantId && assistantId !== "all") {
+      filtered = filtered.filter((item) => item.assistantId === assistantId);
+    }
+    
+    return filtered;
+  };
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value.toLowerCase();
+    const query = e.target.value;
     setSearchQuery(query);
-
-    const filtered = chats.filter((item) =>
-      item.title.toLowerCase().includes(query)
-    );
+    const filtered = filterChats(chats, query, selectedAssistant);
+    setFilteredChats(filtered);
+  };
+  const handleAssistantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const assistantId = e.target.value;
+    setSelectedAssistant(assistantId);
+    const filtered = filterChats(chats, searchQuery, assistantId);
     setFilteredChats(filtered);
   };
 
@@ -150,6 +195,10 @@ const SearxHistory = ({
       return `${t('timeSuffix')} ${timeDifference}`;
     }
     return `${timeDifference} ${t('timeSuffix')}`;
+  };
+  const getAssistantName = (assistantId: string) => {
+    const assistant = assistants.find(a => a._id === assistantId);
+    return assistant ? assistant.name : assistantId;
   };
 
   return (
@@ -204,6 +253,18 @@ const SearxHistory = ({
                         onChange={handleSearch}
                         placeholder={t('placeholder')}
                       />
+                       <select
+                        className='bg-white dark:bg-dark-secondary px-3 py-2 overflow-hidden border border-light-200 dark:border-dark-200 dark:text-white rounded-lg text-sm w-full'
+                        value={selectedAssistant}
+                        onChange={handleAssistantChange}
+                      >
+                        <option value="all">Tous les assistants</option>
+                        {assistants.map((assistant) => (
+                          <option key={assistant._id} value={assistant._id}>
+                            {assistant.name}
+                          </option>
+                        ))}
+                      </select>
                       {filteredchats?.length === 0 && (
                         <div className="flex flex-row items-center justify-center min-h-screen">
                           <p className="text-black/70 dark:text-white/70 text-sm">
@@ -240,6 +301,7 @@ const SearxHistory = ({
                                       ),
                                     )}
                                   </p>
+                                  
                                 </div>
                               </div>
                             </div>
