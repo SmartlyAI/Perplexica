@@ -95,7 +95,7 @@ export const handleConnection = async (
       'message',
       async (message) =>
         // await handleMessage(message.toString(), ws, llm, embeddings),
-        await callSmartlyMessage(message.toString(), ws),
+        await callSmartlyMessage(message.toString(), ws, llm, embeddings),
     );
 
     ws.on('close', () => logger.debug('Connection closed'));

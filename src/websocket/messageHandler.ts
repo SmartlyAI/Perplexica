@@ -15,6 +15,9 @@ import MetaSearchAgent, {
 } from '../search/metaSearchAgent';
 import prompts from '../prompts';
 
+const IN_PROGRESS_MESSAGE_STREAMING_VALUE = 'in progress';
+const SOURCES_MESSAGE_STREAMING_VALUE = 'sources found';
+
 const smartlyEventEmitter = new SmartlyEventEmitter();
 
 export const smartlyEmitter = smartlyEventEmitter;
@@ -167,7 +170,7 @@ const SmartlyHandleEmitterEvents = (
   emitter.on('data' + messageId, (data) => {
     try {
       const parsedData = typeof data === 'string' ? JSON.parse(data) : data;
-      if (parsedData.status === 'in progress') {
+      if (parsedData.status === IN_PROGRESS_MESSAGE_STREAMING_VALUE) {
         ws.send(
           JSON.stringify({
             type: 'message',
@@ -201,11 +204,11 @@ const SmartlyHandleEmitterEvents = (
           }),
         })
         .execute();
-      } else if (parsedData.status === 'sources') {
+      } else if (parsedData.status === SOURCES_MESSAGE_STREAMING_VALUE) {
         ws.send(
           JSON.stringify({
             type: 'sources',
-            data: parsedData,
+            data: parsedData.data,
             messageId: messageId,
           }),
         );
@@ -367,7 +370,9 @@ export const handleMessage = async (
 
 export const callSmartlyMessage = async (
   message: string,
-  ws: WebSocket
+  ws: WebSocket,
+  llm: BaseChatModel,
+  embeddings: Embeddings,
 ) => {
   try {
     const parsedWSMessage = JSON.parse(message) as WSMessage;
@@ -388,20 +393,25 @@ export const callSmartlyMessage = async (
     if (parsedWSMessage.type === 'message') {
       try {
         // Call Smartly API
-        const response = await axios.post('https://apis.smartly.ai/api/dialog/chat/', {
-          event_name: 'NEW_INPUT',
-          platform: 'webchat',
-          streaming: true,
-          skill_id: parsedMessage.assistantId,
-          lang: 'fr-fr',
-          input_type: 'text',
-          input: parsedMessage.content,
-          user_id: 'test-api-7778812-29-11-yd111226545oo',
-          user_data: {
-            webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId + "?messageId=" + parsedMessage.messageId
-          }
-        });
-        SmartlyHandleEmitterEvents(smartlyEventEmitter, ws, parsedMessage.messageId, parsedMessage.chatId);
+        
+        if (parsedWSMessage.focusMode === '') {
+          const response = await axios.post('https://apis.smartly.ai/api/dialog/chat/', {
+            event_name: 'NEW_INPUT',
+            platform: 'webchat',
+            streaming: true,
+            skill_id: parsedMessage.assistantId,
+            lang: 'fr-fr',
+            input_type: 'text',
+            input: parsedMessage.content,
+            user_id: 'test-api-7778812-29-11-yd111226545oo',
+            user_data: {
+              webhook_url: "https://chat.smartly.ai/dashboard/api/webhook/" + parsedMessage.chatId + "?messageId=" + parsedMessage.messageId
+            }
+          });
+          SmartlyHandleEmitterEvents(smartlyEventEmitter, ws, parsedMessage.messageId, parsedMessage.chatId);
+        } else {
+          await handleMessage(message.toString(), ws, llm, embeddings)
+        }
 
         const chat = await db.query.chats.findFirst({
           where: eq(chats.id, parsedMessage.chatId),
