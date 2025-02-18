@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Globe } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import CopilotToggle from './MessageInputActions/Copilot';
@@ -14,6 +14,8 @@ const EmptyChatMessageInput = ({
   sendMessage,
   focusMode,
   setFocusMode,
+  isWebSearch,
+  setIsWebSearch,
   optimizationMode,
   setOptimizationMode,
   fileIds,
@@ -24,6 +26,8 @@ const EmptyChatMessageInput = ({
   sendMessage: (message: string) => void;
   focusMode: string;
   setFocusMode: (mode: string) => void;
+  isWebSearch: boolean;
+  setIsWebSearch: (isWebSearch: boolean) => void;
   optimizationMode: string;
   setOptimizationMode: (mode: string) => void;
   fileIds: string[];
@@ -103,8 +107,15 @@ const EmptyChatMessageInput = ({
         />
         <div className="flex flex-row items-center justify-between mt-4">
           <div className="flex flex-row items-center space-x-2 lg:space-x-4">
-            {/* <Focus focusMode={focusMode} setFocusMode={setFocusMode} />
-            <Attach
+            <div
+              className={`flex items-center gap-2 border px-2 py-1 rounded-full cursor-pointer ${isWebSearch ? 'text-[#0285ff] bg-[#cde5f7] border-[#0285ff]' : 'text-black' }`}
+              onClick={() => setIsWebSearch(!isWebSearch)}
+            >
+              <Globe size={17} />
+              <span>Search</span>
+            </div>
+            {/* <Focus focusMode={focusMode} setFocusMode={setFocusMode} /> */}
+            {/* <Attach
               fileIds={fileIds}
               setFileIds={setFileIds}
               files={files}

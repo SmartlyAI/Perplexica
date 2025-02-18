@@ -7,6 +7,8 @@ const EmptyChat = ({
   sendMessage,
   focusMode,
   setFocusMode,
+  isWebSearch,
+  setIsWebSearch,
   optimizationMode,
   setOptimizationMode,
   fileIds,
@@ -17,6 +19,8 @@ const EmptyChat = ({
   sendMessage: (message: string) => void;
   focusMode: string;
   setFocusMode: (mode: string) => void;
+  isWebSearch: boolean;
+  setIsWebSearch: (isWebSearch: boolean) => void;
   optimizationMode: string;
   setOptimizationMode: (mode: string) => void;
   fileIds: string[];
@@ -37,6 +41,8 @@ const EmptyChat = ({
           sendMessage={sendMessage}
           focusMode={focusMode}
           setFocusMode={setFocusMode}
+          isWebSearch={isWebSearch}
+          setIsWebSearch={setIsWebSearch}
           optimizationMode={optimizationMode}
           setOptimizationMode={setOptimizationMode}
           fileIds={fileIds}

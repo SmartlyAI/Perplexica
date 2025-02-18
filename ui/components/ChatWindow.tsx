@@ -346,8 +346,15 @@ const ChatWindow = ({ id }: { id?: string }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [fileIds, setFileIds] = useState<string[]>([]);
 
-  const [focusMode, setFocusMode] = useState('webSearch');
+  const [isWebSearch, setIsWebSearch] = useState<boolean>(false);
+  const [focusMode, setFocusMode] = useState('');
   const [optimizationMode, setOptimizationMode] = useState('speed');
+
+  useEffect(() => {
+    if (isWebSearch) {
+      setFocusMode('webSearch')
+    }
+  }, [isWebSearch])
 
   const [isMessagesLoaded, setIsMessagesLoaded] = useState(false);
 
@@ -431,6 +438,9 @@ const ChatWindow = ({ id }: { id?: string }) => {
 
     localStorage.setItem('token', token);
 
+    console.log('isWebSearch', isWebSearch)
+    console.log('focusMode', focusMode)
+
     ws?.send(
       JSON.stringify({
         type: 'message',
@@ -493,36 +503,66 @@ const ChatWindow = ({ id }: { id?: string }) => {
       }
 
       if (data.type === 'message') {
-        if (!lastMessageTime || data.sentence_time > lastMessageTime) {
-          lastMessageTime = data.sentence_time;
-
-          setMessages((prev) => {
-            const messageExists = prev.some(
-              (message) => message.messageId === data.messageId && message.role === 'assistant'
-            );
-
-            if (messageExists) {
-              return prev.map((message) =>
-                message.messageId === data.messageId && message.role === 'assistant'
-                  ? { ...message, content: data.data }
-                  : message
+        if (focusMode === '') {
+          if (!lastMessageTime || data.sentence_time > lastMessageTime) {
+            lastMessageTime = data.sentence_time;
+  
+            setMessages((prev) => {
+              const messageExists = prev.some(
+                (message) => message.messageId === data.messageId && message.role === 'assistant'
               );
-            } else {
-              // If the message doesn't exist, add a new one
-              return [
-                ...prev,
-                {
-                  content: data.data,
-                  messageId: data.messageId,
-                  chatId: chatId!,
-                  role: 'assistant',
-                  sources: sources,
-                  createdAt: new Date(),
-                },
-              ];
-            }
-          });
-
+  
+              if (messageExists) {
+                return prev.map((message) =>
+                  message.messageId === data.messageId && message.role === 'assistant'
+                    ? { ...message, content: data.data }
+                    : message
+                );
+              } else {
+                // If the message doesn't exist, add a new one
+                return [
+                  ...prev,
+                  {
+                    content: data.data,
+                    messageId: data.messageId,
+                    chatId: chatId!,
+                    role: 'assistant',
+                    sources: sources,
+                    createdAt: new Date(),
+                  },
+                ];
+              }
+            });
+  
+            recievedMessage += data.data;
+            setMessageAppeared(true);
+          }
+        } else {
+          if (!added) {
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              {
+                content: data.data,
+                messageId: data.messageId,
+                chatId: chatId!,
+                role: 'assistant',
+                sources: sources,
+                createdAt: new Date(),
+              },
+            ]);
+            added = true;
+          }
+  
+          setMessages((prev) =>
+            prev.map((message) => {
+              if (message.messageId === data.messageId) {
+                return { ...message, content: message.content + data.data };
+              }
+  
+              return message;
+            }),
+          );
+  
           recievedMessage += data.data;
           setMessageAppeared(true);
         }
@@ -651,6 +691,8 @@ const ChatWindow = ({ id }: { id?: string }) => {
             sendMessage={sendMessage}
             focusMode={focusMode}
             setFocusMode={setFocusMode}
+            isWebSearch={isWebSearch}
+            setIsWebSearch={setIsWebSearch}
             optimizationMode={optimizationMode}
             setOptimizationMode={setOptimizationMode}
             fileIds={fileIds}
