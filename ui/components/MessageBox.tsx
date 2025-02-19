@@ -150,10 +150,11 @@ const MessageBox = ({
                 className={cn(
                   'prose prose-h1:mb-3 prose-h2:mb-2 prose-h2:mt-6 prose-h2:font-[800] prose-h3:mt-4 prose-h3:mb-1.5 prose-h3:font-[600] dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 font-[400]',
                   'max-w-none break-words text-black dark:text-white',
-                  '[&_table]:w-full [&_table]:border-collapse [&_table]:border-2 [&_table]:border-gray-200 dark:[&_table]:border-gray-700',
-                  '[&_th]:border-2 [&_th]:border-gray-200 dark:[&_th]:border-[#555] [&_th]:bg-[#f9f9f9] dark:[&_th]:dark:bg-[#333] [&_th]:p-4 [&_th]:text-left',
-                  '[&_td]:border-2 [&_td]:border-gray-200 dark:[&_td]:border-[#555] [&_td]:p-4',   
-                  'prose prose-h1:mb-3 prose-h2:mb-2 prose-h2:mt-6 prose-h2:font-[800] prose-h3:mt-4 prose-h3:mb-1.5 prose-h3:font-[600] dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 font-[400]',
+                  '[&_table]:w-full [&_table]:border-separate [&_table]:border-spacing-0 [&_table]:border [&_table]:border-gray-200 [&_table]:rounded-lg dark:[&_table]:border-gray-700',
+                  '[&_th]:border [&_th]:border-gray-200 dark:[&_th]:border-[#555] [&_th]:bg-[#f9f9f9] dark:[&_th]:dark:bg-[#333] [&_th]:p-4 [&_th]:text-left',
+                  '[&_td]:border [&_td]:border-gray-200 dark:[&_td]:border-[#555] [&_td]:p-4',
+                  '[&_table_tr:first-child_th:first-child]:rounded-tl-lg [&_table_tr:first-child_th:last-child]:rounded-tr-lg',
+                  '[&_table_tr:last-child_td:first-child]:rounded-bl-lg [&_table_tr:last-child_td:last-child]:rounded-br-lg',  
                 )}
               >
                 {message.content}
