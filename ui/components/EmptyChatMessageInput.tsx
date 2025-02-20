@@ -107,13 +107,13 @@ const EmptyChatMessageInput = ({
         />
         <div className="flex flex-row items-center justify-between mt-4">
           <div className="flex flex-row items-center space-x-2 lg:space-x-4">
-            <div
+            {/* <div
               className={`flex items-center gap-2 border px-2 py-1 rounded-full cursor-pointer ${isWebSearch ? 'text-[#0285ff] bg-[#cde5f7] border-[#0285ff]' : 'text-black' }`}
               onClick={() => setIsWebSearch(!isWebSearch)}
             >
               <Globe size={17} />
               <span>Search</span>
-            </div>
+            </div> */}
             {/* <Focus focusMode={focusMode} setFocusMode={setFocusMode} /> */}
             {/* <Attach
               fileIds={fileIds}
