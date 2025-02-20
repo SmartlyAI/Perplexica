@@ -48,10 +48,22 @@ const Navbar = () => {
         }
 
         console.log(data.skills);
+        const sgmaBot = data.skills.filter((skill: any) => skill.name === 'SGMA: Chatbot Trade International' || skill._id === '67b381bf96489a7875a9688d');
+
+        // let bots = [
+        //   {
+        //     _id: sgmaBot._id,
+        //     name: sgmaBot.name,
+        //   },
+        //   {
+        //     _id: sgmaBot._id,
+        //     name: sgmaBot.name,
+        //   }
+        // ]
 
         // data.blogs = data.blogs.filter((blog: Discover) => blog.thumbnail);
 
-        setSkills(data.skills);
+        setSkills(sgmaBot);
       } catch (err: any) {
         console.error('Error fetching data:', err.message);
         toast.error('Error fetching data');
@@ -92,7 +104,7 @@ const Navbar = () => {
           </PopoverButton>
           <PopoverPanel
             anchor="bottom start"
-            className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg w-[300px] h-[500px]"
+            className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg w-[300px] h-max-[500px]"
             onClick={(e) => e.stopPropagation()}
           >
             {skills &&
