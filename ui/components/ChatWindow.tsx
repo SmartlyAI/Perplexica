@@ -631,7 +631,7 @@ const ChatWindow = ({ id }: { id?: string }) => {
         }
       }
 
-      Router.push(`/c/${chatId}`);
+      // Router.push(`/c/${chatId}`);
     };
 
     ws?.addEventListener('message', messageHandler);
