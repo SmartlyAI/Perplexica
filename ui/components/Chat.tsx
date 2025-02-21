@@ -8,6 +8,7 @@ import MessageBoxLoading from './MessageBoxLoading';
 import { ArchiveRestore } from 'lucide-react';
 import useHistoryStore from '@/stores/history-store';
 import { toast } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 const Chat = ({
   loading,
@@ -37,6 +38,7 @@ const Chat = ({
   const [dividerWidth, setDividerWidth] = useState(0);
   const dividerRef = useRef<HTMLDivElement | null>(null);
   const messageEnd = useRef<HTMLDivElement | null>(null);
+  const t = useTranslations('EmptyChat');
 
   useEffect(() => {
     const updateDividerWidth = () => {
@@ -127,7 +129,7 @@ const Chat = ({
             setFiles={setFiles}
           />
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-            Smartly Chat can make mistakes. Check important info.
+            {t("chatWarning")}
           </p>
         </div>
       )

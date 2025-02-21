@@ -1,7 +1,8 @@
 {
   "EmptyChat": {
     "title": "How can I help you today?",
-    "placeholder": "Message SmartlyChat"
+    "placeholder": "Message SmartlyChat",
+    "chatWarning": "Smartly Chat can make mistakes. Check important info."
   },
   
   "History": {

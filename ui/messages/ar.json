@@ -1,7 +1,8 @@
 {
   "EmptyChat": {
     "title": "كيف يمكنني مساعدتك اليوم؟",
-    "placeholder": "تحدث مع SmartlyChat"
+    "placeholder": "تحدث مع SmartlyChat",
+    "chatWarning": "قد يرتكب سمارتلي شات أخطاء. تحقق من المعلومات المهمة."
   },
 
   "History": {
@@ -107,5 +108,5 @@
     "copy": "نسخ",
     "stop": "إيقاف",
     "read_aloud": "قراءة بصوت عالٍ"
-  }
+  } 
 }

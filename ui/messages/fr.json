@@ -1,7 +1,8 @@
 {
   "EmptyChat": {
     "title": "Comment puis je vous aider aujourd’hui?",
-    "placeholder": "Envoyer un message"
+    "placeholder": "Envoyer un message",
+    "chatWarning": "Smartly Chat peut faire des erreurs. Vérifiez les informations importantes."
   },
   
   "History": {
