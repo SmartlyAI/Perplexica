@@ -29,7 +29,6 @@ const Navbar = () => {
   const [skills, setSkills] = useState<any>();
   const [loading, setLoading] = useState(true);
   const Router = useRouter();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -84,34 +83,39 @@ const Navbar = () => {
         )}
 
         <Popover className="relative">
-          <PopoverButton className="">
-            <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
-              <h1>{updateAssistant?.name}</h1>
-              <ChevronDown />
-            </button>
-          </PopoverButton>
-          <PopoverPanel
-            anchor="bottom start"
-            className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg w-[300px] h-[500px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {skills &&
-            skills?.map((item: any, i: any) => (
-              <div
-                key={item._id}
-                className="flex-1 cursor-pointer p-2 w-full text-left hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                onClick={(e) => {
-                  setUpdateAssistant(
-                    item._id && item.name ? { id: item._id, name: item.name } : undefined,
-                  );
-                  e.stopPropagation()
-                  Router.push('/');
-                }}
+        {({ close }) => (
+            <>
+              <PopoverButton className="">
+                <button className='flex items-center gap-2 px-3 py-2 hover:bg-gray-50'>
+                  <h1>{updateAssistant?.name}</h1>
+                  <ChevronDown />
+                </button>
+              </PopoverButton>
+              <PopoverPanel
+                anchor="bottom start"
+                className="flex flex-col z-[50] border-2 bg-white dark:bg-dark-secondary rounded-lg shadow-lg w-[300px] h-[500px]"
+                onClick={(e) => e.stopPropagation()}
               >
-                {item.name}
-              </div>
-            ))}
-          </PopoverPanel>
+                {skills &&
+                skills?.map((item: any, i: any) => (
+                  <div
+                    key={item._id}
+                    className="flex-1 cursor-pointer p-2 w-full text-left hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    onClick={(e) => {
+                      setUpdateAssistant(
+                        item._id && item.name ? { id: item._id, name: item.name } : undefined,
+                      );
+                      e.stopPropagation();
+                      Router.push('/');
+                      close(); 
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                ))}
+              </PopoverPanel>
+            </>
+          )}
         </Popover>
       </div>
 
